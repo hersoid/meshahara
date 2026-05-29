@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meshahara — Many Roots, One Ledger</title>
+  <style>
+    body {
+      margin: 0;
+      background: #343230;
+      color: #F0EBE0;
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-size: 13px;
+      letter-spacing: .05em;
+    }
+    p { opacity: .5; }
+  </style>
+</head>
+<body>
+  <p>Meshahara — Coming Soon</p>
+
+  <!-- Netlify Identity widget — handles invite/password-reset links -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    // When someone arrives via an invite or password reset link,
+    // redirect them to /admin to complete the login flow
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
