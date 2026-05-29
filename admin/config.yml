@@ -1,0 +1,127 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Files uploaded via CMS go here
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+# Site URL - update this once deployed
+site_url: https://meshahara.netlify.app
+
+collections:
+
+  # ── BLOG ──────────────────────────────────────────────
+  - name: "blog"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "blog/{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Exhibition News", value: "news" }
+          - { label: "Artist Spotlight", value: "artist-spotlight" }
+          - { label: "Technology & Blockchain", value: "technology" }
+          - { label: "Process & Documentation", value: "process" }
+          - { label: "Press", value: "press" }
+      - { label: "Featured Image", name: "image", widget: "image", required: false }
+      - { label: "Image Caption", name: "image_caption", widget: "string", required: false }
+      - { label: "Excerpt", name: "excerpt", widget: "text", hint: "Short summary shown in blog listings. Max 200 characters." }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Author", name: "author", widget: "string", default: "Art:Tech & Hersoid" }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+
+  # ── GALLERY / DOCUMENTATION ───────────────────────────
+  - name: "gallery"
+    label: "Gallery"
+    label_singular: "Gallery Entry"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - label: "Phase"
+        name: "phase"
+        widget: "select"
+        options:
+          - { label: "Pre-production", value: "pre-production" }
+          - { label: "Open Call Period", value: "open-call" }
+          - { label: "Artist Development", value: "development" }
+          - { label: "Installation", value: "installation" }
+          - { label: "Opening Night", value: "opening-night" }
+          - { label: "Post-Event", value: "post-event" }
+      - { label: "Images", name: "images", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Caption / Description", name: "caption", widget: "text", required: false }
+      - { label: "Credit", name: "credit", widget: "string", required: false, hint: "Photographer or documentation credit" }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+
+  # ── ARTISTS ROSTER ────────────────────────────────────
+  - name: "artists"
+    label: "Artists"
+    label_singular: "Artist"
+    folder: "content/artists"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "title", widget: "string" }
+      - { label: "Profile Image", name: "image", widget: "image", required: false }
+      - { label: "Location", name: "location", widget: "string", hint: "City, Country" }
+      - { label: "Website", name: "website", widget: "string", required: false }
+      - { label: "Instagram", name: "instagram", widget: "string", required: false, hint: "@handle only" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Confirmed", value: "confirmed" }
+          - { label: "Pending", value: "pending" }
+          - { label: "Alumni", value: "alumni" }
+      - { label: "Bio", name: "bio", widget: "text", hint: "Short biography, max 200 words" }
+      - { label: "Work Title", name: "work_title", widget: "string", required: false, hint: "Title of work in the exhibition" }
+      - { label: "Work Description", name: "work_description", widget: "text", required: false }
+      - { label: "Work Image", name: "work_image", widget: "image", required: false }
+      - { label: "Solana Wallet", name: "wallet", widget: "string", required: false, hint: "For on-chain registration — kept private" }
+      - { label: "Sort Order", name: "order", widget: "number", default: 99, hint: "Lower numbers appear first" }
+      - { label: "Published", name: "published", widget: "boolean", default: false, hint: "Unpublished until confirmed" }
+
+  # ── SPONSORS & PARTNERS ───────────────────────────────
+  - name: "sponsors"
+    label: "Sponsors & Partners"
+    label_singular: "Sponsor"
+    folder: "content/sponsors"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Company Name", name: "title", widget: "string" }
+      - { label: "Logo", name: "logo", widget: "image", required: false }
+      - label: "Tier"
+        name: "tier"
+        widget: "select"
+        options:
+          - { label: "Title Sponsor", value: "title" }
+          - { label: "Major Sponsor", value: "major" }
+          - { label: "Community Partner", value: "community" }
+          - { label: "In-Kind Partner", value: "in-kind" }
+          - { label: "Media Partner", value: "media" }
+          - { label: "Grant / Funding Body", value: "grant" }
+      - label: "Sector"
+        name: "sector"
+        widget: "select"
+        options:
+          - { label: "Crypto / Web3", value: "crypto" }
+          - { label: "Government / Arts", value: "government" }
+          - { label: "UK–Malaysia", value: "bilateral" }
+          - { label: "Youth / Lifestyle", value: "lifestyle" }
+          - { label: "Technology / Equipment", value: "technology" }
+          - { label: "Community / NFT", value: "community" }
+      - { label: "Website", name: "website", widget: "string", required: false }
+      - { label: "Short Description", name: "description", widget: "text", required: false, hint: "One sentence — what they bring to the exhibition" }
+      - { label: "Sort Order", name: "order", widget: "number", default: 99 }
+      - { label: "Published", name: "published", widget: "boolean", default: false, hint: "Toggle on once confirmed" }
