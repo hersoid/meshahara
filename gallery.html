@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Meshahara: Many Roots, One Ledger</title>
+<link rel="stylesheet" href="/css/main.css">
+<style>
+.page-header{display:grid;grid-template-columns:110px 1fr 260px;border-bottom:1px solid var(--rule);min-height:200px;}
+.ph-main{padding:2rem 2rem;border-right:1px solid var(--rule);}
+.ph-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,78px);line-height:.88;letter-spacing:.02em;margin-bottom:.75rem;}
+.ph-title span{color:var(--pink);}
+.ph-deck{font-size:13px;color:var(--muted);line-height:1.7;}
+.ph-aside{padding:2rem 1.5rem;background:var(--surface);}
+.phase-tabs{display:flex;gap:0;border-bottom:1px solid var(--rule);background:var(--surface);overflow-x:auto;}
+.phase-tab{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding:.7rem 1.25rem;border:none;background:none;cursor:pointer;border-right:1px solid var(--rule);white-space:nowrap;font-family:'DM Mono',monospace;transition:color .15s,background .15s;}
+.phase-tab:hover,.phase-tab.active{color:var(--pink);background:var(--surface2);}
+.gallery-entry{border-bottom:1px solid var(--rule);padding:2rem;}
+.gallery-entry-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.gallery-img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);}
+.gallery-img{height:220px;background-size:cover;background-position:center;background-color:var(--surface2);}
+.gallery-caption{font-size:12px;color:var(--muted);margin-top:.75rem;line-height:1.6;}
+.gallery-credit{font-size:10px;color:var(--dim);margin-top:.35rem;}
+.empty-gallery{padding:4rem 2rem;text-align:center;color:var(--dim);font-size:13px;line-height:1.8;border-bottom:1px solid var(--rule);}
+.phase-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="nav-logo">Meshahara</a>
+  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/exhibition.html">Exhibition</a></li>
+    <li><a href="/artists.html">Artists</a></li>
+    <li><a href="/open-call.html">Open Call</a></li>
+    <li><a href="/programme.html">Programme</a></li>
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+  </ul>
+</nav>
+
+<header class="page-header">
+  <div class="page-spine">
+    <span class="spine-vert">Gallery · Documentation · 2026</span>
+    <div class="spine-meta">
+      <div class="spine-item"><div class="spine-key">Phase</div><div class="spine-val" style="color:var(--pink);">Pre-prod</div></div>
+    </div>
+    <div class="spine-coord">GL–2026</div>
+  </div>
+  <div class="ph-main">
+    <p class="ph-kicker">Documentation · Process · Archive</p>
+    <h1 class="ph-title">Gallery &<br><span>Documentation</span></h1>
+    <p class="ph-deck">A growing archive documenting Meshahara from open call through to opening night and beyond. Updated in real time as the project develops.</p>
+  </div>
+  <div class="ph-aside">
+    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;"><div class="aside-title">Phases</div><div class="aside-body">Pre-production<br>Open Call Period<br>Artist Development<br>Installation<br>Opening Night<br>Post-Event</div></div>
+    <div class="aside-block"><div class="aside-title">Credits</div><div class="aside-body">Photography credits appear with each entry. All documentation © Art:Tech & Hersoid unless otherwise credited.</div></div>
+  </div>
+</header>
+
+<div class="ticker">
+  <span><span class="ticker-dot"></span>Documentation updated throughout the project</span>
+  <span>Pre-production · Open Call · Installation · Opening Night</span>
+</div>
+
+<div class="phase-tabs">
+  <button class="phase-tab active" data-phase="all">All</button>
+  <button class="phase-tab" data-phase="pre-production">Pre-production</button>
+  <button class="phase-tab" data-phase="open-call">Open Call</button>
+  <button class="phase-tab" data-phase="development">Artist Development</button>
+  <button class="phase-tab" data-phase="installation">Installation</button>
+  <button class="phase-tab" data-phase="opening-night">Opening Night</button>
+  <button class="phase-tab" data-phase="post-event">Post-Event</button>
+</div>
+
+<div id="gallery-container">
+  <div class="empty-gallery">
+    Documentation will appear here as the project develops.<br>
+    Follow us on social media or <a href="/blog.html">read the blog</a> for updates.
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Press</strong><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Deadline 15 August 2026 →</a></div>
+</footer>
+<script src="/js/main.js"></script>
+<script>
+  renderGallery('gallery-container');
+  document.querySelectorAll('.phase-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const phase = tab.dataset.phase === 'all' ? null : tab.dataset.phase;
+      renderGallery('gallery-container', phase);
+    });
+  });
+</script>
+</body>
+</html>

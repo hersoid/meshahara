@@ -1,42 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meshahara — Many Roots, One Ledger</title>
-  <style>
-    body {
-      margin: 0;
-      background: #343230;
-      color: #F0EBE0;
-      font-family: monospace;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      font-size: 13px;
-      letter-spacing: .05em;
-    }
-    p { opacity: .5; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meshahara: Many Roots, One Ledger — RXPKL, Kuala Lumpur 2026</title>
+<meta name="description" content="An international immersive group exhibition connecting Southeast Asian and global artists through the Solana blockchain ecosystem. REX KL, Chinatown, Kuala Lumpur, 2026.">
+<meta property="og:title" content="Meshahara: Many Roots, One Ledger">
+<meta property="og:image" content="/images/roots.jpg">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+.hero{display:grid;grid-template-columns:110px 1fr 240px 160px;grid-template-rows:340px auto;border-bottom:1px solid var(--rule);}
+.hero-spine{grid-row:1/3;border-right:1px solid var(--rule);padding:1.25rem 1rem;display:flex;flex-direction:column;justify-content:space-between;background:var(--surface);}
+.hero-img-main{grid-column:2/3;grid-row:1/2;background-image:url('/images/roots.jpg');background-size:cover;background-position:center 35%;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;overflow:hidden;}
+.hero-img-main::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(52,50,48,.8) 100%);}
+.img-cap{position:absolute;bottom:.6rem;left:.75rem;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,235,224,.35);z-index:2;}
+.hero-title-block{grid-column:2/3;grid-row:2/3;padding:1.1rem 1.4rem;border-right:1px solid var(--rule);}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,90px);line-height:.88;letter-spacing:.03em;}
+.hero-title span{color:var(--pink);}
+.hero-sub{font-size:13px;font-style:italic;font-weight:300;color:var(--muted);margin-top:.45rem;}
+.hero-img-wheel{grid-column:3/4;grid-row:1/3;background-image:url('/images/colour-wheel.jpg');background-size:cover;background-position:center;border-right:1px solid var(--rule);position:relative;overflow:hidden;}
+.hero-img-wheel::before{content:'';position:absolute;inset:0;background:rgba(52,50,48,.2);}
+.hero-img-binary{grid-column:4/5;grid-row:1/2;background-image:url('/images/binary-print.jpg');background-size:cover;background-position:center top;border-bottom:1px solid var(--rule);position:relative;overflow:hidden;}
+.hero-img-binary::before{content:'';position:absolute;inset:0;background:rgba(52,50,48,.35);}
+.hero-meta{grid-column:4/5;grid-row:2/3;padding:1rem;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;}
+.live-tag{font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:.25rem .55rem;border:1px solid var(--pink);color:var(--pink);display:inline-block;margin-top:.4rem;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--rule);}
+.sc{padding:1.1rem 1.25rem;border-right:1px solid var(--rule);background:var(--surface);}
+.sc:last-child{border-right:none;}
+.sc-n{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--pink);letter-spacing:.03em;line-height:1;margin-bottom:.2rem;}
+.sc-d{font-size:11px;color:var(--dim);line-height:1.5;}
+.stmt{display:grid;grid-template-columns:1.6fr 1fr;border-bottom:1px solid var(--rule);}
+.stmt-l{padding:2.25rem 2rem;border-right:1px solid var(--rule);position:relative;overflow:hidden;}
+.stmt-wm{position:absolute;right:-8%;bottom:-8%;width:62%;padding-bottom:62%;background-image:url('/images/colour-wheel.jpg');background-size:cover;background-position:center;opacity:.20;border-radius:50%;pointer-events:none;}
+.stmt-l>*{position:relative;z-index:1;}
+.stmt-l p{font-size:13px;line-height:1.9;color:var(--muted);margin-bottom:.9rem;}
+.stmt-l p b{font-weight:500;color:var(--text);}
+.stmt-r{padding:2.25rem 1.75rem;background:var(--surface);display:flex;flex-direction:column;gap:1.25rem;}
+.img-wide{display:grid;grid-template-columns:1fr 1fr;height:220px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+.iw-a{background-image:url('/images/forest-panoramic.jpg');background-size:cover;background-position:center 40%;border-right:1px solid var(--rule);position:relative;overflow:hidden;}
+.iw-b{background-image:url('/images/tree-grid.jpg');background-size:cover;background-position:center 35%;position:relative;overflow:hidden;}
+.iw-a::before,.iw-b::before{content:'';position:absolute;inset:0;background:rgba(52,50,48,.2);}
+.iw-cap{position:absolute;bottom:.6rem;left:.75rem;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,235,224,.35);}
+.oc-banner{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--rule);min-height:300px;}
+.oc-left{padding:2.25rem 2rem;border-right:2px solid var(--pink);background:var(--surface);display:flex;flex-direction:column;}
+.oc-bgn{font-family:'Bebas Neue',sans-serif;font-size:80px;color:rgba(240,235,224,.03);line-height:1;letter-spacing:.03em;}
+.oc-head{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:.04em;line-height:1;color:var(--text);margin-top:-.8rem;margin-bottom:.65rem;}
+.oc-head span{color:var(--pink);}
+.oc-body{font-size:12px;color:var(--dim);line-height:1.75;}
+.oc-right{background-image:url('/images/tree-grid.jpg');background-size:cover;background-position:center;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:2rem;}
+.oc-right::before{content:'';position:absolute;inset:0;background:rgba(52,50,48,.6);}
+.oc-deadline{position:relative;z-index:1;border:1px solid rgba(240,235,224,.2);padding:1.25rem 1.5rem;text-align:center;min-width:200px;}
+.dl-lbl{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
+.dl-date{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.04em;color:var(--pink);line-height:1.1;margin-bottom:.4rem;}
+.dl-count{font-size:10px;color:var(--dim);}
+.prog{padding:1.5rem 2rem;border-bottom:1px solid var(--rule);background:var(--surface);}
+.prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);margin-top:1rem;}
+.pi{background:var(--surface);padding:.85rem 1rem;}
+.pi-n{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--pink);line-height:1;margin-bottom:.35rem;}
+.pi-t{font-size:12px;font-weight:500;color:var(--text);margin-bottom:.28rem;}
+.pi-d{font-size:11px;color:var(--dim);line-height:1.6;}
+.img-pair{display:grid;grid-template-columns:1fr 1fr;height:240px;border-bottom:1px solid var(--rule);}
+.ip-a{background-image:url('/images/field-map.jpg');background-size:cover;background-position:center 30%;border-right:1px solid var(--rule);position:relative;overflow:hidden;}
+.ip-b{background-image:url('/images/desert-tree.jpg');background-size:cover;background-position:center 45%;position:relative;overflow:hidden;}
+.ip-a::before,.ip-b::before{content:'';position:absolute;inset:0;background:rgba(52,50,48,.2);}
+.ip-cap{position:absolute;bottom:.6rem;left:.75rem;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,235,224,.35);}
+</style>
 </head>
 <body>
-  <p>Meshahara — Coming Soon</p>
 
-  <!-- Netlify Identity widget — handles invite/password-reset links -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    // When someone arrives via an invite or password reset link,
-    // redirect them to /admin to complete the login flow
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
+<nav class="nav">
+  <a href="/" class="nav-logo">Meshahara</a>
+  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links">
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="/exhibition.html">Exhibition</a></li>
+    <li><a href="/artists.html">Artists</a></li>
+    <li><a href="/open-call.html">Open Call</a></li>
+    <li><a href="/programme.html">Programme</a></li>
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-spine page-spine">
+    <span class="spine-vert">Solana Immersive Exhibition · RXPKL · KL</span>
+    <div class="spine-meta">
+      <div class="spine-item"><div class="spine-key">Venue</div><div class="spine-val">REX KL<br>Chinatown</div></div>
+      <div class="spine-item"><div class="spine-key">Curated by</div><div class="spine-val">Art:Tech<br>& Hersoid</div></div>
+      <div class="spine-item"><div class="spine-key">Format</div><div class="spine-val" style="font-size:10px;font-family:'DM Mono',monospace;font-weight:300;line-height:1.7;">Arch. Projection<br>Artist Panel<br>Wallet Onboarding<br>Live Transactions</div></div>
+    </div>
+    <div class="spine-coord">3°8′N<br>101°41′E</div>
+  </div>
+  <div class="hero-img-main"><span class="img-cap">Fig. 01 — Root system · Andombiry Forest</span></div>
+  <div class="hero-title-block">
+    <h1 class="hero-title">ME<span>SHA</span>HARA</h1>
+    <p class="hero-sub">Many Roots, One Ledger</p>
+  </div>
+  <div class="hero-img-wheel"></div>
+  <div class="hero-img-binary"></div>
+  <div class="hero-meta">
+    <div><div class="lbl" style="margin-bottom:.4rem;">Year</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.04em;line-height:1;">2026</div></div>
+    <div><div class="lbl" style="margin-bottom:.4rem;">Network</div><span class="live-tag"><span class="ticker-dot"></span>SOL · Live</span></div>
+    <div class="spine-coord" style="color:var(--rule);">KL · MY<br>UK – SEA</div>
+  </div>
+</section>
+
+<div class="ticker">
+  <span><span class="ticker-dot"></span>SOL Network · Live on-chain transactions during the exhibition</span>
+  <span>REX KL · Jalan Sultan · Chinatown · Kuala Lumpur</span>
+</div>
+
+<div class="stats">
+  <div class="sc"><div class="sc-n">SEA+</div><div class="sc-d">Southeast Asia &<br>international artists</div></div>
+  <div class="sc"><div class="sc-n">01↑</div><div class="sc-d">One immersive night<br>at REX KL</div></div>
+  <div class="sc"><div class="sc-n">0→</div><div class="sc-d">Crypto knowledge<br>needed to participate</div></div>
+  <div class="sc"><div class="sc-n">∞</div><div class="sc-d">Authorship preserved<br>on-chain. Permanently.</div></div>
+</div>
+
+<div class="stmt">
+  <div class="stmt-l">
+    <div class="stmt-wm"></div>
+    <div class="lbl" style="margin-bottom:1rem;">About the Exhibition</div>
+    <p>Meshahara is a Solana-powered immersive exhibition framing <b>blockchain not as financial speculation</b>, but as shared cultural infrastructure — a decentralised commons where artists from Southeast Asia and the world circulate work, maintain authorship, and collaborate across borders without losing their identity.</p>
+    <p>At a time of rising nationalism and cultural isolation, the project positions art as a space for <b>coexistence</b>. Visitors don't scroll past the works — they inhabit them, entering a communal environment of large-scale projections where presence, not transaction, is the point.</p>
+    <a href="/exhibition.html" class="btn-secondary" style="margin-top:.5rem;">Read the Curatorial Brief →</a>
+  </div>
+  <div class="stmt-r">
+    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;"><div class="aside-title">Platform</div><div class="aside-body">Solana blockchain — live transactions, verified authorship, decentralised distribution.</div></div>
+    <div class="aside-block"><div class="aside-title">UK–SEA Exchange</div><div class="aside-body">Co-curated across two continents. British Council aligned. Bilateral creative exchange.</div></div>
+    <div class="aside-block"><div class="aside-title">Become a Partner</div><div class="aside-body">Sponsorship open across crypto, arts, lifestyle & equipment sectors.<br><a href="/sponsors.html">View partners →</a></div></div>
+    <div class="aside-block"><div class="aside-title">Open Call</div><div class="aside-body">International artists invited. SEA artists especially encouraged.<br><a href="/open-call.html">Apply by 15 August 2026 →</a></div></div>
+  </div>
+</div>
+
+<div class="img-wide">
+  <div class="iw-a"><span class="iw-cap">Fig. 02 — Andombiry Forest · Madagascar</span></div>
+  <div class="iw-b"><span class="iw-cap">Fig. 03 — Natural spectrum · Colour field study</span></div>
+</div>
+
+<div class="oc-banner">
+  <div class="oc-left">
+    <div class="lbl" style="margin-bottom:.65rem;">Now Open</div>
+    <div class="oc-bgn">OC</div>
+    <div class="oc-head">Open Call<br>for <span>Artists</span></div>
+    <div class="oc-body">International · Digital media · Immersive<br>Southeast Asian artists especially encouraged.<br>All disciplines welcome. $10 USD submission fee.</div>
+    <a href="/open-call.html" class="btn-primary" style="margin-top:1.25rem;align-self:flex-start;">Read the Brief & Apply →</a>
+  </div>
+  <div class="oc-right">
+    <div class="oc-deadline">
+      <div class="dl-lbl">Deadline</div>
+      <div class="dl-date">15 August<br>2026</div>
+      <div class="dl-count" id="countdown">Loading...</div>
+    </div>
+  </div>
+</div>
+
+<div class="prog">
+  <div class="lbl">Programme · Opening Night</div>
+  <div class="prog-grid">
+    <div class="pi"><div class="pi-n">01</div><div class="pi-t">Architectural Projection</div><div class="pi-d">Large-scale immersive projections across RXPKL's main arena. Works inhabited, not observed.</div></div>
+    <div class="pi"><div class="pi-n">02</div><div class="pi-t">Artist Panel</div><div class="pi-d">Local and international voices in conversation. Art, authorship, and the blockchain.</div></div>
+    <div class="pi"><div class="pi-n">03</div><div class="pi-t">Wallet Onboarding</div><div class="pi-d">Live Solana onboarding. No crypto experience needed — participate directly.</div></div>
+    <div class="pi"><div class="pi-n">04</div><div class="pi-t">Industry Networking</div><div class="pi-d">KL's leading Web3 and digital asset companies present on the night.</div></div>
+  </div>
+</div>
+
+<div class="img-pair">
+  <div class="ip-a"><span class="ip-cap">Fig. 04 — Field mapping · Artist network distribution</span></div>
+  <div class="ip-b"><span class="ip-cap">Fig. 05 — Desert tree · Glitch data overlay</span></div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Press & Partners</strong><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Newsletter</strong>Sign up for announcements</div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) { window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; }); }
+    });
+  }
+</script>
 </body>
 </html>

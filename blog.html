@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Meshahara: Many Roots, One Ledger</title>
+<link rel="stylesheet" href="/css/main.css">
+<style>
+.page-header{display:grid;grid-template-columns:110px 1fr 260px;border-bottom:1px solid var(--rule);min-height:200px;}
+.ph-main{padding:2rem 2rem;border-right:1px solid var(--rule);}
+.ph-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,78px);line-height:.88;letter-spacing:.02em;margin-bottom:.75rem;}
+.ph-title span{color:var(--pink);}
+.ph-deck{font-size:13px;color:var(--muted);line-height:1.7;}
+.ph-aside{padding:2rem 1.5rem;background:var(--surface);}
+.filter-bar{display:flex;gap:0;border-bottom:1px solid var(--rule);background:var(--surface);overflow-x:auto;}
+.filter-btn{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding:.7rem 1.25rem;border:none;background:none;cursor:pointer;border-right:1px solid var(--rule);white-space:nowrap;font-family:'DM Mono',monospace;transition:color .15s,background .15s;}
+.filter-btn:hover,.filter-btn.active{color:var(--pink);background:var(--surface2);}
+#blog-container{display:grid;grid-template-columns:repeat(3,1fr);}
+.no-posts{padding:3rem 2rem;color:var(--dim);font-size:13px;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="nav-logo">Meshahara</a>
+  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/exhibition.html">Exhibition</a></li>
+    <li><a href="/artists.html">Artists</a></li>
+    <li><a href="/open-call.html">Open Call</a></li>
+    <li><a href="/programme.html">Programme</a></li>
+    <li><a href="/blog.html" class="active">Blog</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+  </ul>
+</nav>
+
+<header class="page-header">
+  <div class="page-spine">
+    <span class="spine-vert">Blog · Meshahara 2026</span>
+    <div class="spine-meta">
+      <div class="spine-item"><div class="spine-key">Latest</div><div class="spine-val">28 May<br>2026</div></div>
+    </div>
+    <div class="spine-coord">BL–2026</div>
+  </div>
+  <div class="ph-main">
+    <p class="ph-kicker">News, Process & Documentation</p>
+    <h1 class="ph-title">The <span>Blog</span></h1>
+    <p class="ph-deck">Exhibition news, artist spotlights, documentation, and updates on technology, process, and community. Updated throughout the life of the project.</p>
+  </div>
+  <div class="ph-aside">
+    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;"><div class="aside-title">Categories</div><div class="aside-body">Exhibition News<br>Artist Spotlight<br>Technology & Blockchain<br>Process & Documentation<br>Press</div></div>
+    <div class="aside-block"><div class="aside-title">Newsletter</div><div class="aside-body">Stay updated — sign up for announcements sent directly to your inbox.</div></div>
+  </div>
+</header>
+
+<div class="ticker">
+  <span><span class="ticker-dot"></span>Latest: Open Call Now Live — 28 May 2026</span>
+  <span>Updated regularly throughout the project</span>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-cat="all">All Posts</button>
+  <button class="filter-btn" data-cat="news">Exhibition News</button>
+  <button class="filter-btn" data-cat="artist-spotlight">Artist Spotlight</button>
+  <button class="filter-btn" data-cat="technology">Technology & Blockchain</button>
+  <button class="filter-btn" data-cat="process">Process & Docs</button>
+  <button class="filter-btn" data-cat="press">Press</button>
+</div>
+
+<div id="blog-container" class="card-grid"></div>
+
+<footer class="site-footer">
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Press</strong><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Deadline 15 August 2026 →</a></div>
+</footer>
+<script src="/js/main.js"></script>
+<script>
+  renderBlogListing('blog-container');
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

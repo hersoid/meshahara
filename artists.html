@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artists — Meshahara: Many Roots, One Ledger</title>
+<link rel="stylesheet" href="/css/main.css">
+<style>
+.page-header{display:grid;grid-template-columns:110px 1fr 260px;border-bottom:1px solid var(--rule);min-height:220px;}
+.ph-main{padding:2.5rem 2rem;border-right:1px solid var(--rule);}
+.ph-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:1rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,78px);line-height:.88;letter-spacing:.02em;margin-bottom:1rem;}
+.ph-title span{color:var(--pink);}
+.ph-deck{font-size:13px;font-weight:300;line-height:1.8;color:var(--muted);}
+.ph-aside{padding:2rem 1.5rem;background:var(--surface);}
+.pending-banner{padding:1.5rem 2rem;background:var(--surface);border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;}
+.pb-text{font-size:12px;color:var(--dim);line-height:1.6;}
+.pb-text b{color:var(--text);font-weight:500;}
+.artists-grid{min-height:400px;border-bottom:1px solid var(--rule);}
+#artists-container{display:grid;grid-template-columns:repeat(3,1fr);}
+.open-call-prompt{padding:3rem 2rem;text-align:center;border-bottom:1px solid var(--rule);background:var(--surface);}
+.ocp-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:.04em;color:var(--text);margin-bottom:.5rem;}
+.ocp-title span{color:var(--pink);}
+.ocp-body{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:1.25rem;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="nav-logo">Meshahara</a>
+  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/exhibition.html">Exhibition</a></li>
+    <li><a href="/artists.html" class="active">Artists</a></li>
+    <li><a href="/open-call.html">Open Call</a></li>
+    <li><a href="/programme.html">Programme</a></li>
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+  </ul>
+</nav>
+
+<header class="page-header">
+  <div class="page-spine">
+    <span class="spine-vert">Artists · Meshahara 2026</span>
+    <div class="spine-meta">
+      <div class="spine-item"><div class="spine-key">Status</div><div class="spine-val" style="color:var(--pink);">Open Call</div></div>
+      <div class="spine-item"><div class="spine-key">Deadline</div><div class="spine-val">15 Aug 2026</div></div>
+    </div>
+    <div class="spine-coord">AR–2026</div>
+  </div>
+  <div class="ph-main">
+    <p class="ph-kicker">Participating Artists · Meshahara 2026</p>
+    <h1 class="ph-title">The <span>Artists</span></h1>
+    <p class="ph-deck">Artists will be announced following the open call selection process. The roster will be updated here as participants are confirmed. Check back after 1 September 2026 for the full lineup.</p>
+  </div>
+  <div class="ph-aside">
+    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;"><div class="aside-title">Open Call</div><div class="aside-body">International artists invited. Southeast Asian artists especially encouraged to apply.<br><br><a href="/open-call.html" class="btn-primary" style="display:inline-block;margin-top:.5rem;">Apply Now →</a></div></div>
+    <div class="aside-block"><div class="aside-title">Notification</div><div class="aside-body">All applicants will be notified by 1 September 2026.</div></div>
+  </div>
+</header>
+
+<div class="ticker">
+  <span><span class="ticker-dot"></span>Open Call closes 15 August 2026 · Artists announced 1 September 2026</span>
+  <span>International · Southeast Asian artists especially encouraged</span>
+</div>
+
+<div class="pending-banner">
+  <div class="pb-text"><b>Artist selection is underway.</b> The open call closes 15 August 2026. Confirmed participants will appear below as the roster is finalised.</div>
+  <a href="/open-call.html" class="btn-secondary">View Open Call →</a>
+</div>
+
+<div class="artists-grid">
+  <div id="artists-container"></div>
+</div>
+
+<div class="open-call-prompt">
+  <div class="ocp-title">Want to be part of <span>Meshahara</span>?</div>
+  <div class="ocp-body">The open call is live until 15 August 2026. We welcome artists working across digital media, immersive experience, and blockchain — existing work or new proposals both welcome.</div>
+  <a href="/open-call.html" class="btn-primary">Read the Brief & Apply →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Press</strong><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Deadline 15 August 2026 →</a></div>
+</footer>
+<script src="/js/main.js"></script>
+<script>renderArtists('artists-container');</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Meshahara: Many Roots, One Ledger</title>
+<link rel="stylesheet" href="/css/main.css">
+<style>
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--rule);}
+.contact-cell{padding:2.5rem 2rem;border-right:1px solid var(--rule);}
+.contact-cell:last-child{border-right:none;background:var(--surface);}
+.contact-type{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.04em;margin-bottom:.5rem;}
+.contact-email{font-size:16px;color:var(--pink);}
+.contact-note{font-size:12px;color:var(--dim);line-height:1.7;margin-top:.5rem;}
+.faq-section{border-bottom:1px solid var(--rule);}
+.faq-header{padding:1.25rem 2rem;border-bottom:1px solid var(--rule);background:var(--surface);}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;}
+.faq-col{padding:2rem;}
+.faq-col:first-child{border-right:1px solid var(--rule);}
+.faq-item{border-top:1px solid var(--rule-thin);}
+.faq-q{font-size:12px;font-weight:500;color:var(--text);padding:.7rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+.faq-q::after{content:'+';color:var(--pink);font-size:16px;font-weight:300;}
+.faq-q.open::after{content:'−';}
+.faq-a{font-size:12px;color:var(--dim);line-height:1.7;padding-bottom:.7rem;display:none;}
+.faq-a.open{display:block;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="nav-logo">Meshahara</a>
+  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/exhibition.html">Exhibition</a></li>
+    <li><a href="/artists.html">Artists</a></li>
+    <li><a href="/open-call.html">Open Call</a></li>
+    <li><a href="/programme.html">Programme</a></li>
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+  </ul>
+</nav>
+
+<header style="display:grid;grid-template-columns:110px 1fr;border-bottom:1px solid var(--rule);min-height:180px;">
+  <div class="page-spine">
+    <span class="spine-vert">Contact · Meshahara 2026</span>
+    <div class="spine-coord">CT–2026</div>
+  </div>
+  <div style="padding:2rem;border-right:1px solid var(--rule);">
+    <p style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;">Get in Touch</p>
+    <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,78px);line-height:.88;letter-spacing:.02em;margin-bottom:.75rem;">Contact &<br><span style="color:var(--pink);">FAQ</span></h1>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;">Questions about the open call, the exhibition, or partnership opportunities — reach out directly using the contacts below.</p>
+  </div>
+</header>
+
+<div class="ticker">
+  <span><span class="ticker-dot"></span>Open Call closes 15 August 2026 · Notifications by 1 September 2026</span>
+  <span>hello@meshahara.art</span>
+</div>
+
+<div class="contact-grid">
+  <div class="contact-cell">
+    <div class="contact-type">General Enquiries</div>
+    <div class="contact-email"><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+    <div class="contact-note">For visitor questions, open call queries, accessibility requests, and anything else not covered below.</div>
+  </div>
+  <div class="contact-cell">
+    <div class="contact-type">Press & Partnerships</div>
+    <div class="contact-email"><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
+    <div class="contact-note">For press accreditation, image requests, sponsorship enquiries, and the full partnership prospectus.</div>
+  </div>
+</div>
+
+<div class="faq-section">
+  <div class="faq-header"><div class="lbl">Frequently Asked Questions</div></div>
+  <div class="faq-grid">
+    <div class="faq-col">
+      <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin-bottom:1rem;">For Artists</div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Do I need blockchain experience to apply?</div><div class="faq-a">No. You do not need any prior experience with blockchain, Solana, or crypto to apply. Selected artists receive full support through the on-chain registration process as part of the exhibition programme.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">What format should my work be submitted in?</div><div class="faq-a">Video works should be submitted as links (Vimeo preferred). Minimum 1080p, ideally 16:9 or 4:3 aspect ratio. Generative or interactive works should include a technical spec and demo link. Still image portfolios are accepted but video or generative formats are preferred for projection.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Is the $10 fee waivable?</div><div class="faq-a">If the fee presents a genuine barrier, contact us at hello@meshahara.art before the deadline to discuss. We want the open call to be as accessible as possible.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Can collectives or groups apply?</div><div class="faq-a">Yes. Collective and collaborative submissions are welcome. Please designate one primary contact for correspondence and list all collaborators in the application form.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">When will I hear back?</div><div class="faq-a">All applicants will be notified of the outcome by 1 September 2026. Selected artists will be contacted directly to discuss technical requirements and on-chain registration.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Do I need to be based in Malaysia or Southeast Asia?</div><div class="faq-a">No — the open call is international and open to artists from anywhere in the world. Southeast Asian artists are especially encouraged to apply, but there is no geographic restriction.</div></div>
+    </div>
+    <div class="faq-col">
+      <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin-bottom:1rem;">For Visitors</div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">When and where is the exhibition?</div><div class="faq-a">Meshahara takes place at REX KL — Jalan Sultan, Chinatown, Kuala Lumpur. The event date is to be confirmed in 2026. Sign up to the newsletter for the announcement.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Do I need to know anything about crypto to attend?</div><div class="faq-a">No. The exhibition is designed to be fully accessible to non-crypto audiences. The wallet onboarding station gives visitors a hands-on introduction to Solana if they want it — but attending and experiencing the projection works requires no technical knowledge at all.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Is the event accessible?</div><div class="faq-a">REX KL is a ground-floor venue with step-free access from the street. For specific accessibility requirements, please contact hello@meshahara.art and we will do our best to accommodate you.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Can I take photos?</div><div class="faq-a">Photography and video for personal use is welcome throughout the evening. Commercial photography requires prior accreditation — contact press@meshahara.art.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">How do I get there?</div><div class="faq-a">REX KL is in Jalan Sultan, Chinatown. The nearest LRT station is Pasar Seni (5 minute walk). Grab works well for the area. Street parking is available in Chinatown.</div></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-cell"><strong>General</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Press & Partners</strong><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Deadline 15 August 2026 →</a></div>
+</footer>
+<script src="/js/main.js"></script>
+</body>
+</html>

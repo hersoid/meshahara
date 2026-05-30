@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Call — Meshahara: Many Roots, One Ledger</title>
+<meta name="description" content="Open call for artists — Meshahara: Many Roots, One Ledger at REX KL, Kuala Lumpur, 2026. Deadline 15 August 2026. $10 USD submission fee.">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+.page-header{display:grid;grid-template-columns:110px 1fr 260px;border-bottom:1px solid var(--rule);min-height:320px;}
+.ph-main{padding:2.5rem 2rem;border-right:1px solid var(--rule);position:relative;overflow:hidden;}
+.ph-bg{position:absolute;inset:0;background-image:url('/images/desert-tree.jpg');background-size:cover;background-position:center;opacity:.08;pointer-events:none;}
+.ph-main>*{position:relative;z-index:1;}
+.ph-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:1rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,88px);line-height:.88;letter-spacing:.02em;margin-bottom:1rem;}
+.ph-title span{color:var(--pink);}
+.ph-deck{font-size:14px;font-weight:300;line-height:1.85;color:var(--muted);max-width:560px;}
+.ph-aside{padding:2rem 1.5rem;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;}
+.deadline-block{border:1px solid var(--pink);padding:1.25rem;text-align:center;}
+.dl-label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:.5rem;}
+.dl-date{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.04em;line-height:1.1;color:var(--pink);}
+.dl-sub{font-size:10px;color:var(--dim);margin-top:.35rem;line-height:1.5;}
+.fee-block{border-top:2px solid var(--rule);padding-top:1rem;}
+.fee-label{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:.3rem;}
+.fee-amount{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:.04em;color:var(--text);line-height:1;}
+.fee-note{font-size:10px;color:var(--dim);margin-top:.25rem;line-height:1.5;}
+.facts{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--rule);}
+.fc{padding:1rem 1.25rem;border-right:1px solid var(--rule);background:var(--surface);}
+.fc:last-child{border-right:none;}
+.fc-n{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--pink);line-height:1;margin-bottom:.2rem;}
+.fc-d{font-size:11px;color:var(--dim);line-height:1.5;}
+.brief-grid{display:grid;grid-template-columns:1fr 340px;border-bottom:1px solid var(--rule);}
+.brief-main{padding:2.5rem 2rem;border-right:1px solid var(--rule);}
+.brief-main h2{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.04em;color:var(--text);margin:2rem 0 .85rem;}
+.brief-main h2:first-child{margin-top:0;}
+.brief-main p{font-size:13px;line-height:1.9;color:var(--muted);margin-bottom:1rem;}
+.brief-main p b{font-weight:500;color:var(--text);}
+.brief-main ul{margin:0 0 1rem;padding:0;list-style:none;}
+.brief-main ul li{font-size:13px;line-height:1.8;color:var(--muted);padding:.4rem 0;border-bottom:1px solid var(--rule-thin);display:flex;align-items:flex-start;gap:.75rem;}
+.brief-main ul li::before{content:'→';color:var(--pink);flex-shrink:0;font-size:11px;margin-top:.1rem;}
+.brief-main ul li b{color:var(--text);font-weight:500;}
+.brief-img{height:220px;background-size:cover;background-position:center 40%;position:relative;overflow:hidden;margin:1.5rem 0;border:1px solid var(--rule);}
+.brief-img::before{content:'';position:absolute;inset:0;background:rgba(52,50,48,.25);}
+.brief-img-cap{position:absolute;bottom:.6rem;left:.75rem;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,235,224,.35);z-index:2;}
+.brief-aside{padding:2rem 1.5rem;background:var(--surface);display:flex;flex-direction:column;gap:0;}
+.aside-img-panel{height:180px;background-image:url('/images/tree-grid.jpg');background-size:cover;background-position:center;position:relative;overflow:hidden;margin-top:1.5rem;}
+.aside-img-panel::before{content:'';position:absolute;inset:0;background:rgba(52,50,48,.2);}
+.submit-section{border-bottom:1px solid var(--rule);}
+.submit-header{padding:1.25rem 2rem;border-bottom:1px solid var(--rule);background:var(--surface);display:flex;align-items:baseline;gap:1.5rem;}
+.submit-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.sg-cell{padding:1.75rem 1.5rem;border-right:1px solid var(--rule);position:relative;}
+.sg-cell:last-child{border-right:none;}
+.sg-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(240,235,224,.05);line-height:1;position:absolute;top:.75rem;right:1rem;}
+.sg-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.04em;color:var(--text);margin-bottom:.6rem;position:relative;z-index:1;}
+.sg-body{font-size:12px;color:var(--dim);line-height:1.75;position:relative;z-index:1;}
+.sg-body b{color:var(--text);font-weight:500;}
+.sg-limit{display:inline-block;margin-top:.75rem;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--pink);border:1px solid rgba(232,50,122,.3);padding:.2rem .5rem;}
+.form-section{display:grid;grid-template-columns:1fr 380px;border-bottom:1px solid var(--rule);}
+.form-main{padding:2.5rem 2rem;border-right:1px solid var(--rule);}
+.form-main h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.04em;margin-bottom:.5rem;}
+.form-sub{font-size:12px;color:var(--dim);margin-bottom:2rem;line-height:1.7;}
+.tally-placeholder{border:1px dashed var(--rule);background:var(--surface2);min-height:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;gap:1rem;}
+.tp-icon{font-size:32px;opacity:.25;}
+.tp-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.06em;color:var(--muted);}
+.tp-body{font-size:12px;color:var(--dim);line-height:1.7;max-width:380px;}
+.tp-code{font-size:10px;color:var(--pink);background:rgba(232,50,122,.08);border:1px solid rgba(232,50,122,.2);padding:.6rem 1rem;font-family:'DM Mono',monospace;text-align:left;width:100%;max-width:420px;line-height:1.9;}
+.form-aside{padding:2rem 1.5rem;background:var(--surface);display:flex;flex-direction:column;gap:1.5rem;}
+.pay-block{border:1px solid var(--rule);padding:1.25rem;}
+.pay-title{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
+.pay-step{display:flex;gap:.75rem;margin-bottom:.65rem;align-items:flex-start;}
+.pay-n{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--pink);line-height:1;flex-shrink:0;width:20px;}
+.pay-text{font-size:12px;color:var(--dim);line-height:1.6;}
+.pay-text b{color:var(--text);font-weight:500;}
+.pay-note{font-size:11px;color:var(--dim);line-height:1.7;border-top:1px solid var(--rule-thin);padding-top:.75rem;}
+.faq-block{display:flex;flex-direction:column;}
+.faq-item{border-top:1px solid var(--rule-thin);}
+.faq-q{font-size:11px;font-weight:500;color:var(--text);padding:.65rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+.faq-q::after{content:'+';color:var(--pink);font-size:16px;font-weight:300;}
+.faq-q.open::after{content:'−';}
+.faq-a{font-size:11px;color:var(--dim);line-height:1.7;padding-bottom:.65rem;display:none;}
+.faq-a.open{display:block;}
+.timeline{border-bottom:1px solid var(--rule);background:var(--surface);}
+.tl-header{padding:1.25rem 2rem;border-bottom:1px solid var(--rule);}
+.tl-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.tl-cell{padding:1.5rem 1.5rem;border-right:1px solid var(--rule);}
+.tl-cell:last-child{border-right:none;}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--bg);border:2px solid var(--rule);margin-bottom:.75rem;}
+.tl-cell.active .tl-dot{background:var(--pink);border-color:var(--pink);}
+.tl-cell.active .tl-date{color:var(--pink);}
+.tl-date{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.04em;color:var(--muted);margin-bottom:.3rem;}
+.tl-event{font-size:12px;font-weight:500;color:var(--text);margin-bottom:.25rem;}
+.tl-desc{font-size:11px;color:var(--dim);line-height:1.6;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="nav-logo">Meshahara</a>
+  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/exhibition.html">Exhibition</a></li>
+    <li><a href="/artists.html">Artists</a></li>
+    <li><a href="/open-call.html" class="active">Open Call</a></li>
+    <li><a href="/programme.html">Programme</a></li>
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="/sponsors.html">Sponsors</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+  </ul>
+</nav>
+
+<header class="page-header">
+  <div class="page-spine">
+    <span class="spine-vert">Open Call · Meshahara 2026</span>
+    <div class="spine-meta">
+      <div class="spine-item"><div class="spine-key">Status</div><div class="spine-val" style="color:var(--pink);">Open</div></div>
+      <div class="spine-item"><div class="spine-key">Deadline</div><div class="spine-val">15 Aug<br>2026</div></div>
+      <div class="spine-item"><div class="spine-key">Fee</div><div class="spine-val">$10 USD</div></div>
+    </div>
+    <div class="spine-coord">OC–2026–01</div>
+  </div>
+  <div class="ph-main">
+    <div class="ph-bg"></div>
+    <p class="ph-kicker">Meshahara: Many Roots, One Ledger — RXPKL, Kuala Lumpur, 2026</p>
+    <h1 class="ph-title">Open <span>Call</span><br>for Artists</h1>
+    <p class="ph-deck">We are inviting artists from anywhere in the world to submit work or proposals for Meshahara — an international immersive exhibition at REX KL connecting artists through the Solana blockchain ecosystem. Southeast Asian artists are especially encouraged to apply.</p>
+  </div>
+  <div class="ph-aside">
+    <div class="deadline-block">
+      <div class="dl-label">Submission Deadline</div>
+      <div class="dl-date">15 August<br>2026</div>
+      <div class="dl-sub">23:59 MYT (UTC+8)<br>No late submissions accepted</div>
+    </div>
+    <div class="fee-block">
+      <div class="fee-label">Submission Fee</div>
+      <div class="fee-amount">$10 USD</div>
+      <div class="fee-note">Non-refundable processing fee.<br>Payment details below.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.75rem;">
+      <a href="#apply" class="btn-primary">Apply Now →</a>
+      <a href="#brief" class="btn-secondary">Read the Full Brief ↓</a>
+    </div>
+  </div>
+</header>
+
+<div class="ticker">
+  <span><span class="ticker-dot"></span>Open Call closes 15 August 2026 · 23:59 MYT · <span id="countdown"></span></span>
+  <span>$10 USD · International applications welcome</span>
+</div>
+
+<div class="facts">
+  <div class="fc"><div class="fc-n">Open</div><div class="fc-d">International<br>applications</div></div>
+  <div class="fc"><div class="fc-n">$10</div><div class="fc-d">USD submission<br>fee</div></div>
+  <div class="fc"><div class="fc-n">15 Aug</div><div class="fc-d">2026 deadline<br>23:59 MYT</div></div>
+  <div class="fc"><div class="fc-n">3</div><div class="fc-d">Items required<br>to submit</div></div>
+  <div class="fc"><div class="fc-n">SOL</div><div class="fc-d">Work on<br>Solana chain</div></div>
+</div>
+
+<div class="brief-grid" id="brief">
+  <div class="brief-main">
+    <h2>About the Exhibition</h2>
+    <p>Meshahara is a Solana-powered immersive group exhibition at REX KL. The exhibition frames <b>blockchain not as financial speculation</b>, but as shared cultural infrastructure: a decentralised commons where artists from Southeast Asia and the world circulate work, maintain authorship, and collaborate across borders without losing their identity.</p>
+    <p>Visitors don't scroll past the works — they inhabit them. The main arena at REX KL is transformed into an environment of <b>architectural-scale projection</b>.</p>
+
+    <div class="brief-img" style="background-image:url('/images/roots.jpg');">
+      <span class="brief-img-cap">Fig. 01 — Root system · Andombiry Forest</span>
+    </div>
+
+    <h2>Curatorial Theme</h2>
+    <p>The exhibition takes its name from the Arabic root <em>meshahara</em> — to make public, to witness, to be seen. <b>Many Roots, One Ledger</b> asks: what does it mean to share infrastructure without surrendering identity? Artists are invited to explore:</p>
+    <ul>
+      <li><b>Authorship and ownership</b> in an era of decentralised networks</li>
+      <li><b>Cultural identity</b> across borders — local roots, global circulation</li>
+      <li><b>Coexistence</b> — how different voices occupy shared space without erasure</li>
+      <li><b>The politics of visibility</b> — who gets seen, and on whose terms</li>
+      <li><b>Nature and network</b> — organic systems as metaphors for distributed infrastructure</li>
+    </ul>
+
+    <h2>Format & Technical Context</h2>
+    <p>Selected works will be presented as <b>large-scale projection</b> across the main arena at REX KL. Works should be submitted as video files (ideally 16:9 or 4:3, minimum 1080p) or as generative pieces with technical specifications.</p>
+    <p>Works do not need to have been minted on Solana to be submitted. Selected artists will be supported through on-chain registration. <b>No prior blockchain experience required.</b></p>
+
+    <h2>Who Should Apply</h2>
+    <ul>
+      <li>Artists working in <b>video, animation, generative art, digital collage</b>, or immersive media</li>
+      <li>Artists exploring <b>identity, heritage, data, systems, or nature</b> through a digital lens</li>
+      <li>Practitioners new to blockchain who want a supported entry point</li>
+      <li><b>Southeast Asian artists especially encouraged</b></li>
+      <li>Collaborative and collective submissions welcome</li>
+    </ul>
+  </div>
+  <div class="brief-aside">
+    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;"><div class="aside-title">Eligibility</div><div class="aside-body">Open internationally — any nationality, any career stage. No prior blockchain experience required. Collectives welcome.</div>
+      <div class="tags" style="margin-top:.75rem;"><span class="tag tag-hi">International</span><span class="tag tag-hi">Any Career Stage</span><span class="tag">SEA Encouraged</span><span class="tag">Collectives Welcome</span></div>
+    </div>
+    <div class="aside-block"><div class="aside-title">Disciplines</div><div class="aside-body">Video, animation, generative/code-based work, digital collage, interactive installation, net art, immersive media.</div>
+      <div class="tags" style="margin-top:.75rem;"><span class="tag">Video</span><span class="tag">Animation</span><span class="tag">Generative</span><span class="tag">Interactive</span><span class="tag">Collage</span><span class="tag">Net Art</span></div>
+    </div>
+    <div class="aside-block"><div class="aside-title">Selection</div><div class="aside-body">Works are selected by the curatorial team at Art:Tech and Hersoid. All applicants will be notified by 1 September 2026.</div></div>
+    <div class="aside-block"><div class="aside-title">Exhibition Context</div><div class="aside-body"><b>Venue:</b> REX KL, Jalan Sultan, Chinatown, KL<br><b>Format:</b> Architectural-scale projection<br><b>Chain:</b> Solana (support provided)</div></div>
+    <div class="aside-img-panel"></div>
+  </div>
+</div>
+
+<div class="submit-section">
+  <div class="submit-header">
+    <div class="lbl">What to Submit</div>
+    <div style="font-size:12px;color:var(--dim);">Three items required · All via Tally form below</div>
+  </div>
+  <div class="submit-grid">
+    <div class="sg-cell"><div class="sg-num">01</div><div class="sg-title">Artwork Submission</div><div class="sg-body">Submit an <b>existing work</b> or a <b>proposal for a new work</b>. Both welcome. Provide a link to view the work plus technical specifications, or describe what you intend to make.</div><span class="sg-limit">Max 500 words or 3 min video</span></div>
+    <div class="sg-cell"><div class="sg-num">02</div><div class="sg-title">Artist Statement</div><div class="sg-body">A short statement about your practice — who you are, what you make, what drives your work. English or Bahasa Malaysia accepted.</div><span class="sg-limit">Max 300 words</span></div>
+    <div class="sg-cell"><div class="sg-num">03</div><div class="sg-title">Project Proposal</div><div class="sg-body">Tell us how your submission connects to <b>Many Roots, One Ledger</b>. Why this work for this exhibition? How does it speak to authorship, identity, coexistence, or shared infrastructure?</div><span class="sg-limit">Max 300 words</span></div>
+  </div>
+</div>
+
+<div class="form-section" id="apply">
+  <div class="form-main">
+    <h2>Apply Now</h2>
+    <p class="form-sub">Complete the form below. All three components must be included. The $10 USD processing fee is collected separately — instructions on the right.</p>
+    <div class="tally-placeholder">
+      <div class="tp-icon">◻</div>
+      <div class="tp-title">Tally Form Embed</div>
+      <div class="tp-body">Once your Tally.so form is set up, replace this block with the iframe embed code.</div>
+      <div class="tp-code">&lt;iframe<br>&nbsp;&nbsp;src="https://tally.so/embed/YOUR_FORM_ID"<br>&nbsp;&nbsp;width="100%" height="800"<br>&nbsp;&nbsp;frameborder="0"&gt;&lt;/iframe&gt;</div>
+      <a href="https://tally.so" target="_blank" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--pink);">Set up Tally form →</a>
+    </div>
+  </div>
+  <div class="form-aside">
+    <div class="pay-block">
+      <div class="pay-title">How to Pay the $10 Fee</div>
+      <div class="pay-step"><div class="pay-n">1</div><div class="pay-text">Complete the application form in full.</div></div>
+      <div class="pay-step"><div class="pay-n">2</div><div class="pay-text">Pay the <b>$10 USD</b> fee via the payment link. Non-refundable.</div></div>
+      <div class="pay-step"><div class="pay-n">3</div><div class="pay-text"><b>Your application is not complete until both form and payment are received.</b></div></div>
+      <div class="pay-note">Queries: <a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;">FAQ</div>
+      <div class="faq-block">
+        <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Do I need blockchain experience?</div><div class="faq-a">No. Selected artists receive full support through on-chain registration.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Can I submit more than one work?</div><div class="faq-a">Up to two works per application within the same form.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Is the $10 fee waivable?</div><div class="faq-a">Contact hello@meshahara.art before the deadline if the fee is a genuine barrier.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">What format should work be in?</div><div class="faq-a">Video links preferred (Vimeo). Min 1080p, 16:9 or 4:3. Generative work: include tech spec and demo link.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">When will I hear back?</div><div class="faq-a">All applicants notified by 1 September 2026.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Can collectives apply?</div><div class="faq-a">Yes. One primary contact, list all collaborators in the form.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="timeline">
+  <div class="tl-header"><div class="lbl">Key Dates · Open Call Timeline</div></div>
+  <div class="tl-grid">
+    <div class="tl-cell active"><div class="tl-dot"></div><div class="tl-date">Now Open</div><div class="tl-event">Open Call Launch</div><div class="tl-desc">Applications open. Form and payment live.</div></div>
+    <div class="tl-cell"><div class="tl-dot"></div><div class="tl-date">15 Aug 2026</div><div class="tl-event">Submission Deadline</div><div class="tl-desc">23:59 MYT. No late submissions.</div></div>
+    <div class="tl-cell"><div class="tl-dot"></div><div class="tl-date">1 Sep 2026</div><div class="tl-event">Notification</div><div class="tl-desc">All applicants notified of outcome.</div></div>
+    <div class="tl-cell"><div class="tl-dot"></div><div class="tl-date">TBC 2026</div><div class="tl-event">Exhibition Opening</div><div class="tl-desc">Meshahara opens at REX KL, KL.</div></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-cell"><strong>Open Call Queries</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Press & Partners</strong><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Main Site</strong><a href="/">← Back to Meshahara</a></div>
+</footer>
+<script src="/js/main.js"></script>
+</body>
+</html>
