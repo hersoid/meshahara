@@ -510,3 +510,186 @@ a:hover { text-decoration: underline; }
   .footer-cell { border-right: none !important; border-bottom: 1px solid #2A2826; }
   .footer-cell:last-child { border-bottom: none; }
 }
+
+/* ── INNER PAGE HEADER — MOBILE FIX ── */
+/* These rules fix the narrow column collapse on inner pages */
+
+@media (max-width: 900px) {
+  /* Three-column page headers collapse to two */
+  .page-header {
+    grid-template-columns: 1fr 220px;
+  }
+  /* Hide the spine column entirely on tablet/mobile */
+  .page-header .page-spine {
+    display: none;
+  }
+  /* ph-main takes full width when spine hidden */
+  .page-header .ph-main {
+    border-right: 1px solid var(--rule);
+  }
+}
+
+@media (max-width: 600px) {
+  /* Full single column on mobile */
+  .page-header {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto;
+  }
+  .page-header .page-spine {
+    display: none;
+  }
+  .page-header .ph-main {
+    padding: 1.75rem 1.25rem;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+    grid-column: 1 / -1;
+  }
+  .page-header .ph-aside {
+    padding: 1.5rem 1.25rem;
+    grid-column: 1 / -1;
+    border-top: none;
+  }
+
+  /* Fix the brief/body grid layouts on inner pages */
+  .brief-grid,
+  .body-grid,
+  .stmt,
+  .contact-grid,
+  .reg-body,
+  .form-section,
+  .submit-grid,
+  .oc,
+  .editorial,
+  .prog-detail,
+  .sponsors-body,
+  .become-partner .bp-grid,
+  .faq-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Remove right borders that become orphaned in single column */
+  .brief-main,
+  .body-main,
+  .stmt-l,
+  .contact-cell,
+  .reg-main,
+  .form-main,
+  .oc-text,
+  .oc-img,
+  .prog-main,
+  .sponsors-main,
+  .ed-img,
+  .faq-col {
+    border-right: none !important;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* Images in editorial splits become fixed height, full width */
+  .ed-img,
+  .oc-img,
+  .section-img,
+  .aside-img-panel {
+    height: 220px;
+    width: 100%;
+  }
+
+  /* Aside panels full width below main content */
+  .brief-aside,
+  .body-aside,
+  .stmt-r,
+  .reg-aside,
+  .form-aside,
+  .prog-aside,
+  .sponsors-aside {
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Submit grid — three columns to one */
+  .submit-grid .sg-cell {
+    border-right: none !important;
+    border-bottom: 1px solid var(--rule);
+  }
+  .submit-grid .sg-cell:last-child {
+    border-bottom: none;
+  }
+
+  /* Programme grids */
+  .prog-grid,
+  .prog-detail .prog-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .prog-item {
+    border-right: none !important;
+    border-top: 1px solid var(--rule);
+  }
+  .prog-item:first-child {
+    border-top: none;
+  }
+
+  /* Open call band */
+  .oc-band {
+    grid-template-columns: 1fr !important;
+    padding: 2rem 1.25rem;
+  }
+  .oc-right {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .oc-deadline,
+  .oc-btn {
+    width: 100%;
+  }
+
+  /* Timeline */
+  .tl-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .tl-cell {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* Facts bands */
+  .facts-band,
+  .facts {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .fact:nth-child(2),
+  .fc-cell:nth-child(2) {
+    border-right: none;
+  }
+  .fact:nth-child(3),
+  .fc-cell:nth-child(3) {
+    border-top: 1px solid rgba(255,255,255,.25);
+  }
+  .fact:nth-child(4),
+  .fc-cell:nth-child(4) {
+    border-right: none;
+    border-top: 1px solid rgba(255,255,255,.25);
+  }
+
+  /* General padding reduction */
+  .brief-main,
+  .body-main,
+  .stmt-l,
+  .form-main,
+  .oc-text,
+  .prog-main {
+    padding: 1.75rem 1.25rem;
+  }
+  .brief-aside,
+  .body-aside,
+  .stmt-r,
+  .form-aside,
+  .prog-aside {
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* Headings scale down */
+  .ph-title {
+    font-size: clamp(36px, 10vw, 56px) !important;
+  }
+  .oc-head,
+  .oc-h {
+    font-size: clamp(28px, 8vw, 40px) !important;
+  }
+}
