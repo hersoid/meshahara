@@ -14,7 +14,7 @@ We are delighted to announce that the Meshahara open call for artists is now off
 We are inviting artists working across digital media, immersive experience, and blockchain to submit work or proposals. Southeast Asian artists are especially encouraged to apply.
 
 **Key dates:**
-- Deadline: 15 August 2026, 23:59 MYT
+- Deadline: 31 August 2026, 23:59 MYT
 - Notification: 1 September 2026
 - Exhibition: TBC 2026
 
