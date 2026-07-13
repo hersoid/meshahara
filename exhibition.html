@@ -41,6 +41,39 @@
 .obj-n{font-family:'Bebas Neue',sans-serif;font-size:42px;color:rgba(240,235,224,.06);line-height:1;margin-bottom:-.5rem;}
 .obj-t{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.04em;color:var(--text);margin-bottom:.5rem;}
 .obj-d{font-size:12px;color:var(--dim);line-height:1.7;}
+
+.venue-video-section {
+  border-bottom: 2px solid var(--text);
+}
+.venue-video-header {
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.venue-video-wrap {
+  position: relative;
+  width: 100%;
+  background: #1C1A18;
+  overflow: hidden;
+}
+.venue-video-wrap video {
+  width: 100%;
+  max-height: 560px;
+  object-fit: cover;
+  display: block;
+}
+.venue-video-cap {
+  padding: .6rem 2rem;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  background: var(--surface);
+  border-top: 1px solid var(--rule);
+}
 </style>
 </head>
 <body>
@@ -54,7 +87,7 @@
     <li><a href="/open-call.html">Open Call</a></li>
     <li><a href="/programme.html">Programme</a></li>
     <li><a href="/blog.html">Blog</a></li>
-    <li><a href="/sponsors.html">Sponsors</a></li>
+    
     <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
   </ul>
 </nav>
@@ -86,6 +119,29 @@
 <div class="ticker">
   <span><span class="ticker-dot"></span>Open Call now live · Deadline 15 August 2026</span>
   <span>REX KL · Jalan Sultan · Chinatown · Kuala Lumpur</span>
+</div>
+
+
+<!-- VENUE VIDEO -->
+<div class="venue-video-section">
+  <div class="venue-video-header">
+    <span class="lbl">REX KL — Interior · Main Arena</span>
+    <span style="font-size:13px;color:var(--dim);">Meshahara Exhibition Venue · 2026</span>
+  </div>
+  <div class="venue-video-wrap">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="/images/roots.jpg"
+      aria-label="Interior footage of REX KL main arena — the venue for Meshahara 2026">
+      <source src="/images/interior.mp4" type="video/mp4">
+      Your browser does not support video playback.
+    </video>
+  </div>
+  <div class="venue-video-cap">Fig. 01 — REX KL Main Arena · Chinatown, Kuala Lumpur · Exhibition venue for Meshahara 2026</div>
 </div>
 
 <div class="body-grid">
@@ -126,7 +182,7 @@
       </div>
     </div>
     <div class="aside-block"><div class="aside-title">Legacy</div><div class="aside-body">The exhibition produces a printed publication and online documentation archive extending the project beyond the opening night. An ongoing regional network connects participating artists after the event.</div></div>
-    <div class="aside-block"><div class="aside-title">Press & Partnerships</div><div class="aside-body">For press enquiries, image requests, or partnership opportunities:<br><a href="mailto:press@meshahara.art">press@meshahara.art</a></div></div>
+    <div class="aside-block"><div class="aside-title">Press & Partnerships</div><div class="aside-body">For press enquiries, image requests, or partnership opportunities:<br><a href="mailto:info@meshahara.art">info@meshahara.art</a></div></div>
   </div>
 </div>
 
@@ -143,8 +199,8 @@
 </div>
 
 <footer class="site-footer">
-  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Press & Partners</strong><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:info@meshahara.art">info@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Press & Partners</strong><a href="mailto:info@meshahara.art">info@meshahara.art</a></div>
   <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Apply by 15 August 2026 →</a></div>
 </footer>
 <script src="/js/main.js"></script>
