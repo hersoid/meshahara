@@ -8,6 +8,8 @@ excerpt: Action as art, art as social commentary
 author: Art:Tech & Hersoid
 published: true
 ---
+https://vimeo.com/130888014?fl=pl&fe=sh
+
 One of my favourite artists is Mexican based Francis Alys. His politically and socially charged practice somehow seems to maintain a level of humour that prevents his practice from becoming heavy or preachy. Born 1959 in Belgium, based in Mexico City since 1986, and originally trained as an architect and urbanist, Alÿs abandoned formal architecture to engage directly with the social fabric of cities. His practice blends poetic, absurd, and ephemeral actions with heavy anthropological and geopolitical undertones.   \
 \
 In one piece he dragged a giant magnet on a piece of rope from one side of Mexico city to the other, collecting metal ephemera as he passed. In another, a huge ice block was dragged, slowly melting along the journey until there was nothing but a rope. This action as art morphed into more politically and socially charged works of public engagement (a discipline close to my own heart) such as engaging with communities in war torn regions, cataloguing childrens games around the world or as in a recent piece from Ukraine, asking children to mimic the sound of air raid sirens. \
