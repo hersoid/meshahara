@@ -1,89 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog — Meshahara: Many Roots, One Ledger</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newsletter — Meshahara: Many Roots, One Ledger</title>
+<meta name="description" content="Stay updated on Meshahara — sign up for the newsletter and read the latest news, artist spotlights, and updates on the exhibition.">
 <link rel="stylesheet" href="/css/main.css">
 <style>
-.page-header{display:grid;grid-template-columns:110px 1fr 260px;border-bottom:1px solid var(--rule);min-height:200px;}
-.ph-main{padding:2rem 2rem;border-right:1px solid var(--rule);}
-.ph-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
-.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,78px);line-height:.88;letter-spacing:.02em;margin-bottom:.75rem;}
+.page-header{display:grid;grid-template-columns:100px 1fr 260px;border-bottom:2px solid var(--text);min-height:220px;}
+.ph-main{padding:2.5rem 2rem;border-right:1px solid var(--rule);}
+.ph-kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,80px);line-height:.88;letter-spacing:.02em;margin-bottom:.75rem;color:var(--text);}
 .ph-title span{color:var(--pink);}
-.ph-deck{font-size:13px;color:var(--muted);line-height:1.7;}
+.ph-deck{font-size:14px;color:var(--muted);line-height:1.75;}
 .ph-aside{padding:2rem 1.5rem;background:var(--surface);}
-.filter-bar{display:flex;gap:0;border-bottom:1px solid var(--rule);background:var(--surface);overflow-x:auto;}
-.filter-btn{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding:.7rem 1.25rem;border:none;background:none;cursor:pointer;border-right:1px solid var(--rule);white-space:nowrap;font-family:'DM Mono',monospace;transition:color .15s,background .15s;}
-.filter-btn:hover,.filter-btn.active{color:var(--pink);background:var(--surface2);}
-#blog-container{display:grid;grid-template-columns:repeat(3,1fr);}
-.no-posts{padding:3rem 2rem;color:var(--dim);font-size:13px;}
+
+/* Main content grid */
+.newsletter-body{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  border-bottom:2px solid var(--text);
+  min-height:500px;
+}
+.nl-main{padding:3rem 2.5rem;border-right:1px solid var(--rule);}
+.nl-main h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:32px;letter-spacing:.04em;
+  color:var(--text);margin-bottom:.75rem;
+}
+.nl-main p{
+  font-size:14px;line-height:1.85;
+  color:var(--muted);margin-bottom:1.25rem;
+}
+.nl-main p b{font-weight:500;color:var(--text);}
+
+/* Substack embed wrapper */
+.substack-wrap{
+  margin-top:2rem;
+  border:2px solid var(--text);
+  padding:2.5rem 2rem;
+  background:var(--surface);
+}
+.substack-label{
+  font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:1rem;
+}
+.substack-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;letter-spacing:.04em;
+  color:var(--text);margin-bottom:.5rem;
+}
+.substack-sub{
+  font-size:13px;color:var(--muted);
+  line-height:1.6;margin-bottom:1.5rem;
+}
+
+/* Custom subscribe form styling to match site */
+.subscribe-form{display:flex;gap:0;border:1px solid var(--text);}
+.subscribe-input{
+  flex:1;
+  padding:.7rem 1rem;
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  border:none;outline:none;
+  background:var(--bg);
+  color:var(--text);
+}
+.subscribe-input::placeholder{color:var(--dim);}
+.subscribe-btn{
+  padding:.7rem 1.25rem;
+  background:var(--pink);
+  color:#fff;
+  border:none;cursor:pointer;
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  transition:background .15s;
+}
+.subscribe-btn:hover{background:var(--pink-dark);}
+.subscribe-note{
+  font-size:13px;color:var(--dim);
+  margin-top:.75rem;line-height:1.5;
+}
+
+/* Read on Substack link */
+.substack-link{
+  display:inline-flex;align-items:center;gap:.5rem;
+  margin-top:1.5rem;
+  font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text);border-bottom:1px solid var(--text);
+  padding-bottom:2px;text-decoration:none;
+  transition:color .15s,border-color .15s;
+}
+.substack-link:hover{color:var(--pink);border-color:var(--pink);}
+
+/* Aside */
+.nl-aside{padding:2.5rem 1.75rem;background:var(--surface);display:flex;flex-direction:column;gap:1.5rem;}
+
+/* What to expect section */
+.expect-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:2px solid var(--text);
+}
+.eg-cell{
+  padding:1.75rem 1.5rem;
+  border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.eg-cell:nth-child(2n){border-right:none;}
+.eg-cell:nth-child(3),.eg-cell:nth-child(4){border-bottom:none;}
+.eg-n{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:32px;color:var(--pink);
+  line-height:1;margin-bottom:.4rem;
+}
+.eg-t{font-size:14px;font-weight:500;color:var(--text);margin-bottom:.3rem;}
+.eg-d{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* Dark CTA band */
+.cta-band{
+  background:var(--dark);
+  padding:3rem 2.5rem;
+  display:grid;grid-template-columns:1fr auto;
+  align-items:center;gap:2rem;
+  border-bottom:2px solid var(--pink);
+}
+.cta-text{}
+.cta-label{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#8A8278;margin-bottom:.5rem;}
+.cta-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(28px,4vw,48px);
+  letter-spacing:.02em;line-height:1;
+  color:#F0EBE0;margin-bottom:.5rem;
+}
+.cta-title span{color:var(--pink);}
+.cta-sub{font-size:14px;color:#8A8278;line-height:1.7;max-width:500px;}
+.cta-right{min-width:160px;}
+
+@media(max-width:900px){
+  .page-header{grid-template-columns:1fr 220px;}
+  .page-spine{display:none;}
+  .newsletter-body{grid-template-columns:1fr;}
+  .nl-aside{border-top:1px solid var(--rule);}
+  .expect-grid{grid-template-columns:1fr 1fr;}
+  .cta-band{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .page-header{grid-template-columns:1fr;}
+  .ph-aside{border-top:1px solid var(--rule);}
+  .nl-main{padding:1.75rem 1.25rem;}
+  .nl-aside{padding:1.5rem 1.25rem;}
+  .subscribe-form{flex-direction:column;}
+  .subscribe-btn{width:100%;}
+  .expect-grid{grid-template-columns:1fr;}
+  .eg-cell{border-right:none !important;}
+  .cta-band{padding:2rem 1.25rem;}
+}
 </style>
 </head>
 <body>
-<nav class="nav">
-  <a href="/" class="nav-logo">Meshahara</a>
-  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
-  <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/exhibition.html">Exhibition</a></li>
-    <li><a href="/artists.html">Artists</a></li>
-    <li><a href="/open-call.html">Open Call</a></li>
-    <li><a href="/programme.html">Programme</a></li>
-    <li><a href="/blog.html" class="active">Blog</a></li>
-    
-    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+
+<nav class="nav" style="display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:.9rem 2rem;border-bottom:2px solid var(--text);background:var(--bg);position:sticky;top:0;z-index:100;">
+  <a href="/" class="nav-logo" style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.18em;color:var(--text);text-decoration:none;">Meshahara</a>
+  <span class="nav-centre" style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-align:center;">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links" id="navlinks" style="display:flex;gap:0;list-style:none;align-items:center;">
+    <li><a href="/" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Home</a></li>
+    <li><a href="/exhibition.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Exhibition</a></li>
+    <li><a href="/artists.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Artists</a></li>
+    <li><a href="/open-call.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Open Call</a></li>
+    <li><a href="/programme.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Programme</a></li>
+    <li><a href="/blog.html" class="active" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);padding:.3rem .75rem;text-decoration:none;">Newsletter</a></li>
+    <li><a href="/tickets.html" class="btn-ticket" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;background:var(--dark);color:var(--bg) !important;padding:.35rem .9rem;text-decoration:none;margin-left:.5rem;">Tickets →</a></li>
   </ul>
+  <button class="nav-toggle" id="navtoggle" aria-label="Menu" style="display:none;background:none;border:none;cursor:pointer;padding:.25rem;flex-direction:column;gap:5px;">
+    <span style="display:block;width:22px;height:2px;background:var(--text);transition:.2s;"></span>
+    <span style="display:block;width:22px;height:2px;background:var(--text);transition:.2s;"></span>
+    <span style="display:block;width:22px;height:2px;background:var(--text);transition:.2s;"></span>
+  </button>
 </nav>
 
 <header class="page-header">
   <div class="page-spine">
-    <span class="spine-vert">Blog · Meshahara 2026</span>
-    <div class="spine-meta">
-      <div class="spine-item"><div class="spine-key">Latest</div><div class="spine-val">28 May<br>2026</div></div>
-    </div>
-    <div class="spine-coord">BL–2026</div>
+    <span class="spine-vert">Newsletter · Meshahara 2026</span>
+    <div class="spine-coord">NL–2026</div>
   </div>
   <div class="ph-main">
-    <p class="ph-kicker">News, Process & Documentation</p>
-    <h1 class="ph-title">The <span>Blog</span></h1>
-    <p class="ph-deck">Exhibition news, artist spotlights, documentation, and updates on technology, process, and community. Updated throughout the life of the project.</p>
+    <p class="ph-kicker">Stay Updated · Meshahara 2026</p>
+    <h1 class="ph-title">The <span>Newsletter</span></h1>
+    <p class="ph-deck">Exhibition news, artist spotlights, open call updates, and documentation — delivered directly to your inbox. Published on Substack.</p>
   </div>
   <div class="ph-aside">
-    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;"><div class="aside-title">Categories</div><div class="aside-body">Exhibition News<br>Artist Spotlight<br>Technology & Blockchain<br>Process & Documentation<br>Press</div></div>
-    <div class="aside-block"><div class="aside-title">Newsletter</div><div class="aside-body">Stay updated — sign up for announcements sent directly to your inbox.</div></div>
+    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;">
+      <div class="aside-title">Published on</div>
+      <div class="aside-body">Substack — hersoid.substack.com<br><br>Free to subscribe. No spam. Unsubscribe anytime.</div>
+    </div>
+    <div class="aside-block">
+      <div class="aside-title">Frequency</div>
+      <div class="aside-body">Updates as the project develops — from open call through to opening night and beyond.</div>
+    </div>
   </div>
 </header>
 
 <div class="ticker">
-  <span><span class="ticker-dot"></span>Latest: Open Call Now Live — 28 May 2026</span>
-  <span>Updated regularly throughout the project</span>
+  <span><span class="ticker-dot"></span>10 October 2026 · REX KL · Chinatown, Kuala Lumpur</span>
+  <span>Open Call closes 31 August 2026</span>
 </div>
 
-<div class="filter-bar">
-  <button class="filter-btn active" data-cat="all">All Posts</button>
-  <button class="filter-btn" data-cat="news">Exhibition News</button>
-  <button class="filter-btn" data-cat="artist-spotlight">Artist Spotlight</button>
-  <button class="filter-btn" data-cat="technology">Technology & Blockchain</button>
-  <button class="filter-btn" data-cat="process">Process & Docs</button>
-  <button class="filter-btn" data-cat="press">Press</button>
+<div class="newsletter-body">
+  <div class="nl-main">
+    <h2>Subscribe to the Meshahara Newsletter</h2>
+    <p>Keep up with everything Meshahara — from artist announcements and curatorial updates to documentation and post-exhibition writing. Published on Substack, free to read and subscribe.</p>
+    <p>We won't flood your inbox. Expect <b>occasional updates</b> as the project develops — when artists are confirmed, when the programme is announced, and from the opening night itself.</p>
+
+    <div class="substack-wrap">
+      <div class="substack-label">Subscribe Now</div>
+      <div class="substack-title">Meshahara Updates</div>
+      <div class="substack-sub">Enter your email to receive updates directly. Free forever.</div>
+
+      <!-- Substack embed form -->
+      <iframe
+        src="https://hersoid.substack.com/embed"
+        width="100%"
+        height="150"
+        style="border:none;background:transparent;display:block;"
+        frameborder="0"
+        scrolling="no">
+      </iframe>
+
+      <a href="https://hersoid.substack.com" target="_blank" rel="noopener" class="substack-link">
+        Read all posts on Substack →
+      </a>
+    </div>
+  </div>
+
+  <div class="nl-aside">
+    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;">
+      <div class="aside-title">What to Expect</div>
+      <div class="aside-body">Artist announcements as the roster is confirmed. Open call updates. Exhibition news. Documentation from the opening night. Post-event writing and archive.</div>
+    </div>
+    <div class="aside-block">
+      <div class="aside-title">Read on Substack</div>
+      <div class="aside-body">All posts are free to read on Substack — no account needed to read, only to subscribe.<br><br><a href="https://hersoid.substack.com" target="_blank" rel="noopener">hersoid.substack.com →</a></div>
+    </div>
+    <div class="aside-block">
+      <div class="aside-title">Open Call</div>
+      <div class="aside-body">Artist applications close 31 August 2026.<br><br><a href="/open-call.html">Apply now →</a></div>
+    </div>
+    <div class="aside-block">
+      <div class="aside-title">Contact</div>
+      <div class="aside-body">Questions about the newsletter or the exhibition:<br><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+    </div>
+  </div>
 </div>
 
-<div id="blog-container" class="card-grid"></div>
+<div class="expect-grid">
+  <div class="eg-cell">
+    <div class="eg-n">01</div>
+    <div class="eg-t">Artist Announcements</div>
+    <div class="eg-d">Confirmed artists revealed as the roster is finalised after the open call.</div>
+  </div>
+  <div class="eg-cell">
+    <div class="eg-n">02</div>
+    <div class="eg-t">Exhibition News</div>
+    <div class="eg-d">Programme updates, sponsor announcements, and behind-the-scenes process.</div>
+  </div>
+  <div class="eg-cell">
+    <div class="eg-n">03</div>
+    <div class="eg-t">Opening Night</div>
+    <div class="eg-d">Live updates and documentation from 10 October 2026 at REX KL.</div>
+  </div>
+  <div class="eg-cell">
+    <div class="eg-n">04</div>
+    <div class="eg-t">Post-Exhibition</div>
+    <div class="eg-d">Writing, photography, and archive extending the project beyond the event.</div>
+  </div>
+</div>
+
+<div class="cta-band">
+  <div class="cta-text">
+    <div class="cta-label">10 October 2026 · REX KL</div>
+    <div class="cta-title">Register for the<br><span>Opening Night</span></div>
+    <div class="cta-sub">Free entry with registration. QR code sent to your email. Places are limited.</div>
+  </div>
+  <div class="cta-right">
+    <a href="/tickets.html" class="btn-primary" style="display:block;text-align:center;">Register Now →</a>
+  </div>
+</div>
 
 <footer class="site-footer">
-  <div class="footer-cell"><strong>Contact</strong><a href="mailto:info@meshahara.art">info@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Press</strong><a href="mailto:info@meshahara.art">info@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Newsletter</strong><a href="https://hersoid.substack.com" target="_blank">hersoid.substack.com →</a></div>
   <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Deadline 31 August 2026 →</a></div>
 </footer>
-<script src="/js/main.js"></script>
+
 <script>
-  renderBlogListing('blog-container');
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
+var toggle = document.getElementById('navtoggle');
+var navlinks = document.getElementById('navlinks');
+if(toggle){toggle.addEventListener('click',function(){toggle.classList.toggle('open');navlinks.classList.toggle('open');});}
 </script>
+<script src="/js/main.js"></script>
 </body>
 </html>
