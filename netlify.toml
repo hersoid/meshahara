@@ -1,10 +1,6 @@
 [build]
   publish = "."
 
-# Auto-generate content index.json files on every deploy
-[[plugins]]
-  package = "./plugins/generate-indexes"
-
 [[redirects]]
   from = "/admin"
   to = "/admin/index.html"
