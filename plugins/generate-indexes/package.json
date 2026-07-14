@@ -1,6 +1,0 @@
-{
-  "name": "generate-indexes",
-  "version": "1.0.0",
-  "description": "Auto-generates index.json files for Meshahara content folders",
-  "main": "index.js"
-}
