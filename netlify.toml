@@ -11,3 +11,7 @@
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
     X-XSS-Protection = "1; mode=block"
+[[redirects]]
+  from = "/tickets"
+  to = "/tickets.html"
+  status = 200
