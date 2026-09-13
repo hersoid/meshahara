@@ -87,6 +87,40 @@ body{background:var(--bg);color:var(--text);}
 .hm-k{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:.25rem;}
 .hm-v{font-size:14px;font-weight:500;color:var(--text);}
 
+/* REGISTRATION CTA BLOCK */
+.hero-cta-block{
+  display:block;
+  background:var(--pink);
+  padding:1.25rem 1.5rem;
+  text-decoration:none;
+  margin-top:1.75rem;
+  transition:background .15s;
+}
+.hero-cta-block:hover{
+  background:var(--pink-dark);
+  text-decoration:none;
+}
+.hero-cta-date{
+  font-size:13px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.75);
+  margin-bottom:.4rem;
+  font-family:'DM Mono',monospace;
+}
+.hero-cta-label{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(28px,4vw,42px);
+  letter-spacing:.04em;
+  line-height:1;
+  color:#fff;
+}
+@media(max-width:900px){.hero-cta-label{font-size:32px;}}
+@media(max-width:600px){
+  .hero-cta-block{margin-top:1.25rem;padding:1rem 1.25rem;}
+  .hero-cta-label{font-size:28px;}
+}
+
 .hero-image{
   position:relative;overflow:hidden;
   background:#2A2018;
@@ -367,10 +401,15 @@ body{background:var(--bg);color:var(--text);}
       <p class="hero-kicker">Solana Immersive Exhibition · REX KL · Kuala Lumpur · 2026</p>
       <h1 class="hero-title">ME<em>SHA</em><br>HARA</h1>
       <p class="hero-subtitle">Many Roots, One Ledger</p>
+      <!-- REGISTRATION CTA -->
+      <a href="/tickets.html" class="hero-cta-block">
+        <div class="hero-cta-date">10 October 2026 · REX KL · Free Entry</div>
+        <div class="hero-cta-label">Register Now →</div>
+      </a>
     </div>
     <div class="hero-meta">
       <div><div class="hm-k">Venue</div><div class="hm-v">REX KL, Chinatown KL</div></div>
-      <div><div class="hm-k">Curated by</div><div class="hm-v">Hersoid</div></div>
+      <div><div class="hm-k">Curated by</div><div class="hm-v">Art:Tech & Hersoid</div></div>
       <div><div class="hm-k">Open Call</div><div class="hm-v">Closes 31 Aug 2026</div></div>
     </div>
   </div>
@@ -453,9 +492,9 @@ body{background:var(--bg);color:var(--text);}
 </div>
 
 <footer class="site-footer">
-  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Press & Partners</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Newsletter</strong><a href="mailto:hello@meshahara.art?subject=Newsletter">Sign up for announcements</a></div>
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:info@meshahara.art">info@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Press & Partners</strong><a href="mailto:info@meshahara.art">info@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Newsletter</strong><a href="mailto:info@meshahara.art?subject=Newsletter">Sign up for announcements</a></div>
 </footer>
 
 <script src="/js/main.js"></script>
