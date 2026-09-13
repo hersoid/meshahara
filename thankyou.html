@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Confirmed — Meshahara</title>
+<link rel="stylesheet" href="/css/main.css">
+<!-- Facebook Pixel conversion event — fires on this page only -->
+<script>
+  if(typeof fbq !== 'undefined') {
+    fbq('track', 'Lead');
+  }
+</script>
+<style>
+.thankyou-wrap{
+  min-height:70vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:4rem 2rem;
+}
+.ty-kicker{
+  font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:1.5rem;
+}
+.ty-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,8vw,80px);
+  line-height:.88;letter-spacing:.02em;
+  color:var(--text);margin-bottom:1.5rem;
+}
+.ty-title span{color:var(--pink);}
+.ty-body{
+  font-size:15px;line-height:1.85;
+  color:var(--muted);max-width:520px;
+  margin-bottom:2rem;
+}
+.ty-body b{color:var(--text);font-weight:500;}
+.ty-details{
+  border:1px solid var(--rule);
+  padding:1.5rem 2rem;
+  margin-bottom:2rem;
+  text-align:left;
+  max-width:420px;width:100%;
+}
+.ty-detail-row{
+  display:flex;justify-content:space-between;
+  align-items:baseline;
+  padding:.5rem 0;
+  border-bottom:1px solid var(--rule-thin);
+  font-size:13px;
+}
+.ty-detail-row:last-child{border-bottom:none;}
+.ty-dk{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:11px;}
+.ty-dv{color:var(--text);font-weight:500;}
+.ty-links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+</style>
+</head>
+<body>
+
+<nav class="nav" style="display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:.9rem 2rem;border-bottom:2px solid var(--text);background:var(--bg);position:sticky;top:0;z-index:100;">
+  <a href="/" class="nav-logo" style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.18em;color:var(--text);text-decoration:none;">Meshahara</a>
+  <span class="nav-centre" style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-align:center;">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul style="display:flex;gap:0;list-style:none;align-items:center;">
+    <li><a href="/" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Home</a></li>
+    <li><a href="/exhibition.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Exhibition</a></li>
+    <li><a href="/programme.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Programme</a></li>
+  </ul>
+</nav>
+
+<div class="ticker">
+  <span><span class="ticker-dot"></span>Registration confirmed · Check your email for your QR code entry pass</span>
+  <span>10 October 2026 · REX KL · Doors 6:30pm</span>
+</div>
+
+<div class="thankyou-wrap">
+  <div class="ty-kicker">You're registered</div>
+  <h1 class="ty-title">See You on<br>the <span>Night</span></h1>
+  <p class="ty-body">
+    Your place at Meshahara is confirmed. <b>Check your email</b> — your QR code entry pass has been sent to you. Please have it ready on your phone or printed when you arrive at REX KL.
+  </p>
+
+  <div class="ty-details">
+    <div class="ty-detail-row">
+      <span class="ty-dk">Date</span>
+      <span class="ty-dv">10 October 2026</span>
+    </div>
+    <div class="ty-detail-row">
+      <span class="ty-dk">Doors open</span>
+      <span class="ty-dv">6:30pm</span>
+    </div>
+    <div class="ty-detail-row">
+      <span class="ty-dk">Venue</span>
+      <span class="ty-dv">REX KL, Jalan Sultan, Chinatown KL</span>
+    </div>
+    <div class="ty-detail-row">
+      <span class="ty-dk">Nearest LRT</span>
+      <span class="ty-dv">Pasar Seni — 5 min walk</span>
+    </div>
+    <div class="ty-detail-row">
+      <span class="ty-dk">Entry</span>
+      <span class="ty-dv">Free · QR code required</span>
+    </div>
+  </div>
+
+  <div class="ty-links">
+    <a href="/programme.html" class="btn-secondary">View the Programme →</a>
+    <a href="/exhibition.html" class="btn-secondary">About the Exhibition →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-cell"><strong>Questions</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Exhibition</strong><a href="/exhibition.html">meshahara.art/exhibition</a></div>
+  <div class="footer-cell"><strong>Newsletter</strong><a href="/blog.html">Subscribe for updates →</a></div>
+</footer>
+
+</body>
+</html>
