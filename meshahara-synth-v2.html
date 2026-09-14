@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MESHAHARA — Visual Synthesiser v2</title>
+<style>
+  :root {
+    --bg:#0A0A08;--surface:#111110;--panel:#161614;--border:#2A2A26;
+    --pink:#E8327A;--pink-dim:#7A1A40;--green:#4AE882;--amber:#E8A832;
+    --blue:#32A8E8;--text:#E8E4DC;--muted:#6A6660;--dim:#3A3A36;
+    --mono:'Courier New',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--mono);
+    font-size:11px;height:100vh;overflow:hidden;display:grid;
+    grid-template-rows:38px 1fr 180px;}
+
+  header{display:flex;align-items:center;justify-content:space-between;
+    padding:0 1rem;border-bottom:1px solid var(--border);background:var(--surface);}
+  .logo{font-size:12px;letter-spacing:.2em;color:var(--pink);}
+  .logo span{color:var(--muted);}
+  .hdr-right{display:flex;gap:.75rem;align-items:center;}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--green);
+    animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .fps{color:var(--muted);font-size:10px;}
+
+  main{display:grid;grid-template-columns:200px 1fr 200px;overflow:hidden;}
+
+  .panel{background:var(--panel);overflow-y:auto;display:flex;flex-direction:column;}
+  .panel.left{border-right:1px solid var(--border);}
+  .panel.right{border-left:1px solid var(--border);}
+
+  .psec{border-bottom:1px solid var(--border);}
+  .plbl{font-size:9px;letter-spacing:.18em;color:var(--muted);padding:.4rem .65rem .35rem;
+    text-transform:uppercase;background:var(--surface);border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;}
+  .ind{width:5px;height:5px;border-radius:50%;background:var(--dim);}
+  .ind.on{background:var(--pink);}
+  .ind.on-blue{background:var(--blue);}
+
+  /* SLOTS */
+  .slot{position:relative;height:76px;border-bottom:1px solid var(--border);
+    cursor:pointer;overflow:hidden;background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;}
+  .slot:hover{background:#161614;}
+  .slot-prev{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:.65;}
+  .slot-ov{position:relative;z-index:1;text-align:center;pointer-events:none;}
+  .slot-num{font-size:18px;font-weight:bold;color:var(--pink);line-height:1;}
+  .slot-num.d-num{color:var(--blue);}
+  .slot-lbl{font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+  .slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:2;}
+  .slot.loaded input{display:none;}
+  .slot-x{position:absolute;top:3px;right:5px;z-index:3;background:none;border:none;
+    color:var(--muted);cursor:pointer;font-size:13px;display:none;}
+  .slot.loaded .slot-x{display:block;}
+  .slot-x:hover{color:var(--pink);}
+
+  /* MIX */
+  .mix-bar{padding:.4rem .65rem;display:flex;flex-direction:column;gap:.35rem;}
+  .mix-row{display:flex;align-items:center;gap:.4rem;}
+  .mix-n{font-size:9px;color:var(--pink);width:10px;flex-shrink:0;}
+  .mix-n.d{color:var(--blue);}
+  input[type=range]{flex:1;-webkit-appearance:none;height:2px;background:var(--dim);
+    border-radius:1px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;
+    border-radius:50%;background:var(--amber);cursor:pointer;}
+  .mix-v{font-size:9px;color:var(--muted);width:24px;text-align:right;}
+
+  /* CONTROLS */
+  .ctrls{padding:.4rem .65rem;display:flex;flex-direction:column;gap:.4rem;}
+  .cr{display:flex;align-items:center;gap:.4rem;}
+  .cl{font-size:9px;color:var(--muted);width:62px;flex-shrink:0;
+    letter-spacing:.05em;text-transform:uppercase;}
+  .cr input[type=range]::-webkit-slider-thumb{background:var(--amber);}
+  .cv{font-size:9px;color:var(--amber);width:28px;text-align:right;flex-shrink:0;}
+  .cv.blue{color:var(--blue);}
+
+  /* SELECT */
+  select{background:var(--bg);border:1px solid var(--border);color:var(--text);
+    font-family:var(--mono);font-size:9px;padding:.2rem .3rem;width:100%;outline:none;cursor:pointer;}
+  select:focus{border-color:var(--pink);}
+
+  /* TOGGLE */
+  .tog-row{display:flex;align-items:center;gap:.4rem;padding:.3rem .65rem;}
+  .tog{width:26px;height:13px;background:var(--dim);border-radius:7px;
+    position:relative;cursor:pointer;flex-shrink:0;transition:background .2s;}
+  .tog.on{background:var(--pink);}
+  .tog.on-blue{background:var(--blue);}
+  .tog::after{content:'';position:absolute;top:2px;left:2px;width:9px;height:9px;
+    border-radius:50%;background:#fff;transition:left .2s;}
+  .tog.on::after,.tog.on-blue::after{left:15px;}
+  .tog-lbl{font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;flex:1;}
+
+  /* CANVAS */
+  .canvas-wrap{position:relative;overflow:hidden;background:#000;
+    display:flex;align-items:center;justify-content:center;}
+  #sc{max-width:100%;max-height:100%;display:block;}
+  .c-ov{position:absolute;bottom:.6rem;left:.75rem;font-size:9px;
+    color:rgba(232,50,122,.45);letter-spacing:.1em;pointer-events:none;}
+
+  /* FOOTER */
+  footer{background:var(--surface);border-top:1px solid var(--border);
+    display:grid;grid-template-columns:200px 1fr 200px;overflow:hidden;}
+  .transport{display:flex;align-items:center;gap:.4rem;padding:0 .65rem;
+    border-right:1px solid var(--border);}
+  .btn{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+    padding:.3rem .6rem;border:1px solid var(--border);background:none;
+    color:var(--text);cursor:pointer;transition:all .15s;}
+  .btn:hover{border-color:var(--pink);color:var(--pink);}
+  .btn.active{background:var(--pink);border-color:var(--pink);color:#fff;}
+  .btn.g{border-color:var(--green);color:var(--green);}
+  .btn.g:hover{background:var(--green);color:#000;}
+  .waveform-area{position:relative;overflow:hidden;padding:0 .65rem;
+    display:flex;flex-direction:column;justify-content:center;gap:.2rem;}
+  #wc{width:100%;height:70px;display:block;}
+  .xy-area{border-left:1px solid var(--border);padding:.4rem .65rem;
+    display:flex;flex-direction:column;gap:.35rem;}
+  #xyc{width:100%;flex:1;background:var(--bg);border:1px solid var(--border);cursor:crosshair;display:block;}
+
+  ::-webkit-scrollbar{width:3px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">MESHAHARA <span>/ Visual Synthesiser v2.0</span></div>
+  <div class="hdr-right">
+    <span class="fps" id="fps">-- fps</span>
+    <div class="dot"></div>
+  </div>
+</header>
+
+<main>
+<!-- LEFT: SOURCES A B C D + MIX -->
+<div class="panel left">
+  <div class="psec">
+    <div class="plbl">Source Images <div class="ind on" id="sri"></div></div>
+    <!-- slots A B C -->
+    <div id="slot-0" class="slot"><canvas class="slot-prev" id="pv0"></canvas>
+      <input type="file" accept="image/*" onchange="loadImg(0,this)">
+      <button class="slot-x" onclick="clearSlot(0)">×</button>
+      <div class="slot-ov"><div class="slot-num">A</div><div class="slot-lbl" id="sl0">Drop image</div></div></div>
+    <div id="slot-1" class="slot"><canvas class="slot-prev" id="pv1"></canvas>
+      <input type="file" accept="image/*" onchange="loadImg(1,this)">
+      <button class="slot-x" onclick="clearSlot(1)">×</button>
+      <div class="slot-ov"><div class="slot-num">B</div><div class="slot-lbl" id="sl1">Drop image</div></div></div>
+    <div id="slot-2" class="slot"><canvas class="slot-prev" id="pv2"></canvas>
+      <input type="file" accept="image/*" onchange="loadImg(2,this)">
+      <button class="slot-x" onclick="clearSlot(2)">×</button>
+      <div class="slot-ov"><div class="slot-num">C</div><div class="slot-lbl" id="sl2">Drop image</div></div></div>
+  </div>
+
+  <div class="psec">
+    <div class="plbl">Generative Source D <div class="ind on-blue" id="di"></div></div>
+    <div id="slot-3" class="slot"><canvas class="slot-prev" id="pv3"></canvas>
+      <input type="file" accept="image/*" onchange="loadImg(3,this)">
+      <button class="slot-x" onclick="clearSlot(3)">×</button>
+      <div class="slot-ov"><div class="slot-num d-num">D</div><div class="slot-lbl" id="sl3">Seeds phenomena</div></div></div>
+  </div>
+
+  <div class="psec">
+    <div class="plbl">Source Mix</div>
+    <div class="mix-bar">
+      <div class="mix-row"><span class="mix-n">A</span><input type="range" min="0" max="100" value="100" id="mx0" oninput="mix[0]=this.value/100;document.getElementById('mv0').textContent=this.value"><span class="mix-v" id="mv0">100</span></div>
+      <div class="mix-row"><span class="mix-n">B</span><input type="range" min="0" max="100" value="0" id="mx1" oninput="mix[1]=this.value/100;document.getElementById('mv1').textContent=this.value"><span class="mix-v" id="mv1">0</span></div>
+      <div class="mix-row"><span class="mix-n">C</span><input type="range" min="0" max="100" value="0" id="mx2" oninput="mix[2]=this.value/100;document.getElementById('mv2').textContent=this.value"><span class="mix-v" id="mv2">0</span></div>
+      <div class="mix-row"><span class="mix-n d">D</span><input type="range" min="0" max="100" value="60" id="mx3" oninput="mix[3]=this.value/100;document.getElementById('mv3').textContent=this.value" style="accent-color:var(--blue)"><span class="mix-v" id="mv3">60</span></div>
+    </div>
+  </div>
+
+  <div class="psec">
+    <div class="plbl">Blend Mode</div>
+    <div style="padding:.4rem .65rem;">
+      <select id="bm" onchange="P.blendMode=this.value">
+        <option value="source-over">Normal</option>
+        <option value="multiply">Multiply</option>
+        <option value="screen">Screen</option>
+        <option value="overlay">Overlay</option>
+        <option value="difference">Difference</option>
+        <option value="exclusion">Exclusion</option>
+        <option value="hard-light">Hard Light</option>
+        <option value="color-dodge">Colour Dodge</option>
+        <option value="luminosity">Luminosity</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="psec">
+    <div class="plbl">Output Size</div>
+    <div style="padding:.4rem .65rem;">
+      <select id="os">
+        <option value="1920x1080">1920×1080 FHD</option>
+        <option value="3840x2160">3840×2160 4K</option>
+        <option value="2048x2048">2048×2048 Square</option>
+        <option value="1080x1080">1080×1080 Social</option>
+        <option value="1080x1920">1080×1920 Portrait</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- CANVAS -->
+<div class="canvas-wrap">
+  <canvas id="sc" width="960" height="540"></canvas>
+  <div class="c-ov"><span id="ov-mode">INIT</span></div>
+</div>
+
+<!-- RIGHT: EFFECTS + PHENOMENA -->
+<div class="panel right">
+
+  <!-- DRIFT -->
+  <div class="psec">
+    <div class="plbl">DRIFT <div class="ind" id="id-drift"></div></div>
+    <div class="tog-row"><div class="tog" id="tg-drift" onclick="togFX('drift')"></div><span class="tog-lbl">Active</span></div>
+    <div class="ctrls">
+      <div class="cr"><span class="cl">Speed</span><input type="range" min="0" max="100" value="20" oninput="P.driftSpd=this.value/100*3;cv(this)"><span class="cv">20</span></div>
+      <div class="cr"><span class="cl">Amount</span><input type="range" min="0" max="100" value="15" oninput="P.driftAmt=this.value/100*60;cv(this)"><span class="cv">15</span></div>
+      <div class="cr"><span class="cl">Chroma</span><input type="range" min="0" max="100" value="30" oninput="P.chroma=this.value/100*40;cv(this)"><span class="cv">30</span></div>
+      <div class="cr"><span class="cl">Hue Rot</span><input type="range" min="0" max="100" value="0" oninput="P.hueSpd=this.value/100*2;cv(this)"><span class="cv">0</span></div>
+    </div>
+  </div>
+
+  <!-- GLITCH -->
+  <div class="psec">
+    <div class="plbl">GLITCH <div class="ind" id="id-glitch"></div></div>
+    <div class="tog-row"><div class="tog" id="tg-glitch" onclick="togFX('glitch')"></div><span class="tog-lbl">Active</span></div>
+    <div class="ctrls">
+      <div class="cr"><span class="cl">Rate</span><input type="range" min="0" max="100" value="30" oninput="P.gRate=this.value/100;cv(this)"><span class="cv">30</span></div>
+      <div class="cr"><span class="cl">Intensity</span><input type="range" min="0" max="100" value="40" oninput="P.gIntens=this.value/100;cv(this)"><span class="cv">40</span></div>
+      <div class="cr"><span class="cl">Slice H</span><input type="range" min="0" max="100" value="50" oninput="P.gSlice=this.value/100*80;cv(this)"><span class="cv">50</span></div>
+      <div class="cr"><span class="cl">RGB Spl</span><input type="range" min="0" max="100" value="20" oninput="P.rgbSpl=this.value/100*30;cv(this)"><span class="cv">20</span></div>
+    </div>
+  </div>
+
+  <!-- SCAN -->
+  <div class="psec">
+    <div class="plbl">SCAN <div class="ind" id="id-scan"></div></div>
+    <div class="tog-row"><div class="tog" id="tg-scan" onclick="togFX('scan')"></div><span class="tog-lbl">Active</span></div>
+    <div class="ctrls">
+      <div class="cr"><span class="cl">Speed</span><input type="range" min="0" max="100" value="20" oninput="P.scanSpd=this.value/100*3;cv(this)"><span class="cv">20</span></div>
+      <div class="cr"><span class="cl">Width</span><input type="range" min="1" max="100" value="30" oninput="P.scanW=Math.max(1,this.value/100*200);cv(this)"><span class="cv">30</span></div>
+      <div class="cr"><span class="cl">Mode</span>
+        <select onchange="P.scanMode=this.value" style="font-size:9px;">
+          <option value="reveal">Reveal</option><option value="burn">Burn</option>
+          <option value="invert">Invert</option><option value="pink">Pink</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAIN -->
+  <div class="psec">
+    <div class="plbl">GRAIN/PIXEL <div class="ind" id="id-grain"></div></div>
+    <div class="tog-row"><div class="tog" id="tg-grain" onclick="togFX('grain')"></div><span class="tog-lbl">Active</span></div>
+    <div class="ctrls">
+      <div class="cr"><span class="cl">Amount</span><input type="range" min="0" max="100" value="15" oninput="P.grain=this.value/100;cv(this)"><span class="cv">15</span></div>
+      <div class="cr"><span class="cl">Pixelate</span><input type="range" min="0" max="100" value="0" oninput="P.px=Math.floor(this.value/100*32)+1;cv(this)"><span class="cv">0</span></div>
+      <div class="cr"><span class="cl">Vignette</span><input type="range" min="0" max="100" value="30" oninput="P.vig=this.value/100;cv(this)"><span class="cv">30</span></div>
+    </div>
+  </div>
+
+  <!-- PHENOMENA -->
+  <div class="psec">
+    <div class="plbl" style="color:var(--blue);">PHENOMENA — D <div class="ind on-blue"></div></div>
+    <div style="padding:.4rem .65rem;">
+      <select id="phen-select" onchange="setPhenomenon(this.value)" style="font-size:9px;border-color:var(--blue);">
+        <option value="none">— Select Phenomenon —</option>
+        <option value="sonar">01 · SONAR — Concentric pulse rings</option>
+        <option value="swarm">02 · SWARM — Boid particle flocking</option>
+        <option value="topography">03 · TOPOGRAPHY — Contour maps</option>
+        <option value="morse">04 · MORSE — Signal encoding</option>
+        <option value="constellation">05 · CONSTELLATION — Star fields</option>
+        <option value="mycelium">06 · MYCELIUM — Branching networks</option>
+        <option value="magnetism">07 · MAGNETISM — Field lines</option>
+        <option value="halftone">08 · HALFTONE — Dot matrices</option>
+        <option value="rain">09 · DATA RAIN — Vertical streams</option>
+        <option value="waveform">10 · WAVEFORM — Oscilloscope</option>
+        <option value="voronoi">11 · VORONOI — Cellular fields</option>
+        <option value="diffraction">12 · DIFFRACTION — Wave interference</option>
+        <option value="entropy">13 · ENTROPY — Pixel avalanche</option>
+        <option value="qrfield">14 · QR FIELD — Block matrix</option>
+        <option value="reaction">15 · REACTION — Turing diffusion</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- PHENOMENA PARAMS (dynamic) -->
+  <div class="psec" id="phen-params">
+    <div class="plbl" style="color:var(--blue);">Parameters <div class="ind on-blue"></div></div>
+    <div class="ctrls" id="phen-ctrls">
+      <div style="padding:.4rem 0;color:var(--dim);font-size:9px;">Select a phenomenon above</div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="transport">
+    <button class="btn active" id="btn-play" onclick="togPlay()">▶ Play</button>
+    <button class="btn" onclick="rnd()">⟳ Rnd</button>
+    <button class="btn" onclick="rst()">◼ Rst</button>
+    <button class="btn g" onclick="exportFrame()" style="margin-left:auto;">↓ PNG</button>
+  </div>
+  <div class="waveform-area">
+    <canvas id="wc" width="700" height="70"></canvas>
+  </div>
+  <div class="xy-area">
+    <div style="display:flex;gap:.4rem;align-items:center;">
+      <span style="font-size:9px;color:var(--blue);">XY · Drift × Phenomenon</span>
+    </div>
+    <canvas id="xyc" width="168" height="110" onclick="handleXY(event)"></canvas>
+  </div>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════════════
+const imgs = [null,null,null,null]; // A B C D
+const mix = [1,0,0,0.6];
+const FX = {drift:false,glitch:false,scan:false,grain:false};
+let playing=true, t=0, lastT=0, fc=0, fpsT=0;
+let scanPos=0, currentPhen='none';
+let xyDot={x:84,y:55};
+
+const P = {
+  // drift
+  driftSpd:0.6,driftAmt:9,chroma:12,hueSpd:0,
+  // glitch
+  gRate:0.3,gIntens:0.4,gSlice:40,rgbSpl:6,
+  // scan
+  scanSpd:0.6,scanW:60,scanMode:'reveal',
+  // grain
+  grain:0.15,px:1,vig:0.3,
+  // blend
+  blendMode:'source-over',
+  // phenomena
+  ph:{
+    density:0.5,speed:0.5,size:0.5,opacity:0.7,
+    colorSrc:true,freq:0.5,branches:0.4,chaos:0.3,
+    spacing:0.5,lineW:0.5,decay:0.6,threshold:0.5,
+  }
+};
+
+// ════════════════════════════════════════════════════════════════════════
+// CANVAS
+// ════════════════════════════════════════════════════════════════════════
+const canvas=document.getElementById('sc');
+const ctx=canvas.getContext('2d');
+const W=canvas.width,H=canvas.height;
+const off=document.createElement('canvas');
+off.width=W;off.height=H;
+const offx=off.getContext('2d');
+const wCanvas=document.getElementById('wc');
+const wCtx=wCanvas.getContext('2d');
+const xyCanvas=document.getElementById('xyc');
+const xyCtx=xyCanvas.getContext('2d');
+const xyW=xyCanvas.width,xyH=xyCanvas.height;
+
+// ════════════════════════════════════════════════════════════════════════
+// PHENOMENA STATE
+// ════════════════════════════════════════════════════════════════════════
+let phenState={};
+
+function initPhenState(name){
+  const ph=P.ph;
+  if(name==='swarm'){
+    const n=Math.floor(ph.density*400)+50;
+    phenState.particles=Array.from({length:n},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,
+      life:Math.random()*100
+    }));
+  } else if(name==='mycelium'){
+    phenState.branches=[];
+    const n=Math.floor(ph.density*20)+3;
+    for(let i=0;i<n;i++){
+      phenState.branches.push({
+        x:Math.random()*W,y:Math.random()*H,
+        angle:Math.random()*Math.PI*2,
+        age:0,alive:true,
+        path:[]
+      });
+    }
+  } else if(name==='reaction'){
+    const sz=Math.ceil(W/4);
+    const sh=Math.ceil(H/4);
+    phenState.A=new Float32Array(sz*sh).fill(1);
+    phenState.B=new Float32Array(sz*sh).fill(0);
+    phenState.nA=new Float32Array(sz*sh);
+    phenState.nB=new Float32Array(sz*sh);
+    phenState.rW=sz;phenState.rH=sh;
+    // seed
+    for(let i=0;i<40;i++){
+      const cx=Math.floor(Math.random()*sz);
+      const cy=Math.floor(Math.random()*sh);
+      for(let dy=-2;dy<=2;dy++) for(let dx=-2;dx<=2;dx++){
+        const idx=((cy+dy+sh)%sh)*sz+((cx+dx+sz)%sz);
+        phenState.B[idx]=1;
+      }
+    }
+  } else if(name==='voronoi'){
+    const n=Math.floor(ph.density*60)+5;
+    phenState.sites=Array.from({length:n},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*1.5*ph.speed,
+      vy:(Math.random()-.5)*1.5*ph.speed,
+      c:[Math.random()*360,70,55]
+    }));
+  } else if(name==='constellation'){
+    const n=Math.floor(ph.density*300)+50;
+    phenState.stars=Array.from({length:n},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*2+0.3,
+      twinkle:Math.random()*Math.PI*2
+    }));
+  } else if(name==='magnetism'){
+    const n=Math.floor(ph.density*8)+2;
+    phenState.poles=Array.from({length:n},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      charge:Math.random()>.5?1:-1
+    }));
+  } else if(name==='qrfield'){
+    const cell=Math.floor(ph.spacing*20)+4;
+    phenState.cell=cell;
+    phenState.cols=Math.ceil(W/cell);
+    phenState.rows=Math.ceil(H/cell);
+    phenState.grid=Array.from({length:phenState.cols*phenState.rows},()=>Math.random()>0.5?1:0);
+  } else if(name==='entropy'){
+    phenState.sorted=0;
+  } else if(name==='rain'){
+    const n=Math.floor(ph.density*80)+10;
+    phenState.cols=Array.from({length:n},()=>({
+      x:Math.random()*W,
+      y:Math.random()*H,
+      spd:ph.speed*3+1,
+      chars:[]
+    }));
+  } else if(name==='diffraction'){
+    phenState.sources=Array.from({length:Math.floor(ph.density*6)+2},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      phase:Math.random()*Math.PI*2,
+      freq:ph.freq*8+1
+    }));
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// PHENOMENA DEFINITIONS (15)
+// ════════════════════════════════════════════════════════════════════════
+const phenomena = {
+
+  sonar: (ctx,t,ph)=>{
+    const n=Math.floor(ph.density*8)+2;
+    const dSrc=getDSample();
+    for(let i=0;i<n;i++){
+      const cx=dSrc?dSrc.cx+(i-n/2)*W/n:W/2+(Math.sin(i*1.3+t*.2))*W*.35;
+      const cy=dSrc?dSrc.cy:H/2+(Math.cos(i*.9+t*.15))*H*.25;
+      const maxR=Math.min(W,H)*0.6;
+      for(let r=0;r<5;r++){
+        const phase=(t*ph.speed*1.5+i*.7+r*.4)%(Math.PI*2);
+        const radius=((phase/(Math.PI*2))*maxR);
+        const alpha=ph.opacity*(1-radius/maxR);
+        ctx.beginPath();
+        ctx.arc(cx,cy,radius,0,Math.PI*2);
+        ctx.strokeStyle=dSrc?`hsla(${dSrc.hue},80%,60%,${alpha})`:`rgba(232,50,122,${alpha})`;
+        ctx.lineWidth=ph.lineW*2+0.5;
+        ctx.stroke();
+      }
+    }
+  },
+
+  swarm: (ctx,t,ph)=>{
+    if(!phenState.particles) return;
+    const dSrc=getDSample();
+    phenState.particles.forEach(p=>{
+      // boid-like: drift toward center + neighbour alignment
+      const dx=W/2-p.x,dy=H/2-p.y;
+      const dist=Math.sqrt(dx*dx+dy*dy)||1;
+      p.vx+=dx/dist*0.02*ph.speed+(Math.random()-.5)*ph.chaos*0.5;
+      p.vy+=dy/dist*0.02*ph.speed+(Math.random()-.5)*ph.chaos*0.5;
+      const spd=Math.sqrt(p.vx*p.vx+p.vy*p.vy)||1;
+      const maxSpd=ph.speed*4+0.5;
+      if(spd>maxSpd){p.vx=p.vx/spd*maxSpd;p.vy=p.vy/spd*maxSpd;}
+      p.x+=p.vx;p.y+=p.vy;
+      p.life=(p.life+1)%100;
+      if(p.x<0||p.x>W||p.y<0||p.y>H){p.x=Math.random()*W;p.y=Math.random()*H;}
+      const sz=ph.size*4+0.5;
+      const hue=dSrc?(dSrc.hue+(p.life*3.6))%360:320;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,sz,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${hue},80%,65%,${ph.opacity})`;
+      ctx.fill();
+    });
+  },
+
+  topography: (ctx,t,ph)=>{
+    const dSrc=getDPixelGrid(40,22);
+    if(!dSrc) return;
+    const cols=40,rows=22;
+    const cw=W/cols,ch=H/rows;
+    const levels=Math.floor(ph.density*12)+3;
+    for(let lvl=1;lvl<=levels;lvl++){
+      const threshold=lvl/levels;
+      ctx.beginPath();
+      for(let y=0;y<rows-1;y++){
+        for(let x=0;x<cols-1;x++){
+          const v00=dSrc[y*cols+x],v10=dSrc[y*cols+x+1];
+          const v01=dSrc[(y+1)*cols+x],v11=dSrc[(y+1)*cols+x+1];
+          const pts=[];
+          const check=(a,b,ax,ay,bx,by)=>{
+            if((a<threshold)!==(b<threshold)){
+              const f=(threshold-a)/(b-a);
+              pts.push([(ax+f*(bx-ax))*cw,(ay+f*(by-ay))*ch]);
+            }
+          };
+          check(v00,v10,x,y,x+1,y);
+          check(v10,v11,x+1,y,x+1,y+1);
+          check(v01,v11,x,y+1,x+1,y+1);
+          check(v00,v01,x,y,x,y+1);
+          if(pts.length===2){
+            ctx.moveTo(pts[0][0],pts[0][1]);
+            ctx.lineTo(pts[1][0],pts[1][1]);
+          }
+        }
+      }
+      const hue=200+lvl*15+t*20*ph.speed;
+      ctx.strokeStyle=`hsla(${hue%360},70%,65%,${ph.opacity*0.8})`;
+      ctx.lineWidth=ph.lineW*1.5+0.3;
+      ctx.stroke();
+    }
+  },
+
+  morse: (ctx,t,ph)=>{
+    const rows=Math.floor(ph.density*20)+4;
+    const dSrc=getDSample();
+    for(let r=0;r<rows;r++){
+      const y=r*(H/rows)+10;
+      let x=((t*ph.speed*80+r*127)%(W*2))-W;
+      const hue=dSrc?dSrc.hue+r*12:320+r*8;
+      ctx.fillStyle=`hsla(${hue%360},80%,65%,${ph.opacity})`;
+      const seed=r*7919;
+      let bit=(seed*13+Math.floor(t*3+r))&1;
+      while(x<W){
+        if(bit){
+          const w=ph.size*30+4;
+          const h=ph.lineW*3+1.5;
+          ctx.fillRect(x,y-h/2,w,h);
+          x+=w+6;
+        } else {
+          const w=ph.size*10+2;
+          ctx.fillRect(x,y-1,w,2);
+          x+=w+6;
+        }
+        bit=1-bit;
+      }
+    }
+  },
+
+  constellation: (ctx,t,ph)=>{
+    if(!phenState.stars) return;
+    const dSrc=getDSample();
+    const hue=dSrc?dSrc.hue:200;
+    phenState.stars.forEach((s,i)=>{
+      const twink=0.5+0.5*Math.sin(t*ph.speed*2+s.twinkle);
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r*twink,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${(hue+i*2)%360},60%,85%,${ph.opacity*twink})`;
+      ctx.fill();
+    });
+    // Connect nearby stars
+    const maxDist=ph.spacing*200+30;
+    ctx.strokeStyle=`hsla(${hue},50%,70%,${ph.opacity*0.15})`;
+    ctx.lineWidth=0.4;
+    for(let i=0;i<phenState.stars.length;i++){
+      for(let j=i+1;j<phenState.stars.length;j++){
+        const a=phenState.stars[i],b=phenState.stars[j];
+        const d=Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2);
+        if(d<maxDist){
+          ctx.globalAlpha=(1-d/maxDist)*ph.opacity*0.3;
+          ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+          ctx.globalAlpha=1;
+        }
+      }
+    }
+  },
+
+  mycelium: (ctx,t,ph)=>{
+    if(!phenState.branches) return;
+    const dSrc=getDSample();
+    const hue=dSrc?dSrc.hue:100;
+    phenState.branches.forEach(b=>{
+      if(!b.alive) return;
+      b.angle+=(Math.random()-.5)*ph.chaos*0.6;
+      const step=ph.speed*3+0.5;
+      const nx=b.x+Math.cos(b.angle)*step;
+      const ny=b.y+Math.sin(b.angle)*step;
+      ctx.beginPath();
+      ctx.moveTo(b.x,b.y);ctx.lineTo(nx,ny);
+      ctx.strokeStyle=`hsla(${(hue+b.age)%360},60%,60%,${ph.opacity*(1-b.age/200)})`;
+      ctx.lineWidth=ph.lineW*2*(1-b.age/200)+0.2;
+      ctx.stroke();
+      b.path.push({x:b.x,y:b.y});
+      b.x=nx;b.y=ny;b.age++;
+      if(b.age>200||b.x<0||b.x>W||b.y<0||b.y>H){
+        b.x=Math.random()*W;b.y=Math.random()*H;
+        b.angle=Math.random()*Math.PI*2;b.age=0;b.path=[];
+      }
+      // Spawn child
+      if(Math.random()<ph.branches*0.02&&phenState.branches.length<100){
+        phenState.branches.push({
+          x:b.x,y:b.y,
+          angle:b.angle+(Math.random()-.5)*Math.PI*.7,
+          age:0,alive:true,path:[]
+        });
+      }
+    });
+    if(phenState.branches.length>80) phenState.branches.splice(0,10);
+  },
+
+  magnetism: (ctx,t,ph)=>{
+    if(!phenState.poles) return;
+    // Move poles slowly
+    phenState.poles.forEach(p=>{
+      p.x+=Math.sin(t*ph.speed*0.3+p.charge)*0.5;
+      p.y+=Math.cos(t*ph.speed*0.2+p.charge)*0.5;
+      p.x=(p.x+W)%W;p.y=(p.y+H)%H;
+    });
+    const steps=Math.floor(ph.density*200)+40;
+    const dSrc=getDSample();
+    const hue=dSrc?dSrc.hue:30;
+    for(let i=0;i<steps;i++){
+      let px=Math.random()*W,py=Math.random()*H;
+      ctx.beginPath();ctx.moveTo(px,py);
+      for(let s=0;s<30;s++){
+        let fx=0,fy=0;
+        phenState.poles.forEach(p=>{
+          const dx=px-p.x,dy=py-p.y;
+          const d2=dx*dx+dy*dy+1;
+          const f=p.charge*3000/d2;
+          fx+=f*dx/Math.sqrt(d2);
+          fy+=f*dy/Math.sqrt(d2);
+        });
+        const fm=Math.sqrt(fx*fx+fy*fy)||1;
+        px+=fx/fm*3;py+=fy/fm*3;
+        if(px<0||px>W||py<0||py>H) break;
+        ctx.lineTo(px,py);
+      }
+      ctx.strokeStyle=`hsla(${hue},70%,65%,${ph.opacity*0.15})`;
+      ctx.lineWidth=ph.lineW+0.3;
+      ctx.stroke();
+    }
+    // Draw poles
+    phenState.poles.forEach(p=>{
+      ctx.beginPath();ctx.arc(p.x,p.y,6,0,Math.PI*2);
+      ctx.fillStyle=p.charge>0?'rgba(232,50,122,0.8)':'rgba(50,168,232,0.8)';
+      ctx.fill();
+    });
+  },
+
+  halftone: (ctx,t,ph)=>{
+    const dSrc=getDPixelGrid(60,34);
+    if(!dSrc) return;
+    const cols=60,rows=34;
+    const cw=W/cols,ch=H/rows;
+    const maxR=Math.min(cw,ch)*0.55*(ph.size+0.1);
+    const hueBase=getDSample()?.hue||320;
+    for(let y=0;y<rows;y++){
+      for(let x=0;x<cols;x++){
+        const lum=dSrc[y*cols+x];
+        const r=lum*maxR*(1+Math.sin(t*ph.speed*0.5+x*.3+y*.2)*ph.chaos*0.3);
+        if(r<0.5) continue;
+        const cx=(x+0.5)*cw,cy=(y+0.5)*ch;
+        const hue=(hueBase+x*ph.freq*5+y*3)%360;
+        ctx.beginPath();
+        ctx.arc(cx,cy,r,0,Math.PI*2);
+        ctx.fillStyle=`hsla(${hue},65%,55%,${ph.opacity})`;
+        ctx.fill();
+      }
+    }
+  },
+
+  rain: (ctx,t,ph)=>{
+    if(!phenState.cols) return;
+    const dSrc=getDSample();
+    const hue=dSrc?dSrc.hue:120;
+    const chars='01アイウエオカキクケコサシスセソタチツテトナニヌネノ◆▲■●○◇△□·:·'.split('');
+    phenState.cols.forEach(col=>{
+      col.y+=col.spd;
+      if(col.y>H) col.y=-(Math.random()*H*.5);
+      const n=Math.floor(ph.density*20)+5;
+      for(let i=0;i<n;i++){
+        const alpha=ph.opacity*(1-i/n);
+        const ch2=chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillStyle=i===0?`hsla(${hue},90%,85%,${alpha})`:`hsla(${hue},70%,55%,${alpha*0.5})`;
+        ctx.font=`${ph.size*14+6}px monospace`;
+        ctx.fillText(ch2,col.x,col.y-i*(ph.size*14+6));
+      }
+    });
+  },
+
+  waveform: (ctx,t,ph)=>{
+    const dRow=getDRow(H/2);
+    const n=Math.floor(ph.density*8)+2;
+    for(let w=0;w<n;w++){
+      ctx.beginPath();
+      const hue=w*360/n;
+      ctx.strokeStyle=`hsla(${hue},75%,65%,${ph.opacity/n*2})`;
+      ctx.lineWidth=ph.lineW*2+0.5;
+      for(let x=0;x<W;x++){
+        const sample=dRow?dRow[Math.floor(x*dRow.length/W)]:128;
+        const freq=ph.freq*5+0.5+w*0.3;
+        const phase=t*ph.speed*2+w*Math.PI/n;
+        const amp=(sample/255-.5)*H*0.4*ph.size+(H*.08*Math.sin(freq*x/W*Math.PI*2+phase));
+        const y=H/2+amp;
+        x===0?ctx.moveTo(0,y):ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    }
+  },
+
+  voronoi: (ctx,t,ph)=>{
+    if(!phenState.sites) return;
+    // Move sites
+    phenState.sites.forEach(s=>{
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x<0||s.x>W) s.vx*=-1;
+      if(s.y<0||s.y>H) s.vy*=-1;
+    });
+    // Simple approximation: draw circles around each site
+    const imgData=ctx.createImageData(W,H);
+    const d=imgData.data;
+    for(let y=0;y<H;y+=2){
+      for(let x=0;x<W;x+=2){
+        let minD=Infinity,closest=0;
+        phenState.sites.forEach((s,i)=>{
+          const dd=(x-s.x)**2+(y-s.y)**2;
+          if(dd<minD){minD=dd;closest=i;}
+        });
+        const s=phenState.sites[closest];
+        const [h,sat,l]=[s.c[0]+t*10*ph.speed%360,s.c[1],s.c[2]];
+        // HSL to RGB approx
+        const C=(1-Math.abs(2*l/100-1))*sat/100;
+        const X=C*(1-Math.abs((h/60)%2-1));
+        const m=l/100-C/2;
+        let r=0,g=0,b=0;
+        if(h<60){r=C;g=X;}else if(h<120){r=X;g=C;}else if(h<180){g=C;b=X;}
+        else if(h<240){g=X;b=C;}else if(h<300){r=X;b=C;}else{r=C;b=X;}
+        const idx=(y*W+x)*4;
+        const idx2=(y*W+x+1)*4;
+        const idx3=((y+1)*W+x)*4;
+        const idx4=((y+1)*W+x+1)*4;
+        const al=Math.floor(ph.opacity*220);
+        [idx,idx2,idx3,idx4].forEach(i=>{
+          d[i]=Math.floor((r+m)*255);d[i+1]=Math.floor((g+m)*255);
+          d[i+2]=Math.floor((b+m)*255);d[i+3]=al;
+        });
+      }
+    }
+    ctx.putImageData(imgData,0,0);
+  },
+
+  diffraction: (ctx,t,ph)=>{
+    if(!phenState.sources) return;
+    const dSrc=getDSample();
+    const hue=dSrc?dSrc.hue:200;
+    const imgData=ctx.createImageData(W,H);
+    const d=imgData.data;
+    const step=3;
+    for(let y=0;y<H;y+=step){
+      for(let x=0;x<W;x+=step){
+        let amp=0;
+        phenState.sources.forEach(s=>{
+          const dist=Math.sqrt((x-s.x)**2+(y-s.y)**2)||0.01;
+          amp+=Math.sin(dist*s.freq*0.05-t*ph.speed*3+s.phase)/dist*30;
+        });
+        const v=Math.min(255,Math.max(0,128+amp*ph.size*20));
+        const al=Math.floor(ph.opacity*180);
+        for(let dy=0;dy<step;dy++) for(let dx=0;dx<step;dx++){
+          const i=((y+dy)*W+(x+dx))*4;
+          d[i]=v>128?Math.min(255,v+(hue%60)):0;
+          d[i+1]=Math.floor(v*(50+hue%50)/255);
+          d[i+2]=v<128?Math.min(255,255-v):v;
+          d[i+3]=al;
+        }
+      }
+    }
+    ctx.putImageData(imgData,0,0);
+  },
+
+  entropy: (ctx,t,ph)=>{
+    if(!imgs[0]&&!imgs[1]&&!imgs[2]) return;
+    const src=imgs[0]||imgs[1]||imgs[2];
+    offx.drawImage(src,0,0,W,H);
+    const imgData=offx.getImageData(0,0,W,H);
+    const data=imgData.data;
+    const numCols=Math.floor(ph.density*W/4)+1;
+    for(let c=0;c<numCols;c++){
+      const x=Math.floor(Math.random()*W);
+      const sliceLen=Math.floor(Math.random()*H*ph.chaos)+2;
+      const startY=Math.floor(Math.random()*(H-sliceLen));
+      const pixels=[];
+      for(let y=startY;y<startY+sliceLen;y++){
+        const i=(y*W+x)*4;
+        pixels.push([data[i],data[i+1],data[i+2],data[i+3]]);
+      }
+      pixels.sort((a,b)=>(a[0]+a[1]+a[2])-(b[0]+b[1]+b[2]));
+      for(let y=startY;y<startY+sliceLen;y++){
+        const i=(y*W+x)*4;
+        const p=pixels[y-startY];
+        data[i]=p[0];data[i+1]=p[1];data[i+2]=p[2];data[i+3]=p[3];
+      }
+    }
+    ctx.putImageData(imgData,0,0);
+    // Overlay pink lines
+    ctx.strokeStyle=`rgba(232,50,122,${ph.opacity*0.3})`;
+    ctx.lineWidth=1;
+    for(let i=0;i<5;i++){
+      const y=Math.floor(Math.random()*H);
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+    }
+  },
+
+  qrfield: (ctx,t,ph)=>{
+    if(!phenState.grid) return;
+    const {cell,cols,rows,grid}=phenState;
+    const dSrc=getDSample();
+    const hue=dSrc?dSrc.hue:320;
+    // Animate: flip random cells
+    if(Math.random()<ph.chaos*0.1){
+      const i=Math.floor(Math.random()*grid.length);
+      grid[i]=1-grid[i];
+    }
+    for(let r=0;r<rows;r++){
+      for(let c2=0;c2<cols;c2++){
+        const v=grid[r*cols+c2];
+        const x=c2*cell,y=r*cell;
+        const pulse=Math.sin(t*ph.speed*2+(c2+r)*.3)*ph.chaos*.3;
+        const sz=cell*(0.85+pulse);
+        const off2=(cell-sz)/2;
+        if(v){
+          ctx.fillStyle=`hsla(${(hue+c2*2+r*3)%360},65%,55%,${ph.opacity})`;
+          ctx.fillRect(x+off2,y+off2,sz,sz);
+          // inner quad
+          ctx.fillStyle=`rgba(0,0,0,${ph.opacity*0.4})`;
+          const inner=sz*0.4;
+          ctx.fillRect(x+cell/2-inner/2,y+cell/2-inner/2,inner,inner);
+        } else {
+          ctx.strokeStyle=`hsla(${hue},30%,40%,${ph.opacity*0.2})`;
+          ctx.lineWidth=0.5;
+          ctx.strokeRect(x+off2,y+off2,sz,sz);
+        }
+      }
+    }
+  },
+
+  reaction: (ctx,t,ph)=>{
+    if(!phenState.A) return;
+    const {A,B,nA,nB,rW,rH}=phenState;
+    const f=0.055*(1-ph.freq)+0.02;
+    const k=0.062*(1-ph.threshold)+0.04;
+    const dA=0.8,dB=0.4;
+    // Update (simplified Gray-Scott)
+    for(let y=1;y<rH-1;y++){
+      for(let x=1;x<rW-1;x++){
+        const i=y*rW+x;
+        const la=(A[i-1]+A[i+1]+A[i-rW]+A[i+rW]-4*A[i]);
+        const lb=(B[i-1]+B[i+1]+B[i-rW]+B[i+rW]-4*B[i]);
+        const ab2=A[i]*B[i]*B[i];
+        nA[i]=Math.max(0,Math.min(1,A[i]+dA*la-ab2+f*(1-A[i])));
+        nB[i]=Math.max(0,Math.min(1,B[i]+dB*lb+ab2-(k+f)*B[i]));
+      }
+    }
+    A.set(nA);B.set(nB);
+    // Render
+    const imgData=ctx.createImageData(W,H);
+    const d=imgData.data;
+    const dSrc=getDSample();
+    const hue=dSrc?dSrc.hue:200;
+    for(let y=0;y<H;y++){
+      for(let x=0;x<W;x++){
+        const rx=Math.floor(x/W*rW);
+        const ry=Math.floor(y/H*rH);
+        const v=B[ry*rW+rx];
+        const i=(y*W+x)*4;
+        d[i]=Math.floor(v*(hue%256));
+        d[i+1]=Math.floor(v*80);
+        d[i+2]=Math.floor(v*200);
+        d[i+3]=Math.floor(ph.opacity*200);
+      }
+    }
+    ctx.putImageData(imgData,0,0);
+  }
+};
+
+// ════════════════════════════════════════════════════════════════════════
+// D IMAGE SAMPLING UTILITIES
+// ════════════════════════════════════════════════════════════════════════
+let dCache=null,dCacheW=0,dCacheH=0;
+
+function sampleD(){
+  if(!imgs[3]) return null;
+  if(!dCache||dCacheW!==W){
+    const tmp=document.createElement('canvas');
+    tmp.width=W;tmp.height=H;
+    const tx=tmp.getContext('2d');
+    tx.drawImage(imgs[3],0,0,W,H);
+    dCache=tx.getImageData(0,0,W,H).data;
+    dCacheW=W;dCacheH=H;
+  }
+  return dCache;
+}
+
+function getDSample(){
+  const d=sampleD();
+  if(!d) return null;
+  const x=Math.floor(Math.random()*W),y=Math.floor(Math.random()*H);
+  const i=(y*W+x)*4;
+  const r=d[i],g=d[i+1],b=d[i+2];
+  // RGB to HSL approx
+  const max=Math.max(r,g,b)/255,min=Math.min(r,g,b)/255;
+  let h=0,s=0,l=(max+min)/2;
+  if(max!==min){
+    const d2=max-min;
+    s=l>.5?d2/(2-max-min):d2/(max+min);
+    switch(Math.floor(max*255)){
+      case r:h=((g-b)/255/d2+(g<b?6:0))/6;break;
+      case g:h=((b-r)/255/d2+2)/6;break;
+      default:h=((r-g)/255/d2+4)/6;
+    }
+  }
+  return {r,g,b,hue:h*360,sat:s*100,lum:l*100,cx:x,cy:y};
+}
+
+function getDPixelGrid(cols,rows){
+  const d=sampleD();
+  if(!d) return null;
+  const out=new Float32Array(cols*rows);
+  for(let y=0;y<rows;y++){
+    for(let x=0;x<cols;x++){
+      const px=Math.floor(x*W/cols),py=Math.floor(y*H/rows);
+      const i=(py*W+px)*4;
+      out[y*cols+x]=(d[i]+d[i+1]+d[i+2])/765;
+    }
+  }
+  return out;
+}
+
+function getDRow(y){
+  const d=sampleD();
+  if(!d) return null;
+  const row=new Uint8Array(W);
+  const iy=Math.min(H-1,Math.max(0,Math.floor(y)));
+  for(let x=0;x<W;x++) row[x]=d[(iy*W+x)*4];
+  return row;
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// PHENOMENON SELECTOR + PARAM UI
+// ════════════════════════════════════════════════════════════════════════
+const phenParams={
+  sonar:    [{l:'Pulses',k:'density'},{l:'Speed',k:'speed'},{l:'Opacity',k:'opacity'},{l:'Line W',k:'lineW'}],
+  swarm:    [{l:'Density',k:'density'},{l:'Speed',k:'speed'},{l:'Size',k:'size'},{l:'Chaos',k:'chaos'},{l:'Opacity',k:'opacity'}],
+  topography:[{l:'Levels',k:'density'},{l:'Opacity',k:'opacity'},{l:'Line W',k:'lineW'}],
+  morse:    [{l:'Rows',k:'density'},{l:'Speed',k:'speed'},{l:'Size',k:'size'},{l:'Opacity',k:'opacity'}],
+  constellation:[{l:'Stars',k:'density'},{l:'Speed',k:'speed'},{l:'Connect',k:'spacing'},{l:'Opacity',k:'opacity'}],
+  mycelium: [{l:'Density',k:'density'},{l:'Speed',k:'speed'},{l:'Branch',k:'branches'},{l:'Chaos',k:'chaos'},{l:'Opacity',k:'opacity'},{l:'Line W',k:'lineW'}],
+  magnetism:[{l:'Poles',k:'density'},{l:'Speed',k:'speed'},{l:'Opacity',k:'opacity'},{l:'Line W',k:'lineW'}],
+  halftone: [{l:'Density',k:'density'},{l:'Size',k:'size'},{l:'Freq',k:'freq'},{l:'Chaos',k:'chaos'},{l:'Opacity',k:'opacity'}],
+  rain:     [{l:'Streams',k:'density'},{l:'Speed',k:'speed'},{l:'Size',k:'size'},{l:'Opacity',k:'opacity'}],
+  waveform: [{l:'Waves',k:'density'},{l:'Speed',k:'speed'},{l:'Freq',k:'freq'},{l:'Size',k:'size'},{l:'Opacity',k:'opacity'},{l:'Line W',k:'lineW'}],
+  voronoi:  [{l:'Cells',k:'density'},{l:'Speed',k:'speed'},{l:'Opacity',k:'opacity'}],
+  diffraction:[{l:'Sources',k:'density'},{l:'Speed',k:'speed'},{l:'Freq',k:'freq'},{l:'Size',k:'size'},{l:'Opacity',k:'opacity'}],
+  entropy:  [{l:'Columns',k:'density'},{l:'Chaos',k:'chaos'},{l:'Opacity',k:'opacity'}],
+  qrfield:  [{l:'Spacing',k:'spacing'},{l:'Speed',k:'speed'},{l:'Chaos',k:'chaos'},{l:'Opacity',k:'opacity'}],
+  reaction:  [{l:'Speed',k:'speed'},{l:'Feed',k:'freq'},{l:'Kill',k:'threshold'},{l:'Opacity',k:'opacity'}],
+};
+
+function setPhenomenon(name){
+  currentPhen=name;
+  phenState={};
+  dCache=null;
+  if(name!=='none') initPhenState(name);
+  buildPhenUI(name);
+  document.getElementById('ov-mode').textContent=name.toUpperCase();
+}
+
+function buildPhenUI(name){
+  const wrap=document.getElementById('phen-ctrls');
+  if(name==='none'||!phenParams[name]){
+    wrap.innerHTML='<div style="padding:.4rem 0;color:var(--dim);font-size:9px;">Select a phenomenon above</div>';
+    return;
+  }
+  wrap.innerHTML=phenParams[name].map(p=>`
+    <div class="cr">
+      <span class="cl">${p.l}</span>
+      <input type="range" min="0" max="100" value="${Math.round(P.ph[p.k]*100)}"
+        oninput="P.ph['${p.k}']=this.value/100;initPhenState('${name}');this.nextElementSibling.textContent=Math.round(this.value)">
+      <span class="cv blue">${Math.round(P.ph[p.k]*100)}</span>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// IMAGE LOADING
+// ════════════════════════════════════════════════════════════════════════
+function loadImg(idx,input){
+  const file=input.files[0];if(!file) return;
+  const img=new Image();
+  img.onload=()=>{
+    imgs[idx]=img;
+    if(idx===3){dCache=null;}
+    document.getElementById('slot-'+idx).classList.add('loaded');
+    document.getElementById('sl'+idx).textContent=file.name.slice(0,14)+'…';
+    const pv=document.getElementById('pv'+idx);
+    pv.width=pv.offsetWidth||200;pv.height=pv.offsetHeight||76;
+    const pc=pv.getContext('2d');
+    pc.drawImage(img,0,0,pv.width,pv.height);
+  };
+  img.src=URL.createObjectURL(file);
+}
+
+function clearSlot(idx){
+  imgs[idx]=null;if(idx===3) dCache=null;
+  document.getElementById('slot-'+idx).classList.remove('loaded');
+  document.getElementById('sl'+idx).textContent=idx===3?'Seeds phenomena':'Drop image';
+  const pv=document.getElementById('pv'+idx);
+  pv.getContext('2d').clearRect(0,0,pv.width,pv.height);
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// EFFECTS TOGGLES
+// ════════════════════════════════════════════════════════════════════════
+function togFX(name){
+  FX[name]=!FX[name];
+  document.getElementById('tg-'+name).classList.toggle('on',FX[name]);
+  document.getElementById('id-'+name).classList.toggle('on',FX[name]);
+}
+
+function cv(input){
+  const s=input.parentElement.querySelector('.cv');
+  if(s) s.textContent=Math.round(input.value);
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// MAIN RENDER
+// ════════════════════════════════════════════════════════════════════════
+function render(ts){
+  const dt=(ts-lastT)/1000;lastT=ts;t+=dt;
+  fc++;
+  if(ts-fpsT>1000){
+    document.getElementById('fps').textContent=fc+' fps';
+    fc=0;fpsT=ts;
+  }
+
+  if(playing){
+    ctx.clearRect(0,0,W,H);
+
+    const hasBase=imgs.some((img,i)=>img&&i<3&&mix[i]>0);
+    if(!hasBase&&currentPhen==='none'){
+      drawGrid();
+    } else {
+      // Composite A B C
+      imgs.forEach((img,i)=>{
+        if(i===3||!img||mix[i]<=0) return;
+        offx.clearRect(0,0,W,H);
+        if(FX.drift){
+          const dx=Math.sin(t*P.driftSpd+i*1.2)*P.driftAmt;
+          const dy=Math.cos(t*P.driftSpd*.7+i*.8)*P.driftAmt*.6;
+          offx.save();
+          offx.translate(W/2+dx,H/2+dy);
+          offx.drawImage(img,-W/2,-H/2,W,H);
+          offx.restore();
+          if(P.chroma>0){
+            const imgD=offx.getImageData(0,0,W,H);
+            const d=imgD.data;
+            const tmp=new Uint8ClampedArray(d);
+            const sp=Math.round(P.chroma*Math.sin(t*1.3));
+            for(let y=0;y<H;y++) for(let x=0;x<W;x++){
+              const idx=(y*W+x)*4;
+              const ri=(y*W+Math.min(W-1,Math.max(0,x+sp)))*4;
+              const bi=(y*W+Math.min(W-1,Math.max(0,x-sp)))*4;
+              d[idx]=tmp[ri];d[idx+2]=tmp[bi+2];
+            }
+            offx.putImageData(imgD,0,0);
+          }
+        } else {
+          offx.drawImage(img,0,0,W,H);
+        }
+        ctx.save();
+        ctx.globalAlpha=mix[i];
+        ctx.globalCompositeOperation=i===0?'source-over':P.blendMode;
+        ctx.drawImage(off,0,0);
+        ctx.restore();
+      });
+
+      if(FX.glitch) applyGlitch();
+      if(FX.scan){
+        scanPos=(scanPos+P.scanSpd*dt*H)%H;
+        applyScan();
+      }
+      if(FX.grain) applyGrain();
+
+      // PHENOMENON overlay
+      if(currentPhen!=='none'&&phenomena[currentPhen]&&mix[3]>0){
+        ctx.save();
+        ctx.globalAlpha=mix[3];
+        ctx.globalCompositeOperation=P.blendMode==='source-over'?'source-over':P.blendMode;
+        phenomena[currentPhen](ctx,t,P.ph);
+        ctx.restore();
+      }
+    }
+  }
+
+  renderWave();renderXY();
+  requestAnimationFrame(render);
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// EFFECT PROCESSORS
+// ════════════════════════════════════════════════════════════════════════
+function applyGlitch(){
+  if(Math.random()>P.gRate) return;
+  const imgD=ctx.getImageData(0,0,W,H);
+  const d=imgD.data;
+  const n=Math.floor(P.gIntens*10)+1;
+  for(let s=0;s<n;s++){
+    const y=Math.floor(Math.random()*H);
+    const sh=Math.floor(Math.random()*P.gSlice)+2;
+    const off2=Math.floor((Math.random()-.5)*100*P.gIntens);
+    for(let r=y;r<Math.min(y+sh,H);r++)
+      for(let x=0;x<W;x++){
+        const sx=Math.min(W-1,Math.max(0,x+off2));
+        const dst=(r*W+x)*4,src=(r*W+sx)*4;
+        d[dst]=d[src];d[dst+1]=d[src+1];d[dst+2]=d[src+2];
+      }
+  }
+  if(P.rgbSpl>0){
+    const sp=Math.floor(P.rgbSpl*Math.random());
+    const tmp=new Uint8ClampedArray(d);
+    for(let i=0;i<d.length;i+=4){
+      const x=(i/4)%W;
+      const rx=Math.min(W-1,x+sp)*4+(i-x*4);
+      d[i]=tmp[rx];
+    }
+  }
+  ctx.putImageData(imgD,0,0);
+}
+
+function applyScan(){
+  const sp=Math.floor(scanPos);
+  const sw=Math.min(Math.floor(P.scanW),H-sp);
+  if(sw<1) return;
+  const imgD=ctx.getImageData(0,sp,W,sw);
+  const d=imgD.data;
+  if(P.scanMode==='invert'){
+    for(let i=0;i<d.length;i+=4){d[i]=255-d[i];d[i+1]=255-d[i+1];d[i+2]=255-d[i+2];}
+  } else if(P.scanMode==='pink'){
+    for(let i=0;i<d.length;i+=4){
+      const l=(d[i]*.3+d[i+1]*.59+d[i+2]*.11);
+      d[i]=Math.min(255,l+232);d[i+1]=Math.min(255,l*.2+50);d[i+2]=Math.min(255,l*.2+122);
+    }
+  } else if(P.scanMode==='burn'){
+    for(let i=0;i<d.length;i+=4){d[i]=Math.min(255,d[i]*1.8);d[i+1]=Math.min(255,d[i+1]*1.8);d[i+2]=Math.min(255,d[i+2]*1.8);}
+  }
+  ctx.putImageData(imgD,0,sp);
+  ctx.strokeStyle='rgba(232,50,122,0.7)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(0,sp);ctx.lineTo(W,sp);ctx.stroke();
+}
+
+function applyGrain(){
+  if(P.px>1){
+    const pw=P.px;
+    offx.clearRect(0,0,W,H);
+    offx.imageSmoothingEnabled=false;
+    offx.drawImage(canvas,0,0,Math.ceil(W/pw),Math.ceil(H/pw));
+    ctx.imageSmoothingEnabled=false;
+    ctx.clearRect(0,0,W,H);
+    ctx.drawImage(off,0,0,Math.ceil(W/pw),Math.ceil(H/pw),0,0,W,H);
+    ctx.imageSmoothingEnabled=true;
+  }
+  if(P.grain>0){
+    const imgD=ctx.getImageData(0,0,W,H);const d=imgD.data;
+    const amt=P.grain*60;
+    for(let i=0;i<d.length;i+=4){
+      const n=(Math.random()-.5)*amt;
+      d[i]=Math.min(255,Math.max(0,d[i]+n));d[i+1]=Math.min(255,Math.max(0,d[i+1]+n));d[i+2]=Math.min(255,Math.max(0,d[i+2]+n));
+    }
+    ctx.putImageData(imgD,0,0);
+  }
+  if(P.vig>0){
+    const g=ctx.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,H*.8);
+    g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,`rgba(0,0,0,${P.vig})`);
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  }
+}
+
+function drawGrid(){
+  ctx.fillStyle='#0A0A08';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#1A1A16';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  ctx.fillStyle='rgba(232,50,122,0.4)';
+  ctx.font='12px Courier New';ctx.textAlign='center';
+  ctx.fillText('MESHAHARA Visual Synthesiser',W/2,H/2-14);
+  ctx.fillStyle='rgba(50,168,232,0.3)';
+  ctx.fillText('Load images A·B·C · Select phenomenon D',W/2,H/2+10);
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// WAVEFORM + XY
+// ════════════════════════════════════════════════════════════════════════
+const waveH=[];
+function renderWave(){
+  const WW=wCanvas.width,WH=wCanvas.height;
+  wCtx.fillStyle='#0A0A08';wCtx.fillRect(0,0,WW,WH);
+  wCtx.strokeStyle='#1A1A16';wCtx.lineWidth=1;
+  wCtx.beginPath();wCtx.moveTo(0,WH/2);wCtx.lineTo(WW,WH/2);wCtx.stroke();
+  const v=0.5+Math.sin(t*2.1)*.12*(FX.drift?1:0)+(FX.glitch&&Math.random()>.8?(Math.random()-.5)*.4:0)+Math.sin(t*.7)*.06;
+  waveH.push(v);if(waveH.length>WW) waveH.shift();
+  wCtx.beginPath();wCtx.strokeStyle='#E8A832';wCtx.lineWidth=1.2;
+  waveH.forEach((v2,i)=>{const y=WH-v2*WH;i===0?wCtx.moveTo(i,y):wCtx.lineTo(i,y);});
+  wCtx.stroke();
+  if(currentPhen!=='none'){
+    wCtx.strokeStyle='rgba(50,168,232,0.4)';wCtx.lineWidth=1;
+    const px=((t*P.ph.speed*30)%WW);
+    wCtx.beginPath();wCtx.moveTo(px,0);wCtx.lineTo(px,WH);wCtx.stroke();
+  }
+}
+
+let xyDragging=false;
+xyCanvas.addEventListener('mousedown',e=>{xyDragging=true;handleXY(e);});
+xyCanvas.addEventListener('mousemove',e=>{if(xyDragging) handleXY(e);});
+xyCanvas.addEventListener('mouseup',()=>xyDragging=false);
+
+function handleXY(e){
+  const r=xyCanvas.getBoundingClientRect();
+  xyDot.x=Math.max(0,Math.min(xyW,e.clientX-r.left));
+  xyDot.y=Math.max(0,Math.min(xyH,e.clientY-r.top));
+  P.driftAmt=xyDot.x/xyW*60;
+  P.gIntens=1-xyDot.y/xyH;
+}
+
+function renderXY(){
+  xyCtx.fillStyle='#0A0A08';xyCtx.fillRect(0,0,xyW,xyH);
+  xyCtx.strokeStyle='#1A1A16';xyCtx.lineWidth=0.5;
+  for(let x=0;x<xyW;x+=20){xyCtx.beginPath();xyCtx.moveTo(x,0);xyCtx.lineTo(x,xyH);xyCtx.stroke();}
+  for(let y=0;y<xyH;y+=20){xyCtx.beginPath();xyCtx.moveTo(0,y);xyCtx.lineTo(xyW,y);xyCtx.stroke();}
+  xyCtx.strokeStyle='rgba(50,168,232,0.35)';xyCtx.lineWidth=1;
+  xyCtx.beginPath();xyCtx.moveTo(xyDot.x,0);xyCtx.lineTo(xyDot.x,xyH);xyCtx.stroke();
+  xyCtx.beginPath();xyCtx.moveTo(0,xyDot.y);xyCtx.lineTo(xyW,xyDot.y);xyCtx.stroke();
+  xyCtx.beginPath();xyCtx.arc(xyDot.x,xyDot.y,4,0,Math.PI*2);
+  xyCtx.fillStyle='#32A8E8';xyCtx.fill();
+  xyCtx.fillStyle='#2A2A26';xyCtx.font='8px Courier New';
+  xyCtx.fillText('← drift →',3,xyH-3);
+  xyCtx.fillText('gltch',xyW-28,10);
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// TRANSPORT
+// ════════════════════════════════════════════════════════════════════════
+function togPlay(){
+  playing=!playing;
+  const b=document.getElementById('btn-play');
+  b.textContent=playing?'▶ Play':'⏸ Pause';
+  b.classList.toggle('active',playing);
+}
+
+function rnd(){
+  document.querySelectorAll('.ctrls input[type=range]').forEach(i=>{
+    i.value=Math.floor(Math.random()*80)+10;
+    if(i.oninput) i.oninput.call(i);
+  });
+  Object.keys(FX).forEach(k=>{if(Math.random()>.4&&!FX[k]) togFX(k);});
+  const phens=Object.keys(phenomena);
+  const p=phens[Math.floor(Math.random()*phens.length)];
+  document.getElementById('phen-select').value=p;
+  setPhenomenon(p);
+  P.ph.density=Math.random();P.ph.speed=Math.random();
+  P.ph.opacity=Math.random()*.7+0.2;
+  buildPhenUI(p);
+}
+
+function rst(){
+  Object.keys(FX).forEach(k=>{if(FX[k]) togFX(k);});
+  document.getElementById('phen-select').value='none';
+  setPhenomenon('none');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// EXPORT
+// ════════════════════════════════════════════════════════════════════════
+function exportFrame(){
+  const [ow,oh]=document.getElementById('os').value.split('x').map(Number);
+  const ec=document.createElement('canvas');
+  ec.width=ow;ec.height=oh;
+  const ex=ec.getContext('2d');
+  ex.scale(ow/W,oh/H);
+  ex.drawImage(canvas,0,0);
+  const a=document.createElement('a');
+  a.download=`meshahara_${currentPhen}_${Date.now()}.png`;
+  a.href=ec.toDataURL('image/png');a.click();
+}
+
+requestAnimationFrame(render);
+</script>
+</body>
+</html>
