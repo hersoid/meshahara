@@ -1,72 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-74C4823BYX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-74C4823BYX');
-</script>
-    <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '916260251209339');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=916260251209339&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tickets & Registration — Meshahara: Many Roots, One Ledger</title>
-<meta name="description" content="Register for Meshahara: Many Roots, One Ledger — 10 October 2026 at REX KL, Kuala Lumpur.">
+<meta name="description" content="Register for Meshahara: Many Roots, One Ledger — 10 October 2026 at REX KL, Kuala Lumpur. Free entry with registration.">
 <link rel="stylesheet" href="/css/main.css">
 <style>
-.page-header{display:grid;grid-template-columns:100px 1fr 260px;border-bottom:2px solid var(--text);min-height:220px;}
+.page-header{display:grid;grid-template-columns:100px 1fr 260px;border-bottom:2px solid var(--text);min-height:200px;}
 .ph-main{padding:2.5rem 2rem;border-right:1px solid var(--rule);}
 .ph-kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
-.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,80px);line-height:.88;letter-spacing:.02em;margin-bottom:.75rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,80px);line-height:.88;letter-spacing:.02em;margin-bottom:.75rem;color:var(--text);}
 .ph-title span{color:var(--pink);}
 .ph-deck{font-size:14px;color:var(--muted);line-height:1.75;}
 .ph-aside{padding:2rem 1.5rem;background:var(--surface);}
 
-.reg-body{display:grid;grid-template-columns:1fr 340px;border-bottom:2px solid var(--text);}
+/* VIDEO SECTION */
+.video-section{
+  border-bottom:2px solid var(--text);
+  background:var(--dark);
+  position:relative;
+  overflow:hidden;
+}
+.video-section video{
+  width:100%;
+  max-height:520px;
+  object-fit:cover;
+  display:block;
+  opacity:.9;
+}
+.video-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:2rem 2.5rem;
+  background:linear-gradient(to top, rgba(28,26,24,.95) 0%, transparent 100%);
+  display:flex;align-items:flex-end;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.video-overlay-text{}
+.vo-label{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.35rem;}
+.vo-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,3.5vw,34px);letter-spacing:.04em;color:#fff;line-height:1.1;}
+.vo-cta{
+  display:inline-block;
+  font-size:13px;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--pink);color:#fff;
+  padding:.7rem 1.5rem;text-decoration:none;
+  white-space:nowrap;flex-shrink:0;
+  transition:background .15s;
+}
+.vo-cta:hover{background:var(--pink-dark);text-decoration:none;}
+
+/* REGISTRATION BODY */
+.reg-body{
+  display:grid;grid-template-columns:1fr 340px;
+  border-bottom:2px solid var(--text);
+}
 .reg-main{padding:2.75rem 2rem;border-right:1px solid var(--rule);}
 .reg-main h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.04em;color:var(--text);margin-bottom:.75rem;margin-top:2rem;}
 .reg-main h2:first-child{margin-top:0;}
 .reg-main p{font-size:14px;line-height:1.85;color:var(--muted);margin-bottom:1rem;}
 .reg-main p b{font-weight:500;color:var(--text);}
-
-.tally-wrap{min-height:500px;border:1px solid var(--rule);background:var(--surface);border-radius:0;margin-top:1.5rem;}
-.tally-wrap iframe{display:block;width:100%;border:none;}
-
-.reg-aside{padding:2rem 1.5rem;background:var(--surface);display:flex;flex-direction:column;gap:1.5rem;}
+.tally-wrap{width:100%;margin-top:1.5rem;}
+.tally-wrap iframe{display:block;width:100%;border:none;min-height:400px;}
+.reg-aside{padding:2.5rem 1.75rem;background:var(--surface);display:flex;flex-direction:column;gap:1.5rem;}
 .event-box{border:2px solid var(--text);padding:1.5rem;}
 .ev-label{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
 .ev-date{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:.04em;line-height:1;color:var(--text);margin-bottom:.5rem;}
-.ev-detail{font-size:13px;color:var(--muted);line-height:1.9;}
+.ev-detail{font-size:13px;color:var(--muted);line-height:2;}
 .ev-detail b{color:var(--text);font-weight:500;}
 
-.prog-strip{border-bottom:2px solid var(--text);background:var(--bg);}
-.prog-header{padding:1.1rem 2rem;border-bottom:1px solid var(--rule);}
+/* PROGRAMME */
+.prog-strip{border-bottom:2px solid var(--text);}
+.prog-header{padding:1.1rem 2rem;border-bottom:1px solid var(--rule);background:var(--bg);}
 .prog-grid{display:grid;grid-template-columns:repeat(4,1fr);}
-.pi{padding:1.5rem 1.5rem;border-right:1px solid var(--rule);}
+.pi{padding:1.5rem 1.5rem;border-right:1px solid var(--rule);background:var(--bg);}
 .pi:last-child{border-right:none;}
 .pi-n{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--pink);line-height:1;margin-bottom:.4rem;}
 .pi-t{font-size:14px;font-weight:500;color:var(--text);margin-bottom:.3rem;}
 .pi-d{font-size:13px;color:var(--muted);line-height:1.6;}
 
+/* RESPONSIVE */
 @media(max-width:900px){
   .page-header{grid-template-columns:1fr 220px;}
   .page-spine{display:none;}
@@ -74,8 +87,9 @@ src="https://www.facebook.com/tr?id=916260251209339&ev=PageView&noscript=1"
   .reg-aside{border-top:1px solid var(--rule);}
   .prog-grid{grid-template-columns:1fr 1fr;}
   .pi:nth-child(2){border-right:none;}
-  .pi:nth-child(3){border-top:1px solid var(--rule);border-right:1px solid var(--rule);}
-  .pi:nth-child(4){border-top:1px solid var(--rule);border-right:none;}
+  .pi:nth-child(3){border-top:1px solid var(--rule);}
+  .pi:nth-child(4){border-right:none;border-top:1px solid var(--rule);}
+  .video-overlay{padding:1.5rem 1.25rem;}
 }
 @media(max-width:600px){
   .page-header{grid-template-columns:1fr;}
@@ -83,6 +97,7 @@ src="https://www.facebook.com/tr?id=916260251209339&ev=PageView&noscript=1"
   .prog-grid{grid-template-columns:1fr;}
   .pi{border-right:none !important;border-top:1px solid var(--rule);}
   .pi:first-child{border-top:none;}
+  .video-section video{max-height:280px;}
 }
 </style>
 </head>
@@ -98,7 +113,7 @@ src="https://www.facebook.com/tr?id=916260251209339&ev=PageView&noscript=1"
     <li><a href="/open-call.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Open Call</a></li>
     <li><a href="/programme.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Programme</a></li>
     <li><a href="/blog.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Newsletter</a></li>
-    <li><a href="/tickets.html" class="btn-ticket" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;background:var(--dark);color:var(--bg) !important;padding:.35rem .9rem;text-decoration:none;margin-left:.5rem;">Tickets →</a></li>
+    <li><a href="/tickets.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;background:var(--dark);color:var(--bg) !important;padding:.35rem .9rem;text-decoration:none;margin-left:.5rem;">Tickets →</a></li>
   </ul>
   <button class="nav-toggle" id="navtoggle" aria-label="Menu" style="display:none;background:none;border:none;cursor:pointer;padding:.25rem;flex-direction:column;gap:5px;">
     <span style="display:block;width:22px;height:2px;background:var(--text);"></span>
@@ -115,49 +130,68 @@ src="https://www.facebook.com/tr?id=916260251209339&ev=PageView&noscript=1"
   <div class="ph-main">
     <p class="ph-kicker">10 October 2026 · REX KL · Chinatown, Kuala Lumpur</p>
     <h1 class="ph-title">Register for<br><span>Meshahara</span></h1>
-    <p class="ph-deck">Reserve your place for the opening night of Meshahara: Many Roots, One Ledger. Register below — you will receive a confirmation email with your QR code entry pass.</p>
+    <p class="ph-deck">Reserve your place for the opening night. Free entry — register below and your QR code entry pass is sent directly to your email.</p>
   </div>
   <div class="ph-aside">
     <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;">
-      <div class="aside-title">Date</div>
-      <div class="aside-body"><b>10 October 2026</b><br>Evening — doors open 6:30pm<br>REX KL, Jalan Sultan, Chinatown, KL</div>
+      <div class="aside-title">Date & Time</div>
+      <div class="aside-body"><b>10 October 2026</b><br>Doors open 6:30pm<br>REX KL, Jalan Sultan<br>Chinatown, Kuala Lumpur</div>
     </div>
     <div class="aside-block">
       <div class="aside-title">Entry</div>
-      <div class="aside-body">Free entry. Registration required. QR code sent to your email on registration.</div>
+      <div class="aside-body">Free with registration. QR code sent to your email on sign-up.</div>
     </div>
     <div class="aside-block">
-      <div class="aside-title">Nearest LRT</div>
-      <div class="aside-body">Pasar Seni station — 5 min walk</div>
+      <div class="aside-title">Getting There</div>
+      <div class="aside-body">LRT: Pasar Seni — 5 min walk. Grab recommended. Street parking available.</div>
     </div>
   </div>
 </header>
 
 <div class="ticker">
   <span><span class="ticker-dot"></span>10 October 2026 · REX KL · Chinatown, Kuala Lumpur · Doors open 6:30pm</span>
-  <span>Free entry · Registration required</span>
+  <span>Free entry · Registration required · QR code by email</span>
 </div>
 
-<div class="reg-body">
+<!-- VIDEO SECTION -->
+<div class="video-section">
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="/images/roots.jpg"
+    aria-label="Meshahara exhibition preview — REX KL, Kuala Lumpur">
+    <source src="/images/tickets-video.mp4" type="video/mp4">
+  </video>
+  <div class="video-overlay">
+    <div class="video-overlay-text">
+      <div class="vo-label">Meshahara: Many Roots, One Ledger</div>
+      <div class="vo-title">One night. One room.<br>Something you won't forget.</div>
+    </div>
+    <a href="#register" class="vo-cta">Register Free →</a>
+  </div>
+</div>
+
+<!-- REGISTRATION FORM -->
+<div class="reg-body" id="register">
   <div class="reg-main">
     <h2>Reserve Your Place</h2>
-    <p>Registration is free. Complete the form below and you will receive a <b>confirmation email with your QR code entry pass</b> — please have this ready on your phone or printed when you arrive at REX KL.</p>
-    <p>Places are limited. Register early to avoid disappointment. If you have any accessibility requirements please note them in the form and we will be in touch to assist.</p>
+    <p>Registration is free. Complete the form below — a <b>confirmation email with your QR code entry pass</b> will be sent immediately. Please have it ready on your phone or printed when you arrive at REX KL.</p>
+    <p>Places are limited. If you have any accessibility requirements please note them in the form and we'll be in touch.</p>
 
-    <!-- TALLY REGISTRATION FORM EMBED -->
-    <!-- Replace YOUR_TICKETS_FORM_ID with your Tally registration form ID -->
-    <!-- Suggested fields: Name, Email, Number of guests (max 2), Accessibility needs -->
     <div class="tally-wrap">
       <iframe
         src="https://tally.so/embed/lb17zv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-    loading="lazy"
-    width="100%"
-    height="400"
-    frameborder="0"
-    marginheight="0"
-    marginwidth="0"
-    title="Meshahara Registration Form"
-    style="border:none;display:block;">
+        loading="lazy"
+        width="100%"
+        height="400"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title="Meshahara Registration Form"
+        style="border:none;display:block;">
       </iframe>
     </div>
     <p style="margin-top:1rem;font-size:13px;color:var(--dim);">Problems registering? Email <a href="mailto:hello@meshahara.art">hello@meshahara.art</a></p>
@@ -169,7 +203,6 @@ src="https://www.facebook.com/tr?id=916260251209339&ev=PageView&noscript=1"
       <div class="ev-date">10 Oct<br>2026</div>
       <div class="ev-detail">
         <b>Doors open:</b> 6:30pm<br>
-        <b>Programme:</b> 7:00pm<br>
         <b>Venue:</b> REX KL<br>
         Jalan Sultan, Chinatown<br>
         Kuala Lumpur<br><br>
@@ -177,14 +210,13 @@ src="https://www.facebook.com/tr?id=916260251209339&ev=PageView&noscript=1"
         <b>QR code:</b> Sent by email
       </div>
     </div>
-
     <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;">
       <div class="aside-title">Getting There</div>
       <div class="aside-body">LRT to Pasar Seni — 5 min walk. Grab recommended. Street parking available in Chinatown.</div>
     </div>
     <div class="aside-block">
       <div class="aside-title">Accessibility</div>
-      <div class="aside-body">Step-free access from street level. Note any requirements in the registration form or contact <a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+      <div class="aside-body">Step-free access from street level. Note requirements in the form or contact <a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
     </div>
     <div class="aside-block">
       <div class="aside-title">Press Accreditation</div>
@@ -193,6 +225,7 @@ src="https://www.facebook.com/tr?id=916260251209339&ev=PageView&noscript=1"
   </div>
 </div>
 
+<!-- PROGRAMME -->
 <div class="prog-strip">
   <div class="prog-header"><span class="lbl">Programme · Opening Night · 10 October 2026</span></div>
   <div class="prog-grid">
