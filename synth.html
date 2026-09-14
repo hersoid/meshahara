@@ -14,7 +14,7 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:var(--mono);
-    font-size:11px;height:100vh;overflow:hidden;display:grid;
+    font-size:11px;height:calc(100vh - 36px);overflow:hidden;display:grid;
     grid-template-rows:38px 1fr 180px;}
 
   header{display:flex;align-items:center;justify-content:space-between;
@@ -126,7 +126,7 @@
 </style>
 </head>
 <body>
-<div style="background:#0A0A08;border-bottom:2px solid #E8327A;padding:.45rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.1em;">
+<div style="background:#0A0A08;border-bottom:2px solid #E8327A;padding:0 1rem;height:36px;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.1em;flex-shrink:0;overflow:hidden;">
   <a href="/" style="color:#6A6660;text-decoration:none;text-transform:uppercase;white-space:nowrap;">← meshahara.art</a>
   <div style="color:#6A6660;text-align:center;text-transform:uppercase;line-height:1.6;">
     Load images A·B·C·D &nbsp;·&nbsp; Select a Phenomenon &nbsp;·&nbsp; Apply Effects (Drift / Glitch / Scan / Grain) &nbsp;·&nbsp; Export PNG or ● Rec WebM &nbsp;·&nbsp;
