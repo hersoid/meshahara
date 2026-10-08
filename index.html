@@ -1,61 +1,227 @@
-<!--
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  MESHAHARA SITE PATCH — Video Synthesiser Launch
-  Apply to: index.html (changes 1–2) + all other pages (change 3)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meshahara: Many Roots, One Ledger — REX KL, Kuala Lumpur 2026</title>
+<meta name="description" content="Meshahara: Many Roots, One Ledger. An immersive group exhibition at REX KL, Kuala Lumpur. 10 October 2026. Curated by Art:Tech & Hersoid.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+/* VIDEO HERO */
+.hero-video-section{
+  background:#1C1A18;
+  position:relative;overflow:hidden;
+  min-height:80vh;
+  display:flex;align-items:stretch;
+  border-bottom:2px solid var(--text);
+}
+.hero-video-section video{
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;opacity:.7;
+}
+.hero-overlay{
+  position:relative;z-index:2;
+  width:100%;
+  padding:6rem 2.5rem 2.5rem;
+  background:linear-gradient(to top,rgba(28,26,24,.97) 0%,rgba(28,26,24,.15) 50%,transparent 100%);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:80vh;
+}
+.hero-kicker{
+  font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:1rem;
+  font-family:'DM Mono',monospace;
+}
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(52px,9vw,110px);
+  letter-spacing:.02em;color:#fff;
+  line-height:.88;margin-bottom:1.25rem;
+}
+.hero-title em{color:var(--pink);font-style:normal;}
+.hero-subtitle{
+  font-size:clamp(18px,2.5vw,28px);
+  font-style:italic;font-weight:300;
+  color:rgba(255,255,255,.75);
+  letter-spacing:.02em;
+  border-left:3px solid var(--pink);
+  padding-left:1.25rem;
+  margin-bottom:2rem;
+  max-width:700px;
+  line-height:1.4;
+  font-family:'DM Mono',monospace;
+}
+.hero-meta-strip{
+  display:flex;gap:2.5rem;flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,.15);
+  padding-top:1.25rem;margin-bottom:1.75rem;
+}
+.hm-k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.25rem;font-family:'DM Mono',monospace;}
+.hm-v{font-size:14px;font-weight:500;color:#fff;font-family:'DM Mono',monospace;}
+.hero-cta-block{
+  display:inline-block;align-self:flex-start;
+  background:var(--pink);
+  padding:.85rem 2rem;
+  text-decoration:none;
+  transition:background .15s;
+}
+.hero-cta-block:hover{background:var(--pink-dark);text-decoration:none;}
+.hero-cta-date{
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.75);margin-bottom:.35rem;
+  font-family:'DM Mono',monospace;
+}
+.hero-cta-label{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(24px,3vw,36px);
+  letter-spacing:.04em;line-height:1;color:#fff;
+}
+@media(max-width:900px){
+  .hero-video-section{min-height:70vh;}
+  .hero-overlay{padding:4rem 1.5rem 2rem;min-height:70vh;}
+  .hero-meta-strip{gap:1.5rem;}
+}
+@media(max-width:600px){
+  .hero-video-section{min-height:85vh;}
+  .hero-overlay{min-height:85vh;padding:3rem 1.25rem 1.75rem;}
+  .hero-meta-strip{flex-direction:column;gap:.75rem;}
+  .hero-cta-block{display:block;text-align:center;}
+}
+</style>
+</head>
+<body>
 
-═══════════════════════════════════════════════════════
-CHANGE 1 — NAV UPDATE (index.html only)
-  Find this line in the <ul id="navlinks"> block:
+<nav class="nav">
+  <a href="/" class="nav-logo">Meshahara</a>
+  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links" id="navlinks">
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="/exhibition.html">Exhibition</a></li>
+    <li><a href="/artists.html">Artists</a></li>
+    <li><a href="/open-call.html">Open Call</a></li>
+    <li><a href="/programme.html">Programme</a></li>
     <li><a href="/meshahara-synth-v2.html" style="color:var(--pink);">Synth ✦</a></li>
+    <li><a href="/blog.html">Newsletter</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+  </ul>
+  <button class="nav-toggle" id="navtoggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  Replace it with these TWO lines:
-═══════════════════════════════════════════════════════
--->
-
-<li><a href="/meshahara-synth-v2.html">Synth ✦</a></li>
-<li><a href="/video-synth.html" style="color:var(--pink);">Video ✦</a></li>
-
-
-<!--
-═══════════════════════════════════════════════════════
-CHANGE 2 — VIDEO SYNTH CTA BAND (index.html only)
-  Find the existing SYNTH CTA BAND comment block.
-  BELOW it (after the closing </div>), ADD this new band:
-═══════════════════════════════════════════════════════
--->
-
-<!-- VIDEO SYNTH CTA BAND -->
-<div style="background:#0a0a08;border-top:2px solid #E8327A;border-bottom:1px solid #1C1A18;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
-  <div>
-    <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#E8327A;margin-bottom:.35rem;font-family:'DM Mono',monospace;">New ✦ — Interactive Tool</div>
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,2.5vw,28px);letter-spacing:.04em;color:#e8e2d4;line-height:1;">Video Synthesiser</div>
-    <div style="font-size:11px;color:#6A6660;margin-top:.3rem;font-family:'DM Mono',monospace;">Loop & glitch live video through 8 generative modes — teletext, satellite decay, phosphor burn &amp; more. Record &amp; export.</div>
+<!-- VIDEO HERO -->
+<section class="hero-video-section">
+  <video autoplay muted loop playsinline preload="metadata" poster="/images/roots.jpg">
+    <source src="/images/tickets-video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay">
+    <p class="hero-kicker">Solana Immersive Exhibition · REX KL · Kuala Lumpur · 2026</p>
+    <h1 class="hero-title">ME<em>SHA</em><br>HARA</h1>
+    <p class="hero-subtitle">You don't look at the art.<br>You stand inside it.</p>
+    <div class="hero-meta-strip">
+      <div><div class="hm-k">Venue</div><div class="hm-v">REX KL, Chinatown KL</div></div>
+      <div><div class="hm-k">Date</div><div class="hm-v">10 October 2026</div></div>
+      <div><div class="hm-k">Curated by</div><div class="hm-v">Art:Tech &amp; Hersoid</div></div>
+      <div><div class="hm-k">Entry</div><div class="hm-v">Free with registration</div></div>
+    </div>
+    <a href="/tickets.html" class="hero-cta-block">
+      <div class="hero-cta-date">10 October 2026 · REX KL · Free Entry</div>
+      <div class="hero-cta-label">Register Now →</div>
+    </a>
   </div>
-  <a href="/video-synth.html" style="display:inline-block;background:#E8327A;border:1px solid #E8327A;color:#fff;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.65rem 1.5rem;text-decoration:none;white-space:nowrap;flex-shrink:0;">Open Video Synth →</a>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span><span class="ticker-dot"></span>Open Call closes 31 August 2026 · 23:59 MYT · <span id="countdown">calculating...</span></span>
+  <span>Artist notification: 10 September 2026 · International applications welcome</span>
 </div>
 
+<!-- SYNTH CTA BAND -->
+<div style="background:#111110;border-bottom:1px solid #1C1A18;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+  <div>
+    <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#32A8E8;margin-bottom:.35rem;font-family:'DM Mono',monospace;">New — Interactive Tool</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,2.5vw,28px);letter-spacing:.04em;color:#fff;line-height:1;">Visual Synthesiser &nbsp;<span style="color:#E8327A;">✦</span></div>
+    <div style="font-size:11px;color:#6A6660;margin-top:.3rem;font-family:'DM Mono',monospace;">Blend exhibition images through 15 generative physical phenomena. Export as PNG or video.</div>
+  </div>
+  <a href="/meshahara-synth-v2.html" style="display:inline-block;background:none;border:1px solid #32A8E8;color:#32A8E8;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.65rem 1.5rem;text-decoration:none;white-space:nowrap;flex-shrink:0;">Open Synthesiser →</a>
+</div>
 
-<!--
-═══════════════════════════════════════════════════════
-CHANGE 3 — NAV UPDATE for all OTHER pages
-  (exhibition.html, artists.html, open-call.html,
-   programme.html, blog.html, tickets.html, etc.)
+<!-- STATEMENT BAND -->
+<div class="statement-band">
+  <div class="statement-text">
+    Blockchain framed not as financial speculation —<br>
+    but as <em>shared cultural infrastructure.</em>
+  </div>
+</div>
 
-  In each page's <ul id="navlinks"> find:
-    <li><a href="/meshahara-synth-v2.html" ...>Synth ✦</a></li>
+<!-- FACTS BAND -->
+<div class="facts-band">
+  <div class="fact-item">
+    <div class="fact-n">15+</div>
+    <div class="fact-l">International<br>Artists</div>
+  </div>
+  <div class="fact-item">
+    <div class="fact-n">1</div>
+    <div class="fact-l">Night Only<br>10 Oct 2026</div>
+  </div>
+  <div class="fact-item">
+    <div class="fact-n">360°</div>
+    <div class="fact-l">Immersive<br>Projection</div>
+  </div>
+  <div class="fact-item">
+    <div class="fact-n">Free</div>
+    <div class="fact-l">Entry with<br>Registration</div>
+  </div>
+</div>
 
-  Replace with:
-═══════════════════════════════════════════════════════
--->
+<!-- OPEN CALL BAND -->
+<div class="open-call-band">
+  <div class="oc-text">
+    <div class="oc-kicker">Open Call — Closes 31 August 2026</div>
+    <h2 class="oc-title">Submit Your Work</h2>
+    <p class="oc-body">We are seeking artists working at the intersection of digital practice and cultural identity. All mediums considered. No submission fee. International applications welcome.</p>
+  </div>
+  <a href="/open-call.html" class="oc-btn">Apply Now →</a>
+</div>
 
-<li><a href="/meshahara-synth-v2.html">Synth ✦</a></li>
-<li><a href="/video-synth.html" style="color:var(--pink);">Video ✦</a></li>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Deadline 31 August 2026 →</a></div>
+  <div class="footer-cell"><strong>Newsletter</strong><a href="/blog.html">Subscribe for updates →</a></div>
+  <div class="footer-cell"><strong>Herod Hersché</strong><a href="https://herod.meshahara.art" target="_blank" rel="noopener">Guest Critic →</a></div>
+</footer>
 
-<!--
-  (Remove style="color:var(--pink);" from the Video ✦ link
-   on pages where it should NOT be highlighted — only keep
-   that style on video-synth.html itself, which has its own
-   nav via the dark variant embedded in the page.)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--->
+<script>
+// Countdown
+function updateCountdown(){
+  var el=document.getElementById('countdown');
+  if(!el) return;
+  var deadline=new Date('2026-08-31T23:59:00+08:00').getTime();
+  var now=Date.now();
+  var diff=deadline-now;
+  if(diff<=0){el.textContent='Deadline passed';return;}
+  var d=Math.floor(diff/86400000);
+  var h=Math.floor((diff%86400000)/3600000);
+  var m=Math.floor((diff%3600000)/60000);
+  var s=Math.floor((diff%60000)/1000);
+  el.textContent=d+'d '+h+'h '+m+'m '+s+'s remaining';
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+// Mobile nav
+var toggle=document.getElementById('navtoggle');
+var navlinks=document.getElementById('navlinks');
+if(toggle){toggle.addEventListener('click',function(){
+  toggle.classList.toggle('open');navlinks.classList.toggle('open');
+});}
+</script>
+</body>
+</html>
