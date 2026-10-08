@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Synthesiser — Meshahara: Many Roots, One Ledger</title>
+<meta name="description" content="Browser-based video synthesiser — glitch, teletext, satellite decay, phosphor burn and more. Part of Meshahara at REX KL, Kuala Lumpur 2026.">
+<link rel="stylesheet" href="/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+/* ── PAGE SHELL ── */
+.vsynth-page { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: #0a0a08; }
+
+/* ── NAV OVERRIDE: dark variant ── */
+.vsynth-page .nav {
+  background: #0e0e0c;
+  border-bottom: 1px solid #2a2825;
+  position: relative;
+  z-index: 200;
+  flex-shrink: 0;
+}
+.vsynth-page .nav .nav-logo { color: #e8e2d4; }
+.vsynth-page .nav .nav-centre { color: #6a6050; }
+.vsynth-page .nav #navlinks a { color: #a09888; }
+.vsynth-page .nav #navlinks a:hover,
+.vsynth-page .nav #navlinks a.active { color: #e8327a; }
+.vsynth-page .nav .btn-ticket { background: #e8327a; color: #fff; }
+.vsynth-page .nav .btn-ticket:hover { background: #c0205a; }
+
+/* ── PAGE TITLE BAR ── */
+.vsynth-titlebar {
+  flex-shrink: 0;
+  background: #0e0e0c;
+  border-bottom: 2px solid #e8327a;
+  padding: 0.6rem 2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+}
+.vsynth-titlebar h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: .1em;
+  color: #e8e2d4;
+  line-height: 1;
+}
+.vsynth-titlebar .vt-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #6a6050;
+}
+.vsynth-titlebar .vt-new {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #e8327a;
+  border: 1px solid #e8327a;
+  padding: 2px 8px;
+}
+
+/* ── SYNTH CONTAINER ── */
+.vsynth-app {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── SYNTH INTERNALS (dark theme, scoped) ── */
+:root {
+  --vs-bg: #0a0a08;
+  --vs-surface: #111110;
+  --vs-panel: #161614;
+  --vs-rule: #2a2825;
+  --vs-text: #e8e2d4;
+  --vs-dim: #7a7468;
+  --vs-pink: #e8327a;
+  --vs-teal: #00c9a7;
+  --vs-amber: #f4a020;
+}
+
+#vs-shell {
+  width: 100%; height: 100%;
+  display: grid;
+  grid-template-rows: 46px 1fr 240px;
+  background: var(--vs-bg);
+  color: var(--vs-text);
+  font-family: 'Share Tech Mono', 'DM Mono', monospace;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+/* ── VS TOP BAR ── */
+#vs-topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--vs-rule);
+  background: var(--vs-surface);
+  gap: 16px;
+}
+#vs-topbar .vs-label { color: var(--vs-dim); font-size: 13px; letter-spacing: .08em; }
+#vs-topbar .vs-rec-zone { display: flex; align-items: center; gap: 8px; }
+#vs-rec-btn {
+  font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: .1em;
+  padding: 5px 14px; border: 1px solid var(--vs-pink); background: transparent; color: var(--vs-pink);
+  cursor: pointer; text-transform: uppercase; transition: all .15s;
+}
+#vs-rec-btn:hover, #vs-rec-btn.active { background: var(--vs-pink); color: #000; }
+#vs-rec-timer { color: var(--vs-amber); font-size: 13px; min-width: 48px; }
+#vs-dl-btn {
+  display: none; font-family: 'Share Tech Mono', monospace; font-size: 13px;
+  padding: 5px 14px; border: 1px solid var(--vs-teal); background: transparent; color: var(--vs-teal);
+  cursor: pointer; letter-spacing: .1em;
+}
+#vs-dl-btn.show { display: block; }
+
+/* ── VS STAGE ── */
+#vs-stage {
+  position: relative; overflow: hidden; background: #000;
+}
+#vs-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated;
+}
+#vs-stage::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 10;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.12) 2px, rgba(0,0,0,.12) 4px);
+}
+#vs-vignette {
+  position: absolute; inset: 0; pointer-events: none; z-index: 11;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.7) 100%);
+}
+#vs-status-ov {
+  position: absolute; top: 8px; right: 12px; z-index: 13;
+  font-size: 13px; color: var(--vs-teal); letter-spacing: .06em; opacity: .8;
+}
+
+/* ── VS CONTROLS ── */
+#vs-controls {
+  border-top: 1px solid var(--vs-rule);
+  background: var(--vs-panel);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) 180px;
+  overflow: hidden;
+}
+.vs-slot {
+  border-right: 1px solid var(--vs-rule);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.vs-slot-hd {
+  padding: 6px 8px;
+  background: var(--vs-surface);
+  border-bottom: 1px solid var(--vs-rule);
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--vs-dim);
+}
+.vs-slot-hd span { color: var(--vs-pink); }
+.vs-gen .vs-slot-hd span { color: var(--vs-amber); }
+.vs-drop {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; position: relative; overflow: hidden;
+  background: #0d0d0b; transition: background .2s;
+  flex-direction: column; gap: 4px;
+  font-size: 12px; color: #3a3830; letter-spacing: .08em; text-align: center;
+}
+.vs-drop:hover { background: #141412; }
+.vs-drop.loaded { background: #0a120a; }
+.vs-drop video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .7; }
+.vs-drop input[type=file] { display: none; }
+.vs-drop-icon { font-size: 22px; opacity: .25; }
+.vs-clip-name { font-size: 11px; color: var(--vs-dim); margin-top: 2px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 4px; }
+.vs-slot-fx {
+  padding: 5px 7px; border-top: 1px solid var(--vs-rule);
+  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
+}
+.vs-slot-fx label { font-size: 11px; color: var(--vs-dim); letter-spacing: .06em; flex: 0 0 auto; }
+.vs-knob {
+  flex: 1; -webkit-appearance: none; appearance: none;
+  height: 3px; background: var(--vs-rule); border-radius: 2px; cursor: pointer; min-width: 0;
+}
+.vs-knob::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--vs-pink); cursor: pointer; }
+.vs-sel {
+  font-family: 'Share Tech Mono', monospace; font-size: 11px;
+  background: var(--vs-surface); border: 1px solid var(--vs-rule);
+  color: var(--vs-text); padding: 2px 4px; cursor: pointer; max-width: 100%;
+}
+.vs-tog {
+  font-size: 11px; padding: 3px 7px; border: 1px solid var(--vs-rule);
+  background: transparent; color: var(--vs-dim); cursor: pointer;
+  font-family: 'Share Tech Mono', monospace; letter-spacing: .06em;
+}
+.vs-tog.on { border-color: var(--vs-teal); color: var(--vs-teal); }
+
+/* Gen slot body */
+.vs-gen-body { flex: 1; padding: 6px 8px; display: flex; flex-direction: column; gap: 5px; background: #0d0a08; }
+.vs-gen-body label { font-size: 12px; color: var(--vs-dim); }
+.vs-gen-sel { font-family: 'Share Tech Mono', monospace; font-size: 12px; background: var(--vs-surface); border: 1px solid var(--vs-rule); color: var(--vs-text); padding: 4px 7px; cursor: pointer; width: 100%; }
+
+/* Master */
+#vs-master { border-left: 1px solid var(--vs-rule); display: flex; flex-direction: column; overflow: hidden; }
+#vs-master .vs-m-hd { padding: 6px 8px; background: var(--vs-surface); border-bottom: 1px solid var(--vs-rule); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--vs-amber); }
+#vs-master .vs-m-body { flex: 1; padding: 7px 9px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; }
+#vs-master label { font-size: 12px; color: var(--vs-dim); display: flex; justify-content: space-between; }
+#vs-master label span { color: var(--vs-text); }
+#vs-master input[type=range] { width: 100%; -webkit-appearance: none; height: 2px; background: var(--vs-rule); border-radius: 1px; cursor: pointer; }
+#vs-master input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--vs-amber); }
+.vs-m-btn {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: .08em;
+  padding: 5px; border: 1px solid var(--vs-rule); background: transparent; color: var(--vs-dim);
+  cursor: pointer; width: 100%; text-align: center; transition: all .15s;
+}
+.vs-m-btn:hover { border-color: var(--vs-amber); color: var(--vs-amber); }
+.vs-m-btn.active { border-color: var(--vs-amber); background: var(--vs-amber); color: #000; }
+.vs-m-row { display: flex; gap: 4px; }
+.vs-m-row .vs-m-btn { flex: 1; }
+
+/* ── HELP FOOTER ── */
+.vsynth-help {
+  flex-shrink: 0;
+  background: #0e0e0c;
+  border-top: 1px solid #2a2825;
+  padding: 0.5rem 2rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  overflow-x: auto;
+}
+.vsynth-help .vh-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #6a6050;
+  white-space: nowrap;
+}
+.vsynth-help .vh-item b { color: #a09888; font-weight: 500; }
+.vsynth-help .vh-back {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #e8327a;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.vsynth-help .vh-back:hover { color: #c0205a; }
+</style>
+</head>
+<body class="vsynth-page">
+
+<!-- ── SITE NAV (matches main site exactly) ── -->
+<nav class="nav">
+  <a class="nav-logo" href="/">Meshahara</a>
+  <span class="nav-centre">03°08′N 101°41′E &nbsp;·&nbsp; 2026</span>
+  <ul id="navlinks">
+    <li><a href="/">Home</a></li>
+    <li><a href="/exhibition">Exhibition</a></li>
+    <li><a href="/artists">Artists</a></li>
+    <li><a href="/open-call">Open Call</a></li>
+    <li><a href="/programme">Programme</a></li>
+    <li><a href="/meshahara-synth-v2" style="color:#e8327a;">Synth ✦</a></li>
+    <li><a href="/video-synth" class="active" style="color:#e8327a;">Video ✦</a></li>
+    <li><a href="/blog">Newsletter</a></li>
+    <li><a href="/tickets" class="btn-ticket">Tickets →</a></li>
+  </ul>
+  <button id="navtoggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── PAGE TITLE BAR ── -->
+<div class="vsynth-titlebar">
+  <h1>Video Synthesiser</h1>
+  <span class="vt-sub">Meshahara · REX KL 2026</span>
+  <span class="vt-new">New ✦</span>
+</div>
+
+<!-- ── SYNTH APP ── -->
+<div class="vsynth-app">
+  <div id="vs-shell">
+
+    <!-- TOP BAR -->
+    <div id="vs-topbar">
+      <div class="vs-label" id="vs-status">STANDBY — LOAD VIDEO CLIPS TO BEGIN</div>
+      <div></div>
+      <div class="vs-rec-zone">
+        <div id="vs-rec-timer">0:00</div>
+        <button id="vs-rec-btn" onclick="vsToggleRec()">⏺ REC</button>
+        <button id="vs-dl-btn" onclick="vsDownload()">↓ SAVE</button>
+      </div>
+    </div>
+
+    <!-- STAGE -->
+    <div id="vs-stage">
+      <canvas id="vs-canvas"></canvas>
+      <div id="vs-vignette"></div>
+      <div id="vs-status-ov"></div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div id="vs-controls">
+
+      <!-- CH 1–4 video slots -->
+      <div class="vs-slot" id="vss0">
+        <div class="vs-slot-hd">CH·1 <span>VIDEO</span></div>
+        <div class="vs-drop" id="vsd0" onclick="vsTrigger(0)" ondragover="event.preventDefault()" ondrop="vsDrop(event,0)">
+          <input type="file" id="vsf0" accept="video/*" onchange="vsLoad(0,this)">
+          <div class="vs-drop-icon">▶</div><div>DROP VIDEO</div>
+          <div class="vs-clip-name" id="vsn0">or click to browse</div>
+          <video id="vsv0" loop muted playsinline></video>
+        </div>
+        <div class="vs-slot-fx">
+          <label>FX</label><input class="vs-knob" type="range" id="vsfx0" min="0" max="1" step=".01" value="0">
+          <select class="vs-sel" id="vsb0"><option>normal</option><option>screen</option><option>multiply</option><option>overlay</option><option>hard-light</option><option>difference</option><option>exclusion</option><option>color-dodge</option><option>luminosity</option></select>
+          <button class="vs-tog" id="vst0" onclick="vsTogSlot(0)">OFF</button>
+        </div>
+      </div>
+
+      <div class="vs-slot" id="vss1">
+        <div class="vs-slot-hd">CH·2 <span>VIDEO</span></div>
+        <div class="vs-drop" id="vsd1" onclick="vsTrigger(1)" ondragover="event.preventDefault()" ondrop="vsDrop(event,1)">
+          <input type="file" id="vsf1" accept="video/*" onchange="vsLoad(1,this)">
+          <div class="vs-drop-icon">▶</div><div>DROP VIDEO</div>
+          <div class="vs-clip-name" id="vsn1">or click to browse</div>
+          <video id="vsv1" loop muted playsinline></video>
+        </div>
+        <div class="vs-slot-fx">
+          <label>FX</label><input class="vs-knob" type="range" id="vsfx1" min="0" max="1" step=".01" value="0">
+          <select class="vs-sel" id="vsb1"><option>normal</option><option>screen</option><option>multiply</option><option>overlay</option><option>hard-light</option><option>difference</option><option>exclusion</option><option>color-dodge</option><option>luminosity</option></select>
+          <button class="vs-tog" id="vst1" onclick="vsTogSlot(1)">OFF</button>
+        </div>
+      </div>
+
+      <div class="vs-slot" id="vss2">
+        <div class="vs-slot-hd">CH·3 <span>VIDEO</span></div>
+        <div class="vs-drop" id="vsd2" onclick="vsTrigger(2)" ondragover="event.preventDefault()" ondrop="vsDrop(event,2)">
+          <input type="file" id="vsf2" accept="video/*" onchange="vsLoad(2,this)">
+          <div class="vs-drop-icon">▶</div><div>DROP VIDEO</div>
+          <div class="vs-clip-name" id="vsn2">or click to browse</div>
+          <video id="vsv2" loop muted playsinline></video>
+        </div>
+        <div class="vs-slot-fx">
+          <label>FX</label><input class="vs-knob" type="range" id="vsfx2" min="0" max="1" step=".01" value="0">
+          <select class="vs-sel" id="vsb2"><option>normal</option><option>screen</option><option>multiply</option><option>overlay</option><option>hard-light</option><option>difference</option><option>exclusion</option><option>color-dodge</option><option>luminosity</option></select>
+          <button class="vs-tog" id="vst2" onclick="vsTogSlot(2)">OFF</button>
+        </div>
+      </div>
+
+      <div class="vs-slot" id="vss3">
+        <div class="vs-slot-hd">CH·4 <span>VIDEO</span></div>
+        <div class="vs-drop" id="vsd3" onclick="vsTrigger(3)" ondragover="event.preventDefault()" ondrop="vsDrop(event,3)">
+          <input type="file" id="vsf3" accept="video/*" onchange="vsLoad(3,this)">
+          <div class="vs-drop-icon">▶</div><div>DROP VIDEO</div>
+          <div class="vs-clip-name" id="vsn3">or click to browse</div>
+          <video id="vsv3" loop muted playsinline></video>
+        </div>
+        <div class="vs-slot-fx">
+          <label>FX</label><input class="vs-knob" type="range" id="vsfx3" min="0" max="1" step=".01" value="0">
+          <select class="vs-sel" id="vsb3"><option>normal</option><option>screen</option><option>multiply</option><option>overlay</option><option>hard-light</option><option>difference</option><option>exclusion</option><option>color-dodge</option><option>luminosity</option></select>
+          <button class="vs-tog" id="vst3" onclick="vsTogSlot(3)">OFF</button>
+        </div>
+      </div>
+
+      <!-- CH 5 GENERATIVE -->
+      <div class="vs-slot vs-gen">
+        <div class="vs-slot-hd">CH·5 <span>GEN</span></div>
+        <div class="vs-gen-body">
+          <select class="vs-gen-sel" id="vs-gen-mode">
+            <option value="none">— GENERATIVE OFF —</option>
+            <option value="teletext">TELETEXT (UK BBC)</option>
+            <option value="pong">PONG FIELD</option>
+            <option value="scanlines">CRT SCANLINES</option>
+            <option value="phosphor">PHOSPHOR BURN</option>
+            <option value="sega_noise">SEGA STATIC</option>
+            <option value="satellite">SATELLITE DECAY</option>
+            <option value="countdown">TEST COUNTDOWN</option>
+            <option value="grid_bars">COLOUR BARS</option>
+          </select>
+          <label>GEN OPACITY</label>
+          <input type="range" class="vs-knob" id="vs-gen-op" min="0" max="1" step=".01" value=".7" style="width:100%">
+          <label>GEN SPEED</label>
+          <input type="range" class="vs-knob" id="vs-gen-sp" min=".1" max="3" step=".05" value="1" style="width:100%">
+          <label>GEN MIX</label>
+          <select class="vs-sel" id="vs-gen-blend" style="width:100%"><option>screen</option><option>normal</option><option>overlay</option><option>multiply</option><option>difference</option><option>color-dodge</option><option>hard-light</option></select>
+        </div>
+        <div class="vs-slot-fx">
+          <label style="font-size:12px;color:var(--vs-amber)">GEN ACTIVE</label>
+          <button class="vs-tog" id="vst4" onclick="vsTogSlot(4)">OFF</button>
+        </div>
+      </div>
+
+      <!-- MASTER -->
+      <div id="vs-master">
+        <div class="vs-m-hd">MASTER</div>
+        <div class="vs-m-body">
+          <label>GLITCH <span id="vv-gl">0%</span></label>
+          <input type="range" id="vs-glitch" min="0" max="1" step=".01" value="0" oninput="document.getElementById('vv-gl').textContent=Math.round(this.value*100)+'%'">
+          <label>GHOST <span id="vv-gh">0%</span></label>
+          <input type="range" id="vs-ghost" min="0" max=".98" step=".01" value="0" oninput="document.getElementById('vv-gh').textContent=Math.round(this.value*100)+'%'">
+          <label>PIXELATE <span id="vv-px">1px</span></label>
+          <input type="range" id="vs-pix" min="1" max="32" step="1" value="1" oninput="document.getElementById('vv-px').textContent=this.value+'px'">
+          <label>DISTORT <span id="vv-dt">0%</span></label>
+          <input type="range" id="vs-dist" min="0" max="1" step=".01" value="0" oninput="document.getElementById('vv-dt').textContent=Math.round(this.value*100)+'%'">
+          <label>SATURATION <span id="vv-st">100%</span></label>
+          <input type="range" id="vs-sat" min="0" max="2" step=".05" value="1" oninput="document.getElementById('vv-st').textContent=Math.round(this.value*100)+'%'">
+          <label>CONTRAST <span id="vv-cn">100%</span></label>
+          <input type="range" id="vs-con" min=".2" max="3" step=".05" value="1" oninput="document.getElementById('vv-cn').textContent=Math.round(this.value*100)+'%'">
+          <div class="vs-m-row">
+            <button class="vs-m-btn" id="vs-btn-crt" onclick="vsTogFX('crt',this)">CRT</button>
+            <button class="vs-m-btn" id="vs-btn-vhs" onclick="vsTogFX('vhs',this)">VHS</button>
+          </div>
+          <div class="vs-m-row">
+            <button class="vs-m-btn" id="vs-btn-inv" onclick="vsTogFX('invert',this)">INV</button>
+            <button class="vs-m-btn" id="vs-btn-mono" onclick="vsTogFX('mono',this)">MONO</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /vs-controls -->
+  </div><!-- /vs-shell -->
+</div><!-- /vsynth-app -->
+
+<!-- ── HELP STRIP ── -->
+<div class="vsynth-help">
+  <div class="vh-item"><b>CH·1–4</b> Drop or click to load video clips</div>
+  <div class="vh-item"><b>CH·5</b> Generative effects layer</div>
+  <div class="vh-item"><b>FX sliders</b> Per-channel glitch intensity</div>
+  <div class="vh-item"><b>GHOST</b> Satellite signal persistence</div>
+  <div class="vh-item"><b>⏺ REC</b> Record · ⏹ Stop · ↓ Save WebM</div>
+  <a class="vh-back" href="/meshahara-synth-v2">← Image Synth</a>
+</div>
+
+<!-- ── NAV SCRIPT (matches main site) ── -->
+<script>
+(function(){
+  var btn = document.getElementById('navtoggle');
+  var nav = document.getElementById('navlinks');
+  if(btn && nav) btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    nav.classList.toggle('open');
+  });
+})();
+</script>
+
+<!-- ── SYNTH ENGINE ── -->
+<script>
+// ── STATE ──
+const VS_NUM = 4;
+const vsVideos = [];
+const vsSlotOn = [false,false,false,false,false];
+const vsFX = {crt:false, vhs:false, invert:false, mono:false};
+let vsGhostBuf = null;
+let vsFrame = 0;
+let vsRecChunks = [];
+let vsRecorder = null;
+let vsRecInt = null;
+let vsRecSecs = 0;
+let vsRecBlob = null;
+let vsGhostRow = 0;
+const vsPong = { bx:160, by:120, vx:2.2, vy:1.6, p1y:90, p2y:90, ph:30, pw:4, score:[0,0] };
+const vsTTLines = [
+  'CEEFAX  100','',
+  '  MESHAHARA · DIGITAL EXHIBITION',
+  '  REX KL · KUALA LUMPUR · 2026','',
+  '  Connecting artists across South East Asia',
+  '  and beyond through experimental signal.','',
+  '  P101 LATEST NEWS','  P200 ARTS & CULTURE','  P301 REGIONAL INDEX','',
+  '  SIGNAL ORIGIN: KL · 03°08N 101°41E'
+];
+const vsTTCols = ['#ffffff','#ffff00','#00ffff','#00ff00','#ff00ff','#ff0000','#0000ff'];
+
+const vsCanvas = document.getElementById('vs-canvas');
+const vsCtx = vsCanvas.getContext('2d');
+let vsW = 1280, vsH = 720;
+
+function vsResize(){
+  const s = document.getElementById('vs-stage');
+  vsW = s.offsetWidth; vsH = s.offsetHeight;
+  vsCanvas.width = vsW; vsCanvas.height = vsH;
+  vsGhostBuf = vsCtx.createImageData(vsW, vsH);
+}
+vsResize();
+window.addEventListener('resize', vsResize);
+
+for(let i=0;i<VS_NUM;i++){
+  const v = document.getElementById('vsv'+i);
+  v.crossOrigin = 'anonymous';
+  vsVideos.push(v);
+}
+
+function vsTrigger(i){ document.getElementById('vsf'+i).click(); }
+function vsDrop(e,i){ e.preventDefault(); const f=e.dataTransfer.files[0]; if(f&&f.type.startsWith('video/')) vsLoadFile(i,f); }
+function vsLoad(i,inp){ if(inp.files[0]) vsLoadFile(i,inp.files[0]); }
+function vsLoadFile(i,f){
+  const v = vsVideos[i];
+  v.src = URL.createObjectURL(f); v.load(); v.play().catch(()=>{});
+  document.getElementById('vsn'+i).textContent = f.name.replace(/\.[^.]+$/,'');
+  document.getElementById('vsd'+i).classList.add('loaded');
+  vsSlotOn[i] = true;
+  const t = document.getElementById('vst'+i);
+  t.textContent='ON'; t.classList.add('on');
+  document.getElementById('vs-status').textContent = 'CH·'+(i+1)+' LOADED — PLAYING';
+}
+function vsTogSlot(i){
+  vsSlotOn[i]=!vsSlotOn[i];
+  const t=document.getElementById('vst'+i);
+  t.textContent=vsSlotOn[i]?'ON':'OFF'; t.classList.toggle('on',vsSlotOn[i]);
+  if(i<4){ if(vsSlotOn[i]) vsVideos[i].play().catch(()=>{}); else vsVideos[i].pause(); }
+}
+function vsTogFX(n,btn){ vsFX[n]=!vsFX[n]; btn.classList.toggle('active',vsFX[n]); }
+
+// ── FX ──
+function vsGlitch(imgData, amt){
+  if(amt<=0) return;
+  const d=imgData.data, rows=Math.floor(amt*20);
+  for(let r=0;r<rows;r++){
+    const y=Math.floor(Math.random()*vsH);
+    const sh=Math.floor((Math.random()-.5)*amt*80);
+    const lb=vsW*4;
+    const src=Math.max(0,Math.min(vsH-1,y))*lb;
+    const dst=Math.max(0,Math.min(vsH-1,y+Math.floor(Math.random()*3)))*lb;
+    for(let x=0;x<vsW;x++){
+      const sx=((x+sh)%vsW+vsW)%vsW;
+      d[dst+x*4]=d[src+sx*4]; d[dst+x*4+1]=d[src+sx*4+1]; d[dst+x*4+2]=d[src+sx*4+2];
+    }
+  }
+  if(amt>0.3){
+    const cs=Math.floor(amt*12);
+    for(let i=0;i<d.length;i+=4){
+      const px=(i/4)%vsW, npx=Math.min(vsW-1,px+cs), ni=i+(npx-px)*4;
+      if(ni<d.length) d[i]=d[ni];
+    }
+  }
+}
+function vsPixelate(amt){
+  if(amt<=1) return;
+  const tw=Math.ceil(vsW/amt), th=Math.ceil(vsH/amt);
+  const tmp=document.createElement('canvas'); tmp.width=tw; tmp.height=th;
+  tmp.getContext('2d').drawImage(vsCanvas,0,0,tw,th);
+  vsCtx.imageSmoothingEnabled=false;
+  vsCtx.drawImage(tmp,0,0,vsW,vsH);
+}
+function vsDistort(amt){
+  if(amt<=0) return;
+  const img=vsCtx.getImageData(0,0,vsW,vsH);
+  const src=new Uint8ClampedArray(img.data), d=img.data, t=vsFrame*.05;
+  for(let y=0;y<vsH;y++){
+    const wave=Math.sin(y*.03+t)*amt*30;
+    for(let x=0;x<vsW;x++){
+      const sx=Math.min(vsW-1,Math.max(0,Math.floor(x+wave)));
+      const di=(y*vsW+x)*4, si=(y*vsW+sx)*4;
+      d[di]=src[si]; d[di+1]=src[si+1]; d[di+2]=src[si+2];
+    }
+  }
+  vsCtx.putImageData(img,0,0);
+}
+function vsColour(sat,con){
+  if(sat===1&&con===1&&!vsFX.invert&&!vsFX.mono) return;
+  const img=vsCtx.getImageData(0,0,vsW,vsH), d=img.data;
+  for(let i=0;i<d.length;i+=4){
+    let r=d[i],g=d[i+1],b=d[i+2];
+    r=Math.min(255,Math.max(0,(r-128)*con+128));
+    g=Math.min(255,Math.max(0,(g-128)*con+128));
+    b=Math.min(255,Math.max(0,(b-128)*con+128));
+    if(vsFX.mono){ const l=r*.299+g*.587+b*.114; r=g=b=l; }
+    if(sat!==1){ const l=r*.299+g*.587+b*.114; r=l+(r-l)*sat; g=l+(g-l)*sat; b=l+(b-l)*sat; r=Math.min(255,Math.max(0,r)); g=Math.min(255,Math.max(0,g)); b=Math.min(255,Math.max(0,b)); }
+    if(vsFX.invert){ r=255-r; g=255-g; b=255-b; }
+    d[i]=r; d[i+1]=g; d[i+2]=b;
+  }
+  vsCtx.putImageData(img,0,0);
+}
+function vsVHS(){
+  const img=vsCtx.getImageData(0,0,vsW,vsH), d=img.data;
+  for(let y=0;y<vsH;y++){
+    if(Math.sin(y*.4+vsFrame*.3)>.85&&Math.random()>.5){
+      const n=(Math.random()-.5)*40;
+      for(let x=0;x<vsW;x++){ const i=(y*vsW+x)*4; d[i]=Math.min(255,Math.max(0,d[i]+n)); d[i+1]=Math.min(255,Math.max(0,d[i+1]+n*.5)); d[i+2]=Math.min(255,Math.max(0,d[i+2]+n*.3)); }
+    }
+  }
+  vsCtx.putImageData(img,0,0);
+  if(Math.random()>.7){ const h=Math.floor(Math.random()*20)+5; vsCtx.fillStyle=`rgba(0,0,0,${Math.random()*.6})`; vsCtx.fillRect(0,0,vsW,h); }
+}
+function vsGhost(amt){
+  if(amt<=0) return;
+  const cur=vsCtx.getImageData(0,0,vsW,vsH), curD=cur.data, gD=vsGhostBuf.data;
+  const keep=amt, fresh=1-amt;
+  const rpf=Math.max(1,Math.floor(vsH*(1-amt)*.5));
+  for(let r=0;r<rpf;r++){
+    const y=(vsGhostRow+r)%vsH;
+    for(let x=0;x<vsW;x++){
+      const i=(y*vsW+x)*4;
+      gD[i]=gD[i]*keep+curD[i]*fresh; gD[i+1]=gD[i+1]*keep+curD[i+1]*fresh;
+      gD[i+2]=gD[i+2]*keep+curD[i+2]*fresh; gD[i+3]=255;
+    }
+  }
+  vsGhostRow=(vsGhostRow+rpf)%vsH;
+  vsCtx.putImageData(vsGhostBuf,0,0);
+  vsCtx.globalAlpha=.55; vsCtx.putImageData(cur,0,0); vsCtx.globalAlpha=1;
+}
+
+// ── GEN EFFECTS ──
+function vsGenTeletext(op,sp){
+  const oc=document.createElement('canvas'); oc.width=vsW; oc.height=vsH;
+  const c=oc.getContext('2d');
+  c.fillStyle='rgba(0,0,100,0.92)'; c.fillRect(0,0,vsW,vsH);
+  const lh=Math.floor(vsH/18); c.font=`bold ${lh}px 'Share Tech Mono',monospace`;
+  const t=Math.floor(vsFrame*sp/4);
+  c.fillStyle='#0000ff'; c.fillRect(0,0,vsW,lh*1.4);
+  c.fillStyle='#ffff00'; c.fillText('CEEFAX  100',20,lh);
+  c.fillStyle='#ffffff'; c.fillText('Thu 8 Oct 2026  '+new Date().toLocaleTimeString('en-GB'),vsW*.45,lh);
+  vsTTLines.forEach((txt,li)=>{
+    const y=lh*1.6+li*lh*1.3;
+    c.fillStyle=vsTTCols[(li+t)%vsTTCols.length];
+    if(txt.startsWith('  P')) c.fillStyle='#00ffff';
+    if(li===2||li===3) c.fillStyle='#ffffff';
+    c.fillText(txt,20,y);
+  });
+  if(Math.floor(vsFrame*sp/30)%2===0){ c.fillStyle='#ffff00'; c.fillRect(20,lh*1.6+vsTTLines.length*lh*1.3+6,12,lh); }
+  vsCtx.globalCompositeOperation=document.getElementById('vs-gen-blend').value;
+  vsCtx.globalAlpha=op; vsCtx.drawImage(oc,0,0);
+  vsCtx.globalAlpha=1; vsCtx.globalCompositeOperation='source-over';
+}
+function vsGenPong(op,sp){
+  const oc=document.createElement('canvas'); oc.width=vsW; oc.height=vsH;
+  const c=oc.getContext('2d'); c.fillStyle='#000'; c.fillRect(0,0,vsW,vsH);
+  vsPong.bx+=vsPong.vx*sp; vsPong.by+=vsPong.vy*sp;
+  if(vsPong.by<8||vsPong.by>vsH-8) vsPong.vy*=-1;
+  vsPong.p1y+=(vsPong.by-vsPong.p1y-vsPong.ph/2)*.06*sp;
+  vsPong.p2y+=(vsPong.by-vsPong.p2y-vsPong.ph/2)*.04*sp;
+  vsPong.p1y=Math.min(vsH-vsPong.ph,Math.max(0,vsPong.p1y));
+  vsPong.p2y=Math.min(vsH-vsPong.ph,Math.max(0,vsPong.p2y));
+  if(vsPong.bx<20+vsPong.pw&&vsPong.by>vsPong.p1y&&vsPong.by<vsPong.p1y+vsPong.ph) vsPong.vx=Math.abs(vsPong.vx);
+  if(vsPong.bx>vsW-20-vsPong.pw&&vsPong.by>vsPong.p2y&&vsPong.by<vsPong.p2y+vsPong.ph) vsPong.vx=-Math.abs(vsPong.vx);
+  if(vsPong.bx<0){ vsPong.score[1]++; vsPong.bx=vsW/2; vsPong.by=vsH/2; }
+  if(vsPong.bx>vsW){ vsPong.score[0]++; vsPong.bx=vsW/2; vsPong.by=vsH/2; }
+  c.fillStyle='#fff';
+  for(let y=0;y<vsH;y+=18) c.fillRect(vsW/2-2,y,4,10);
+  c.fillRect(20,vsPong.p1y,vsPong.pw,vsPong.ph);
+  c.fillRect(vsW-20-vsPong.pw,vsPong.p2y,vsPong.pw,vsPong.ph);
+  c.fillRect(vsPong.bx-6,vsPong.by-6,12,12);
+  c.font=`bold ${Math.floor(vsH*.1)}px 'Share Tech Mono',monospace`; c.textAlign='center';
+  c.fillText(vsPong.score[0],vsW*.35,vsH*.12); c.fillText(vsPong.score[1],vsW*.65,vsH*.12);
+  vsCtx.globalCompositeOperation=document.getElementById('vs-gen-blend').value;
+  vsCtx.globalAlpha=op; vsCtx.drawImage(oc,0,0);
+  vsCtx.globalAlpha=1; vsCtx.globalCompositeOperation='source-over';
+}
+function vsGenPhosphor(op,sp){
+  const oc=document.createElement('canvas'); oc.width=vsW; oc.height=vsH;
+  const c=oc.getContext('2d'); const t=vsFrame*sp*.02;
+  c.strokeStyle=`rgba(0,255,80,${op*.8})`; c.lineWidth=2; c.shadowColor='#00ff50'; c.shadowBlur=8;
+  c.beginPath();
+  for(let i=0;i<400;i++){ const a=i/400*Math.PI*2; c.lineTo(vsW/2+Math.sin(a*3+t)*(vsW*.38), vsH/2+Math.cos(a*2+t*.7)*(vsH*.38)); }
+  c.stroke();
+  vsCtx.globalCompositeOperation=document.getElementById('vs-gen-blend').value;
+  vsCtx.drawImage(oc,0,0); vsCtx.globalCompositeOperation='source-over';
+}
+function vsGenSega(op,sp){
+  const img=vsCtx.createImageData(vsW,vsH), d=img.data, t=Math.floor(vsFrame*sp);
+  for(let i=0;i<d.length;i+=4){
+    const cell=Math.floor((i/4)%vsW/4)+Math.floor((i/4)/vsW/4)*100+t*7;
+    const v=((cell*2654435761)>>>0)%256;
+    const p=[0,85,170,255];
+    d[i]=p[v%4]; d[i+1]=p[(v>>2)%4]; d[i+2]=p[(v>>4)%4]; d[i+3]=Math.floor(op*255);
+  }
+  const oc=document.createElement('canvas'); oc.width=vsW; oc.height=vsH;
+  oc.getContext('2d').putImageData(img,0,0);
+  vsCtx.globalCompositeOperation=document.getElementById('vs-gen-blend').value;
+  vsCtx.drawImage(oc,0,0); vsCtx.globalCompositeOperation='source-over';
+}
+function vsGenSatellite(op,sp){
+  const img=vsCtx.getImageData(0,0,vsW,vsH), d=img.data;
+  const scanY=Math.floor(vsFrame*sp*2)%vsH, bh=Math.floor(vsH*.08);
+  for(let row=scanY;row<Math.min(vsH,scanY+bh);row++){
+    for(let x=0;x<vsW;x++){
+      const i=(row*vsW+x)*4;
+      if(Math.random()>.6){ d[i]=d[i+1]=d[i+2]=255; }
+      else if(Math.random()>.85){ d[i]=d[i+1]=d[i+2]=0; }
+    }
+  }
+  if(Math.random()>.97){
+    const lh2=Math.floor(Math.random()*40), ly=Math.floor(Math.random()*vsH);
+    for(let row=ly;row<Math.min(vsH,ly+lh2);row++){
+      for(let x=0;x<vsW;x++){ const i=(row*vsW+x)*4; d[i]=d[i+1]=d[i+2]=Math.random()>.5?255:0; }
+    }
+  }
+  vsCtx.putImageData(img,0,0);
+}
+function vsGenCountdown(op,sp){
+  const oc=document.createElement('canvas'); oc.width=vsW; oc.height=vsH;
+  const c=oc.getContext('2d'); c.fillStyle='#888'; c.fillRect(0,0,vsW,vsH);
+  const bars=['#fff','#ff0','#0ff','#0f0','#f0f','#f00','#00f','#000'];
+  const bw=vsW/bars.length;
+  bars.forEach((col,i)=>{ c.fillStyle=col; c.fillRect(i*bw,0,bw,vsH*.7); });
+  c.strokeStyle='#000'; c.lineWidth=3;
+  c.beginPath(); c.arc(vsW/2,vsH/2-vsH*.1,vsH*.28,0,Math.PI*2); c.stroke();
+  c.beginPath(); c.moveTo(vsW/2,vsH*.05); c.lineTo(vsW/2,vsH*.75); c.stroke();
+  c.beginPath(); c.moveTo(vsW*.2,vsH/2-vsH*.1); c.lineTo(vsW*.8,vsH/2-vsH*.1); c.stroke();
+  const num=Math.max(0,9-Math.floor(vsFrame*sp/60)%10);
+  c.font=`bold ${Math.floor(vsH*.35)}px monospace`; c.fillStyle='#000'; c.textAlign='center';
+  c.fillText(num,vsW/2,vsH/2-vsH*.1+vsH*.12);
+  vsCtx.globalCompositeOperation=document.getElementById('vs-gen-blend').value;
+  vsCtx.globalAlpha=op; vsCtx.drawImage(oc,0,0);
+  vsCtx.globalAlpha=1; vsCtx.globalCompositeOperation='source-over';
+}
+function vsGenBars(op){
+  const bars=['#fff','#ff0','#0ff','#0f0','#f0f','#f00','#00f','#000'];
+  const bw=vsW/bars.length;
+  vsCtx.save(); vsCtx.globalAlpha=op;
+  vsCtx.globalCompositeOperation=document.getElementById('vs-gen-blend').value;
+  bars.forEach((c,i)=>{ vsCtx.fillStyle=c; vsCtx.fillRect(i*bw,0,bw,vsH); });
+  vsCtx.restore();
+}
+
+// ── RENDER LOOP ──
+function vsRender(){
+  vsFrame++;
+  const glitch=parseFloat(document.getElementById('vs-glitch').value);
+  const ghost=parseFloat(document.getElementById('vs-ghost').value);
+  const pix=parseInt(document.getElementById('vs-pix').value);
+  const dist=parseFloat(document.getElementById('vs-dist').value);
+  const sat=parseFloat(document.getElementById('vs-sat').value);
+  const con=parseFloat(document.getElementById('vs-con').value);
+  const genOp=parseFloat(document.getElementById('vs-gen-op').value);
+  const genSp=parseFloat(document.getElementById('vs-gen-sp').value);
+  const genMode=document.getElementById('vs-gen-mode').value;
+  const genOn=vsSlotOn[4];
+
+  if(ghost>0) vsGhost(ghost); else vsCtx.clearRect(0,0,vsW,vsH);
+
+  for(let i=0;i<VS_NUM;i++){
+    if(!vsSlotOn[i]) continue;
+    const v=vsVideos[i]; if(v.readyState<2) continue;
+    const fx=parseFloat(document.getElementById('vsfx'+i).value);
+    vsCtx.globalCompositeOperation=document.getElementById('vsb'+i).value;
+    vsCtx.globalAlpha=1; vsCtx.drawImage(v,0,0,vsW,vsH);
+    if(fx>0){ const img=vsCtx.getImageData(0,0,vsW,vsH); vsGlitch(img,fx*.5); vsCtx.putImageData(img,0,0); }
+    vsCtx.globalCompositeOperation='source-over';
+  }
+
+  if(genOn&&genMode!=='none'){
+    switch(genMode){
+      case 'teletext': vsGenTeletext(genOp,genSp); break;
+      case 'pong': vsGenPong(genOp,genSp); break;
+      case 'scanlines':
+        vsCtx.save(); vsCtx.globalAlpha=genOp*.5; vsCtx.globalCompositeOperation='multiply';
+        for(let y=0;y<vsH;y+=4){ vsCtx.fillStyle='rgba(0,0,0,0.6)'; vsCtx.fillRect(0,y,vsW,2); }
+        vsCtx.restore(); break;
+      case 'phosphor': vsGenPhosphor(genOp,genSp); break;
+      case 'sega_noise': vsGenSega(genOp,genSp); break;
+      case 'satellite': vsGenSatellite(genOp,genSp); break;
+      case 'countdown': vsGenCountdown(genOp,genSp); break;
+      case 'grid_bars': vsGenBars(genOp); break;
+    }
+  }
+
+  if(glitch>0){ const img=vsCtx.getImageData(0,0,vsW,vsH); vsGlitch(img,glitch); vsCtx.putImageData(img,0,0); }
+  if(pix>1) vsPixelate(pix);
+  if(dist>0) vsDistort(dist);
+  vsColour(sat,con);
+  if(vsFX.vhs) vsVHS();
+  if(vsFX.crt){ vsCtx.globalCompositeOperation='screen'; vsCtx.globalAlpha=.04; vsCtx.fillStyle='#00ff60'; vsCtx.fillRect(0,0,vsW,vsH); vsCtx.globalAlpha=1; vsCtx.globalCompositeOperation='source-over'; }
+
+  const active=vsSlotOn.slice(0,4).filter(Boolean).length;
+  document.getElementById('vs-status-ov').textContent = active>0||(genOn&&genMode!=='none')
+    ? `CH:${vsSlotOn.map((s,i)=>s?i+1:'·').join('')} │ ${glitch>0?'GLT ':''} ${ghost>0?'GHO ':''} ${pix>1?'PIX ':''} ${dist>0?'DST ':''} ${vsFX.vhs?'VHS ':''} ${vsFX.crt?'CRT':''}`
+    : '';
+
+  requestAnimationFrame(vsRender);
+}
+vsRender();
+
+// ── RECORDING ──
+function vsToggleRec(){
+  if(vsRecorder&&vsRecorder.state==='recording') vsStopRec(); else vsStartRec();
+}
+function vsStartRec(){
+  vsRecChunks=[]; vsRecBlob=null;
+  document.getElementById('vs-dl-btn').classList.remove('show');
+  try{
+    const stream=vsCanvas.captureStream(30);
+    const mime=MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':MediaRecorder.isTypeSupported('video/webm')?'video/webm':'video/mp4';
+    vsRecorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:5000000});
+    vsRecorder.ondataavailable=e=>{ if(e.data.size>0) vsRecChunks.push(e.data); };
+    vsRecorder.onstop=()=>{
+      vsRecBlob=new Blob(vsRecChunks,{type:mime});
+      document.getElementById('vs-dl-btn').classList.add('show');
+      document.getElementById('vs-status').textContent='REC COMPLETE — '+vsRecSecs+'s — CLICK ↓ SAVE';
+    };
+    vsRecorder.start(100);
+    vsRecSecs=0;
+    vsRecInt=setInterval(()=>{
+      vsRecSecs++;
+      const m=Math.floor(vsRecSecs/60), s=String(vsRecSecs%60).padStart(2,'0');
+      document.getElementById('vs-rec-timer').textContent=m+':'+s;
+      document.getElementById('vs-status').textContent='RECORDING — '+m+':'+s;
+    },1000);
+    document.getElementById('vs-rec-btn').textContent='⏹ STOP';
+    document.getElementById('vs-rec-btn').classList.add('active');
+  }catch(e){ document.getElementById('vs-status').textContent='REC ERROR: '+e.message; }
+}
+function vsStopRec(){
+  if(vsRecorder&&vsRecorder.state!=='inactive') vsRecorder.stop();
+  clearInterval(vsRecInt);
+  document.getElementById('vs-rec-btn').textContent='⏺ REC';
+  document.getElementById('vs-rec-btn').classList.remove('active');
+}
+function vsDownload(){
+  if(!vsRecBlob) return;
+  const ext=vsRecBlob.type.includes('mp4')?'mp4':'webm';
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(vsRecBlob);
+  a.download='meshahara-video-synth-'+Date.now()+'.'+ext;
+  a.click();
+}
+</script>
+</body>
+</html>
