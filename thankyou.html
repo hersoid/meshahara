@@ -3,117 +3,308 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Registration Confirmed — Meshahara</title>
+<title>Meshahara — Thank You</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="/css/main.css">
-<!-- Facebook Pixel conversion event — fires on this page only -->
-<script>
-  if(typeof fbq !== 'undefined') {
-    fbq('track', 'Lead');
-  }
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
-.thankyou-wrap{
-  min-height:70vh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;
-  padding:4rem 2rem;
+/* ── SHELL ── */
+body { background: #0a0a08; color: #e8e2d4; min-height: 100vh; }
+
+/* ── NAV: dark variant ── */
+.nav { background: #0e0e0c; border-bottom: 1px solid #2a2825; }
+.nav .nav-logo { color: #e8e2d4; }
+.nav .nav-centre { color: #4a4840; }
+.nav #navlinks a { color: #6a6050; }
+.nav #navlinks a:hover { color: #e8327a; }
+.nav .btn-ticket { background: #e8327a; color: #fff; }
+
+/* ── HERO BAND ── */
+.ty-hero {
+  padding: 3.5rem 2rem 2.5rem;
+  border-bottom: 1px solid #1c1a18;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
 }
-.ty-kicker{
-  font-size:13px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--pink);margin-bottom:1.5rem;
+.ty-kicker {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: #e8327a;
+  margin-bottom: 1.25rem;
 }
-.ty-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(48px,8vw,80px);
-  line-height:.88;letter-spacing:.02em;
-  color:var(--text);margin-bottom:1.5rem;
+.ty-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(42px, 8vw, 80px);
+  letter-spacing: .04em;
+  line-height: .9;
+  color: #e8e2d4;
+  margin-bottom: 1.25rem;
 }
-.ty-title span{color:var(--pink);}
-.ty-body{
-  font-size:15px;line-height:1.85;
-  color:var(--muted);max-width:520px;
-  margin-bottom:2rem;
+.ty-title span { color: #e8327a; }
+.ty-body {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #8a8070;
+  max-width: 520px;
+  margin: 0 auto;
 }
-.ty-body b{color:var(--text);font-weight:500;}
-.ty-details{
-  border:1px solid var(--rule);
-  padding:1.5rem 2rem;
-  margin-bottom:2rem;
-  text-align:left;
-  max-width:420px;width:100%;
+.ty-arabic {
+  font-size: 22px;
+  color: #4a4840;
+  margin: 1.5rem 0 .4rem;
+  font-weight: 300;
+  direction: rtl;
+  letter-spacing: .04em;
 }
-.ty-detail-row{
-  display:flex;justify-content:space-between;
-  align-items:baseline;
-  padding:.5rem 0;
-  border-bottom:1px solid var(--rule-thin);
-  font-size:13px;
+.ty-translation {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #4a4840;
 }
-.ty-detail-row:last-child{border-bottom:none;}
-.ty-dk{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:11px;}
-.ty-dv{color:var(--text);font-weight:500;}
-.ty-links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+
+/* ── DOWNLOADS SECTION ── */
+.ty-downloads {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  border-bottom: 1px solid #1c1a18;
+}
+.ty-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: #4a4840;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.ty-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #1c1a18;
+}
+
+.dl-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+}
+@media(max-width: 720px) { .dl-grid { grid-template-columns: 1fr; } }
+
+.dl-card {
+  background: #0e0e0c;
+  border: 1px solid #1c1a18;
+  display: flex;
+  flex-direction: column;
+}
+.dl-preview {
+  aspect-ratio: 9/16;
+  overflow: hidden;
+  background: #111110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dl-preview.postcard {
+  aspect-ratio: 5/7;
+}
+.dl-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+.dl-card:hover .dl-preview img { transform: scale(1.02); }
+
+.dl-info {
+  padding: 1.1rem 1.25rem 1.25rem;
+  border-top: 1px solid #1c1a18;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.dl-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #4a4840;
+}
+.dl-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: .06em;
+  color: #e8e2d4;
+  line-height: 1;
+}
+.dl-spec {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #4a4840;
+  letter-spacing: .06em;
+  line-height: 1.5;
+}
+.dl-btn {
+  display: inline-block;
+  margin-top: .4rem;
+  background: none;
+  border: 1px solid #e8327a;
+  color: #e8327a;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: .55rem 1rem;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.dl-btn:hover { background: #e8327a; color: #fff; }
+
+/* ── FOOTER LINKS ── */
+.ty-links {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 3rem;
+  text-align: center;
+}
+.ty-links-head {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #4a4840;
+  margin-bottom: 1.5rem;
+}
+.ty-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 2rem;
+  margin-bottom: 2.5rem;
+}
+.ty-link-row a {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #6a6050;
+  text-decoration: none;
+  transition: color .2s;
+}
+.ty-link-row a:hover { color: #e8327a; }
+.ty-sign {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  color: #2a2825;
+}
 </style>
 </head>
 <body>
 
-<nav class="nav" style="display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:.9rem 2rem;border-bottom:2px solid var(--text);background:var(--bg);position:sticky;top:0;z-index:100;">
-  <a href="/" class="nav-logo" style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.18em;color:var(--text);text-decoration:none;">Meshahara</a>
-  <span class="nav-centre" style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-align:center;">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
-  <ul style="display:flex;gap:0;list-style:none;align-items:center;">
-    <li><a href="/" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Home</a></li>
-    <li><a href="/exhibition.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Exhibition</a></li>
-    <li><a href="/programme.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Programme</a></li>
+<nav class="nav">
+  <a href="/" class="nav-logo">Meshahara</a>
+  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
+  <ul class="nav-links" id="navlinks">
+    <li><a href="/">Home</a></li>
+    <li><a href="/artists.html">Artists</a></li>
+    <li><a href="/meshahara-synth-v2.html">Synth ✦</a></li>
+    <li><a href="/video-synth.html">Video ✦</a></li>
+    <li><a href="/blog.html">Newsletter</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
   </ul>
+  <button class="nav-toggle" id="navtoggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<div class="ticker">
-  <span><span class="ticker-dot"></span>Registration confirmed · Check your email for your QR code entry pass</span>
-  <span>10 October 2026 · REX KL · Doors 6:30pm</span>
+<div class="ty-hero">
+  <div class="ty-kicker">Meshahara · REX KL · 10 October 2026</div>
+  <h1 class="ty-title">You were <span>there.</span></h1>
+  <p class="ty-body">Thirty-four artists. One night. One shared ledger. Thank you for being in the room. Below are two mementos from the exhibition — a printable postcard and a phone wallpaper — yours to keep.</p>
+  <div class="ty-arabic">شَهَرَ</div>
+  <div class="ty-translation">Shahara · to make public · to witness · to be seen</div>
 </div>
 
-<div class="thankyou-wrap">
-  <div class="ty-kicker">You're registered</div>
-  <h1 class="ty-title">See You on<br>the <span>Night</span></h1>
-  <p class="ty-body">
-    Your place at Meshahara is confirmed. <b>Check your email</b> — your QR code entry pass has been sent to you. Please have it ready on your phone or printed when you arrive at REX KL.
-  </p>
+<div class="ty-downloads">
+  <div class="ty-section-label">Your mementos</div>
+  <div class="dl-grid">
 
-  <div class="ty-details">
-    <div class="ty-detail-row">
-      <span class="ty-dk">Date</span>
-      <span class="ty-dv">10 October 2026</span>
+    <!-- POSTCARD -->
+    <div class="dl-card">
+      <div class="dl-preview postcard">
+        <img src="/images/memento-postcard.jpg" alt="Meshahara postcard — colour wheel on cardboard ground">
+      </div>
+      <div class="dl-info">
+        <div class="dl-label">Printable Postcard</div>
+        <div class="dl-name">Colour Wheel</div>
+        <div class="dl-spec">A5 · Portrait<br>Print or frame</div>
+        <a class="dl-btn" href="/images/memento-postcard.jpg" download="meshahara-postcard.jpg">↓ Download</a>
+      </div>
     </div>
-    <div class="ty-detail-row">
-      <span class="ty-dk">Doors open</span>
-      <span class="ty-dv">6:30pm</span>
-    </div>
-    <div class="ty-detail-row">
-      <span class="ty-dk">Venue</span>
-      <span class="ty-dv">REX KL, Jalan Sultan, Chinatown KL</span>
-    </div>
-    <div class="ty-detail-row">
-      <span class="ty-dk">Nearest LRT</span>
-      <span class="ty-dv">Pasar Seni — 5 min walk</span>
-    </div>
-    <div class="ty-detail-row">
-      <span class="ty-dk">Entry</span>
-      <span class="ty-dv">Free · QR code required</span>
-    </div>
-  </div>
 
-  <div class="ty-links">
-    <a href="/programme.html" class="btn-secondary">View the Programme →</a>
-    <a href="/exhibition.html" class="btn-secondary">About the Exhibition →</a>
+    <!-- WALLPAPER A -->
+    <div class="dl-card">
+      <div class="dl-preview">
+        <img src="/images/memento-wallpaper-grid.png" alt="Meshahara phone wallpaper — colour grid">
+      </div>
+      <div class="dl-info">
+        <div class="dl-label">Phone Wallpaper</div>
+        <div class="dl-name">Colour Grid</div>
+        <div class="dl-spec">Portrait · 9:16<br>Lock screen or home</div>
+        <a class="dl-btn" href="/images/memento-wallpaper-grid.png" download="meshahara-wallpaper-grid.png">↓ Download</a>
+      </div>
+    </div>
+
+    <!-- WALLPAPER B -->
+    <div class="dl-card">
+      <div class="dl-preview">
+        <img src="/images/memento-wallpaper-wheel.png" alt="Meshahara phone wallpaper — colour wheel portrait">
+      </div>
+      <div class="dl-info">
+        <div class="dl-label">Phone Wallpaper</div>
+        <div class="dl-name">Colour Wheel</div>
+        <div class="dl-spec">Portrait · 9:16<br>Lock screen or home</div>
+        <a class="dl-btn" href="/images/memento-wallpaper-wheel.png" download="meshahara-wallpaper-wheel.png">↓ Download</a>
+      </div>
+    </div>
+
   </div>
+</div>
+
+<div class="ty-links">
+  <div class="ty-links-head">Continue exploring</div>
+  <div class="ty-link-row">
+    <a href="/artists.html">Artist Statements →</a>
+    <a href="/meshahara-synth-v2.html">Image Synthesiser →</a>
+    <a href="/video-synth.html">Video Synthesiser →</a>
+    <a href="https://herod.meshahara.art" target="_blank">Critical Writing →</a>
+    <a href="/blog.html">Newsletter →</a>
+  </div>
+  <div class="ty-sign">Meshahara 2026 · Curated by HERSOID · meshahara.art</div>
 </div>
 
 <footer class="site-footer">
-  <div class="footer-cell"><strong>Questions</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Exhibition</strong><a href="/exhibition.html">meshahara.art/exhibition</a></div>
-  <div class="footer-cell"><strong>Newsletter</strong><a href="/blog.html">Subscribe for updates →</a></div>
+  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+  <div class="footer-cell"><strong>Exhibition</strong><a href="/exhibition.html">10 October 2026</a></div>
+  <div class="footer-cell"><strong>Newsletter</strong><a href="/blog.html">Subscribe →</a></div>
 </footer>
 
+<script src="/js/main.js"></script>
+<script>
+const tog = document.getElementById('navtoggle');
+const links = document.getElementById('navlinks');
+if(tog && links) tog.addEventListener('click', () => links.classList.toggle('open'));
+</script>
 </body>
 </html>
