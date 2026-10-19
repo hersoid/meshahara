@@ -1,603 +1,860 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artists — Meshahara: Many Roots, One Ledger</title>
-<meta name="description" content="24 artists from across the globe — participating in Meshahara: Many Roots, One Ledger at REX KL, Kuala Lumpur, 10 October 2026.">
-<link rel="stylesheet" href="/css/main.css">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artists — Meshahara 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
 <style>
-/* ── PAGE HEADER ── */
-.page-header{display:grid;grid-template-columns:110px 1fr 260px;border-bottom:1px solid var(--rule);min-height:220px;}
-.ph-main{padding:2.5rem 2rem;border-right:1px solid var(--rule);}
-.ph-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:1rem;}
-.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,78px);line-height:.88;letter-spacing:.02em;margin-bottom:1rem;}
-.ph-title span{color:var(--pink);}
-.ph-deck{font-size:13px;font-weight:300;line-height:1.8;color:var(--muted);}
-.ph-aside{padding:2rem 1.5rem;background:var(--surface);}
+  :root {
+    --pink: #E8327A;
+    --bg: #FAFAF8;
+    --text: #1C1A18;
+    --muted: #6A6050;
+    --card-bg: #F2F1EF;
+    --border: #E0DED8;
+  }
 
-/* ── ARTIST COUNT BAND ── */
-.count-band{
-  padding:.9rem 2rem;
-  background:var(--surface);
-  border-bottom:1px solid var(--rule);
-  display:flex;
-  align-items:center;
-  gap:2rem;
-  font-family:'DM Mono',monospace;
-  font-size:11px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--dim);
-}
-.count-band strong{color:var(--text);font-weight:400;}
-.count-band .cb-divider{color:var(--rule);}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── ARTISTS GRID ── */
-.artists-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  border-bottom:1px solid var(--rule);
-}
-@media(max-width:900px){.artists-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:560px){
-  .artists-grid{grid-template-columns:1fr;}
-  .page-header{grid-template-columns:1fr;}
-  .page-spine,.ph-aside{display:none;}
-}
+  body {
+    font-family: 'DM Mono', 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
 
-/* ── ARTIST CARD ── */
-.a-card{
-  border-right:1px solid var(--rule);
-  border-bottom:1px solid var(--rule);
-  display:flex;
-  flex-direction:column;
-}
-.a-card:nth-child(3n){border-right:none;}
-@media(max-width:900px){
-  .a-card:nth-child(2n){border-right:none;}
-  .a-card:nth-child(3n){border-right:1px solid var(--rule);}
-  .a-card:nth-child(2n+1):nth-last-child(-n+2),.a-card:nth-child(2n+1):nth-last-child(-n+2)~.a-card{border-bottom:none;}
-}
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 52px;
+  }
 
-.a-card-head{
-  padding:1.5rem 1.5rem 1rem;
-  border-bottom:1px solid var(--rule);
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:1rem;
-}
-.a-number{
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:.18em;
-  color:var(--dim);
-  flex-shrink:0;
-  padding-top:.15rem;
-}
-.a-name{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:22px;
-  letter-spacing:.04em;
-  line-height:1;
-  color:var(--text);
-  flex:1;
-}
-.a-location{
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--dim);
-  margin-top:.3rem;
-}
-.a-work-title{
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:.1em;
-  color:var(--pink);
-  margin-top:.25rem;
-  font-style:italic;
-}
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-decoration: none;
+  }
 
-.a-card-body{
-  padding:1.25rem 1.5rem;
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
-.a-statement{
-  font-size:12px;
-  line-height:1.75;
-  color:var(--muted);
-  flex:1;
-}
-.a-statement.truncated{
-  display:-webkit-box;
-  -webkit-line-clamp:5;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-.a-expand{
-  margin-top:.9rem;
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--pink);
-  background:none;
-  border:none;
-  padding:0;
-  cursor:pointer;
-  text-align:left;
-  display:flex;
-  align-items:center;
-  gap:.4rem;
-}
-.a-expand:hover{color:var(--pink-dark);}
-.a-expand::after{content:'↓';transition:transform .2s;}
-.a-expand.open::after{transform:rotate(180deg);}
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
 
-/* ── FOOTER CTA ── */
-.artists-footer-cta{
-  padding:3rem 2rem;
-  text-align:center;
-  border-bottom:1px solid var(--rule);
-  background:var(--surface);
-}
-.afc-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:.04em;color:var(--text);margin-bottom:.5rem;}
-.afc-title span{color:var(--pink);}
-.afc-body{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:1.25rem;}
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--pink); }
+
+  /* ── HEADER BAND ── */
+  .page-header {
+    padding: 56px 40px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 96px);
+    letter-spacing: 0.04em;
+    line-height: 0.92;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .page-title span { color: var(--pink); }
+
+  .count-band {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+
+  .count-band strong { color: var(--text); }
+
+  /* ── GRID ── */
+  .artists-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 900px) {
+    .artists-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .artists-grid { grid-template-columns: 1fr; }
+    .page-header { padding: 36px 20px 28px; }
+    nav { padding: 0 16px; }
+    .nav-links { gap: 16px; }
+  }
+
+  /* ── ARTIST CARD ── */
+  .artist-card {
+    background: var(--bg);
+    padding: 28px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .artist-number {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+
+  .artist-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .artist-meta {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  /* ── VIDEO EMBED ── */
+  .video-wrap {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    background: #111;
+    border-radius: 4px;
+  }
+
+  .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .video-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  /* Multiple videos */
+  .videos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ── STATEMENT ── */
+  .statement-wrap { position: relative; }
+
+  .statement-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .statement-text.truncated {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .read-more-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pink);
+    padding: 6px 0 0;
+    display: block;
+  }
+
+  .read-more-btn.open { color: var(--muted); }
+
+  /* ── PLACEHOLDER ── */
+  .placeholder-note {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── SPECIAL CARD (curator) ── */
+  .artist-card.curator .artist-name {
+    color: var(--pink);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 36px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 40px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 560px) {
+    footer { padding: 28px 20px; }
+  }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <a href="/" class="nav-logo">Meshahara</a>
-  <span class="nav-centre">3°8′31″N · 101°41′49″E · Kuala Lumpur · 2026</span>
-  <ul class="nav-links" id="navlinks">
-    <li><a href="/">Home</a></li>
-    <li><a href="/exhibition.html">Exhibition</a></li>
+<nav>
+  <a class="nav-logo" href="/">Meshahara</a>
+  <ul class="nav-links">
     <li><a href="/artists.html" class="active">Artists</a></li>
-    <li><a href="/open-call.html">Open Call</a></li>
-    <li><a href="/programme.html">Programme</a></li>
-    <li><a href="/meshahara-synth-v2.html">Synth ✦</a></li>
-    <li><a href="/video-synth.html" style="color:var(--pink);">Video ✦</a></li>
-    <li><a href="/blog.html">Newsletter</a></li>
-    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+    <li><a href="/writing.html">Writing</a></li>
+    <li><a href="/image-synth.html">Synth ✦</a></li>
+    <li><a href="/video-synth.html">Video ✦</a></li>
   </ul>
-  <button class="nav-toggle" id="navtoggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="page-header">
-  <div class="page-spine">
-    <span class="spine-vert">Artists · Meshahara 2026</span>
-    <div class="spine-meta">
-      <div class="spine-item"><div class="spine-key">Status</div><div class="spine-val" style="color:var(--pink);">Confirmed</div></div>
-      <div class="spine-item"><div class="spine-key">Artists</div><div class="spine-val">24</div></div>
-    </div>
-    <div class="spine-coord">AR–2026</div>
-  </div>
-  <div class="ph-main">
-    <p class="ph-kicker">Participating Artists · Meshahara 2026</p>
-    <h1 class="ph-title">The <span>Artists</span></h1>
-    <p class="ph-deck">Twenty-four artists from Brazil, Indonesia, Germany, Mexico, Jamaica, the USA, and beyond — converging at REX KL on 10 October 2026. Working across generative code, AI, video, painting, sculpture, and immersive installation, each brings a distinct visual language to a shared ledger.</p>
-  </div>
-  <div class="ph-aside">
-    <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;">
-      <div class="aside-title">Exhibition</div>
-      <div class="aside-body">One night only · 10 October 2026<br>REX KL, Chinatown, Kuala Lumpur<br><br><a href="/tickets.html" class="btn-primary" style="display:inline-block;margin-top:.5rem;">Register Free →</a></div>
-    </div>
-    <div class="aside-block">
-      <div class="aside-title">Curated by</div>
-      <div class="aside-body">Art:Tech &amp; Hersoid</div>
-    </div>
+  <h1 class="page-title">Participating<br><span>Artists</span></h1>
+  <div class="count-band">
+    <span><strong>34</strong> Participating Artists</span>
+    <span>10 Oct 2026</span>
+    <span>REX KL</span>
+    <span>Free Entry</span>
   </div>
 </header>
 
-<div class="ticker">
-  <span><span class="ticker-dot"></span>24 confirmed artists · 10 October 2026 · REX KL · Kuala Lumpur</span>
-  <span>International · SE Asian · Digital · Generative · Immersive</span>
-</div>
+<main class="artists-grid">
 
-<div class="count-band">
-  <span><strong>24</strong> &nbsp;Participating Artists</span>
-  <span class="cb-divider">·</span>
-  <span><strong>10 Oct 2026</strong> &nbsp;Exhibition Date</span>
-  <span class="cb-divider">·</span>
-  <span><strong>REX KL</strong> &nbsp;Kuala Lumpur</span>
-  <span class="cb-divider">·</span>
-  <span><strong>Free</strong> &nbsp;Entry with Registration</span>
-</div>
-
-<section class="artists-grid" id="artists-grid">
-
-  <!-- 01 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 01 · A Suliana / Andre Suliana -->
+  <article class="artist-card">
+    <div class="artist-number">01</div>
+    <div class="artist-name">A Suliana</div>
+    <div class="artist-meta">Indonesia</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Lisanne Haack</div>
-        <div class="a-location">Brazil · Berlin</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1237116439" title="A Suliana — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">01</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">Lisanne Haack is a Brazilian artist based in Berlin, working across physical and digital media, where painting extends into sculpture, installation, and digital formats. Her work is influenced by the gestural language of early Abstract Expressionist artists, translated into a contemporary context shaped by new tools and technologies. She deconstructs and rebuilds themes such as nature, the body, and spatial structures, transforming them into abstract compositions that are both chaotic and intentional. Using oil paint, AI, 3D, VR, sculpture, and animation, she treats all mediums as part of a unified visual language. At the core of her practice is the translation of internal states — melancholy, memory, and trauma — into structured visual forms, where meaning emerges through the interaction and binding of materials.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">Flowers and foliage emerge from near-total darkness, a visual "root system" in which every element — petals, leaves, butterfly, the snake-like form — grows from the same dark root while retaining its own shape. This responds to the "Many Roots, One Ledger" theme: how individual identity can stay visible and intact while sharing the same visual space/infrastructure. The small butterfly in the lower corner represents the politics of visibility — a small entity, nearly invisible, yet present and entitled to its own space. The organic structure of the flowers and roots becomes a metaphor for distributed networks: every part connected, yet none uniform.<br><br>A multidisciplinary artist and visual practitioner working across various visual media, with practice driven by an interest in observing everyday experiences and translating them into visual forms. Work has been presented through exhibitions and projects in Indonesia, Japan, Italy, and Scotland.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 02 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 02 · Alpha Omega 8 -->
+  <article class="artist-card">
+    <div class="artist-number">02</div>
+    <div class="artist-name">AlphaOmega8</div>
+    <div class="artist-meta">@The_AO8</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Hans Kristo</div>
-        <div class="a-location">Medan, Indonesia</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236191176" title="AlphaOmega8 — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">02</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">Hans Kristo is an independent contemporary artist based in Medan, Indonesia. He has been actively working as an artist since 2005 and works across a range of media, from digital practices to traditional materials. His practice often uses metaphor, symbolism, and figurative imagery to observe and reflect on various social phenomena and human experiences. His artistic practice continues to evolve through ongoing explorations of medium, form, and visual narrative.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">The work builds on the concept of identity and connections. Based on the advanced 3D reconstruction of the hemibrain of Drosophila melanogaster (the common fruit fly), released in 2020 by HHMI's Janelia Research Campus and Connectomics at Google. Biologists have used fruit flies as a model organism to infer human biological processes for over a century — despite obvious differences (including a genetic homology of just 60%) — for several key reasons, including conserved biological pathways, low genetic redundancy, and speed and scale properties.<br><br>The XYZ triptych is created from 20-micron thick slabs captured by focused ion beam scanning electron microscopes, stitched and aligned into a 26-trillion pixel 3D volume through computational methods. Digitally re-stained, modified and mounted on video, with AI music created using Mureka (full license). This artwork incorporates material from the "FlyEM Hemibrain Dataset" by the Janelia Research Campus / HHMI, used under CC BY 4.0. August 2026.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 03 -->
-  <article class="a-card">
-    <div class="a-card-head">
-      <div>
-        <div class="a-name">Kurupuri</div>
-      </div>
-      <div class="a-number">03</div>
-    </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">I create moving images centered on bodily transformation. Bodies, objects, and environments collide, merge, multiply, and continuously shift into unfamiliar forms. I'm drawn to the point where the grotesque, the comic, vivid color, and unease can all exist at once. AI allows me to visualize things I want to see that could never exist in the real world. I create short AI-generated moving-image works that explore bodily transformation, surreal humor, and unexpected physical movement. Rather than building conventional narratives, I usually begin with a single image or situation and develop it through continuous visual transformation — human bodies, familiar spaces, and ordinary situations that can suddenly become unstable, exaggerated, grotesque, or absurd. I am particularly interested in the contrast between realism and impossibility. Even when the events become physically impossible, I try to retain the feeling that they are taking place in a tangible, photographed world.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+  <!-- 03 · Aintweallgods -->
+  <article class="artist-card">
+    <div class="artist-number">03</div>
+    <div class="artist-name">Aintweallgods</div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">"TEMPORAL_PARADOX.jpg" is an exploratory digital artwork that maps the subconscious intersections of human relationship, nature, and time. Intertwining motifs from daily life, cultural symbolism, and fluid organic structures, the composition moves with an intuitive symmetry. The piece investigates the philosophical conflict between the rational and the intuitive. It illustrates how the chaotic, interconnected nature of reality inherently contradicts the individualistic attempt to understand life through pure logic alone.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 04 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 04 · Beam / Surreal Beam -->
+  <article class="artist-card">
+    <div class="artist-number">04</div>
+    <div class="artist-name">Beam</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Physixdude</div>
-        <div class="a-work-title">Digital Apotheosis</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236192400" title="Beam — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">04</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">"Digital Apotheosis" imagines digital space as a living ecosystem rather than a purely technological one. Organic forms intertwine with computational artifacts, suggesting that networks grow less like machines than like roots, rivers, and neural pathways. The work explores how individual identity can persist within shared infrastructures, where many distinct visual languages coexist without erasing one another. In dialogue with "Many Roots, One Ledger," the piece proposes that digital connectivity need not produce uniformity. Instead, common networks can become places where memory, authorship, and cultural difference remain visible while participating in a larger collective system. The work invites viewers to consider digital space as another landscape in which human imagination continues to take root — not as a mere escape from humanity.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">Meshahara — to make public, to witness, to be seen — is the act at the center of my submission, "Water Yourself." The piece imagines a desert garden as a living network: cacti rooted separately yet sharing one soil, one light, one ledger of sun and water. Within this shared ecosystem, a single identity — myself — appears twice: standing, to water; seated, to receive. Same face, same clothing, same body, split across two roles within one private exchange of care.<br><br>This split speaks directly to the exhibition's inquiry into shared infrastructure and identity. Like the cactus, which stores its own resources rather than depending on constant external input, Water Yourself imagines a sovereignty that exists inside the self alone — an infrastructure of care that begins and ends with the same person.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 05 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 05 · CD Guthrie -->
+  <article class="artist-card">
+    <div class="artist-number">05</div>
+    <div class="artist-name">CD Guthrie</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Paradigmstories</div>
-        <div class="a-work-title">Tempus Impromptu</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236190330" title="CD Guthrie — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">05</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">Tempus Impromptu explores connection as both structure and experience. The work originates in a series of hand-drawn black-and-white compositions designed as fragments of a larger visual system. Each piece exists independently, yet its lines, forms and narratives continue beyond its boundaries, connecting with other works to reveal an expanding whole. For Many Roots, One Ledger, this idea of interconnected fragments becomes particularly relevant: individual origins remain visible while contributing to a shared structure. The physical drawing evolves through digital animation and blockchain, allowing the work to move between material and digital states without abandoning its handmade origin. Presented as an architectural-scale projection, the work transforms the exhibition surface into part of that system, allowing fragments, transitions and connections to unfold across the space. The blockchain is not treated simply as a distribution mechanism, but as another layer of continuity — recording the work's digital existence while connecting physical authorship, technological transformation and collective experience.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 06 · Celestial Body -->
+  <article class="artist-card">
+    <div class="artist-number">06</div>
+    <div class="artist-name">Celestial Body</div>
+    <div class="videos-list">
+      <div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236191229" title="Celestial Body — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 07 · Choen Lee -->
+  <article class="artist-card">
+    <div class="artist-number">07</div>
+    <div class="artist-name">Choen Lee</div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">A glowing entity is shedding. The execution of this artwork is purposely made to feel unfinished, in an attempt to capture that ethereal but fleeting moment that does not last but which otherwise repeats again and again. Just like the process of life itself, from mother to child and so on.<br><br>Colour pencils on paper, scanned and digitally repainted in Photoshop CS6. Meant to be paired with audio but which has not yet been composed.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 06 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 08 · Degen Poet -->
+  <article class="artist-card">
+    <div class="artist-number">08</div>
+    <div class="artist-name">Degen Poet</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Silo Has Art</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236190403" title="Degen Poet — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">06</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">This artwork is all about connectivity and how we can find ourselves bogged down by the constant interaction and requirements of modern life. It's best not to forget that there are other elements at play.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 09 · Demon Ego -->
+  <article class="artist-card">
+    <div class="artist-number">09</div>
+    <div class="artist-name">Demon Ego</div>
+    <div class="videos-list">
+      <div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236191232" title="Demon Ego — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 10 · DOM -->
+  <article class="artist-card">
+    <div class="artist-number">10</div>
+    <div class="artist-name">DOM</div>
+    <div class="videos-list">
+      <div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236190328" title="DOM — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">"Dom" (Home) is a triptych built around a private cipher: I sign my work using geometric shapes, where each letter of the alphabet corresponds to a form. The word "Dom" — Home — becomes triangle, circle, square. This is my authorship made visible as infrastructure: a personal ledger encoded directly into the surface of the work.<br><br>Each panel shows organic, root-like tendrils of light converging toward one of these three shapes at the centre — red toward the triangle, yellow-green toward the circle, blue-violet toward the square. The branching lines evoke both neural networks and root systems: distributed structures that carry signal, energy, and identity from many directions into a single point, without erasing where each strand began.<br><br>My cipher functions like a private key — visible, but only legible to those who know the system. It sits within the composition the way authorship sits within a blockchain: openly displayed, cryptographically distinct, impossible to counterfeit once you understand the code.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 07 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 11 · DON't BUY -->
+  <article class="artist-card">
+    <div class="artist-number">11</div>
+    <div class="artist-name">DON't BUY</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Mark Walhimer</div>
-        <div class="a-work-title">Invisible Layer</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236190329" title="DON't BUY — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">07</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">Meshahara — to make public, to witness, to be seen. Invisible Layer is a machine built for that verb. The piece is driven by a layer that is never displayed. A hidden motion map is computed every frame, and its color channels become the spatial coordinates of everything visible. The work that does the work is not the work you see. Whose labor is visible, and whose is structural and unseen — that is the question the architecture asks by existing. Each instance grows from a seed. The seed determines the work completely; identical code under a different seed produces a different creature. I author the rule and not the outcome. A ledger recording this work records a seed, not an image — authorship at the level of the generative rule rather than the artifact. Green scanners, red layers, and blue depth probes occupy one volume simultaneously through RGB-to-XYZ feedback. Each channel keeps its own identity while contributing to a single image; none is overwritten. The system has DNA and a lifeline. It grows, holds, and ends, and it knows where it is in that arc. Distributed systems and living systems solve the same problem; the work follows that resemblance rather than asserting it.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 12 · HACS / HACSS -->
+  <article class="artist-card">
+    <div class="artist-number">12</div>
+    <div class="artist-name">HACS</div>
+    <div class="artist-meta">Tampico, Mexico</div>
+    <div class="videos-list">
+      <div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236453281" title="HACS — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">"Essence" fits the theme of cultural identity and local roots — it's a piece with 25 moving scenes that makes a portrait of the city I was born and raised. Each scene is a fragment of the identity of Tampico, my hometown in Mexico.<br><br>I also made this piece as an introduction to my photographic practice through the essence of the place that shaped my eye, hoping for this piece to move across borders too.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 08 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 13 · Hans Kristo -->
+  <article class="artist-card">
+    <div class="artist-number">13</div>
+    <div class="artist-name">Hans Kristo</div>
+    <div class="artist-meta">Medan, Indonesia</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Tarp Cigarette</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236454694" title="Hans Kristo &amp; Lisanne Haack — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">08</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">I am actually strongly against AI in practically every one of its forms — whenever it is centralized, closed source, in the cloud. However, decentralized, locally hosted, open source AI is like a ray of sunlight coming through the clouds. Experimenting with decentralized AI in the creative process, viewing it as a liberated field condition of our modern existence, feels like a worthwhile exploration. At the moment I am working to apply that liberated technology to physical mediums, then back to the digital sphere, creating a feedback loop and expanding the creative process using consumer-level computer hardware and basic art supplies.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">Hans Kristo is an independent contemporary artist based in Medan, Indonesia. He has been actively working as an artist since 2005 and works across a range of media, from digital practices to traditional materials. His practice often uses metaphor, symbolism, and figurative imagery to observe and reflect on various social phenomena and human experiences. His artistic practice continues to evolve through ongoing explorations of medium, form, and visual narrative.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 09 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 14 · Hersoid ✦ -->
+  <article class="artist-card curator">
+    <div class="artist-number">✦</div>
+    <div class="artist-name">Hersoid</div>
+    <div class="artist-meta">Curator · Nick Hersey · KL</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Choen Lee</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236453707" title="Hersoid — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">09</div>
-    </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">A glowing entity is shedding. The execution of this artwork is purposely made to feel unfinished in attempt to capture that ethereal but fleeting moment that does not last but which otherwise repeats again and again. Just like the process of life itself, from mother to child and so on. Colour pencils on paper, scanned and digitally repainted in Photoshop CS6. Meant to be paired with audio but which has not yet been composed.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 10 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 15 · Hooosney -->
+  <article class="artist-card">
+    <div class="artist-number">15</div>
+    <div class="artist-name">Hooosney</div>
+    <div class="artist-meta">Indonesia</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Rapha Mey</div>
-        <div class="a-work-title">VSLS (Vessels)</div>
+        <div class="video-label">↳ Documentation (with M808347 &amp; Signifixance)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236191238" title="Hooosney, M808347 &amp; Signifixance — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">10</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">VSLS (Vessels) is a series of glass shapes made by code, shown as moving light patterns in real time. The light passes through each glass and bends, and the pattern it makes is what we see. Some of the glass shapes come from blending two shapes together. Others are assembled by a small neural net. Many Roots, One Ledger asks who gets seen, and on whose terms. In this piece, each glass stands in for a person. On its own, it's just an empty shape, a vessel. It only becomes visible when light passes through it and changes direction because of it. The light follows the same simple rule every time. But every glass bends it a little differently, because every glass has a different shape. So every pattern on the wall is different too. No one chooses the light that reaches them. But what they do with it is what makes them visible.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">This work is inspired by Solana — the artist's imagination depicts two early designers discovering Solana in a laboratory, utilising all the technology and capabilities. Even though they are very different in many aspects, backgrounds, and mindsets, they share knowledge and then unite their vision and mission for one useful goal. According to the artist, this best describes "many roots, one ledger."<br><br>Hi, I'm Hooosney, an illustrator from Indonesia. I always explore my work through various media and tools. I found Web3 which really helps me develop many aspects. That development is what always drives me.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 11 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 16 · K3@N -->
+  <article class="artist-card">
+    <div class="artist-number">16</div>
+    <div class="artist-name">K3@N</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Nygilia</div>
-        <div class="a-location">Jamaica · Germany · Italy</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236453771" title="K3@N — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">11</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">I'm Nygilia, a New Media Artist working across generative art, 3D, illustration, and immersive media. My practice is rooted in Afro-Caribbean and European heritage (Jamaican, German, and Italian) and draws on cultural heritage, video games, and post-internet aesthetics as conceptual foundations. I build worlds and images that hold multiple lineages at once through various perspectives. My work has been shown at Art Basel Miami, Digital Art Fair Asia, the Dakar Biennale, and the Paris Olympics 2024. I'm also an Adobe Firefly Ambassador, and was selected as the third Art Blocks x OpenSea Resident artist.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 17 · Kurupuri -->
+  <article class="artist-card">
+    <div class="artist-number">17</div>
+    <div class="artist-name">Kurupuri</div>
+    <div class="videos-list">
+      <div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236453893" title="Kurupuri — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">I create moving images centered on bodily transformation. Bodies, objects, and environments collide, merge, multiply, and continuously shift into unfamiliar forms. I'm drawn to the point where the grotesque, the comic, vivid color, and unease can all exist at once. AI allows me to visualize things I want to see that could never exist in the real world.<br><br>This work connects to the exhibition's themes of identity and visibility through continuous bodily transformation. The human figure begins in a recognizable state, but its shape, scale, color, and physical structure are repeatedly rewritten while traces of the original identity remain visible. I am interested in how far a body can change while still remaining connected to what it was before. In this work, identity is not fixed to a single visual form, but continues through instability, contradiction, and reconstruction.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 12 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 18 · Lisanne Haack -->
+  <article class="artist-card">
+    <div class="artist-number">18</div>
+    <div class="artist-name">Lisanne Haack</div>
+    <div class="artist-meta">Berlin · Brazilian</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Zizzyza</div>
-        <div class="a-work-title">algorithm</div>
+        <div class="video-label">↳ Documentation (with Hans Kristo)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236454694" title="Lisanne Haack &amp; Hans Kristo — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">12</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">Created in 2026, "algorithm" is an animated GIF (sent as a video file) that works on a loop. While the letters of the word appear scattered and changing their colors, a hand very similar to the ones found on a computer's system seems to move but not click through these letters. This piece talks about how a dominant system powered by an "algorithm" is capable of choosing and leading people to make pre-defined choices, not letting space for free will. Even being colorful and seeming harmless, the "algorithm" here is the voice of something more powerful dictating where we're supposed to look.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">Lisanne Haack is a Brazilian artist based in Berlin, working across physical and digital media, where painting extends into sculpture, installation, and digital formats. Her work is influenced by the gestural language of early Abstract Expressionist artists, translated into a contemporary context shaped by new tools and technologies.<br><br>She deconstructs and rebuilds themes such as nature, the body, and spatial structures, transforming them into abstract compositions that are both chaotic and intentional. Using oil paint, AI, 3D, VR, sculpture, and animation, she treats all mediums as part of a unified visual language. At the core of her practice is the translation of internal states — melancholy, memory, and trauma — into structured visual forms, where meaning emerges through the interaction and binding of materials.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 13 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 19 · M808347 -->
+  <article class="artist-card">
+    <div class="artist-number">19</div>
+    <div class="artist-name">M808347</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Beam</div>
-        <div class="a-work-title">Water Yourself</div>
+        <div class="video-label">↳ Documentation (with Hooosney &amp; Signifixance)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236191238" title="M808347, Hooosney &amp; Signifixance — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">13</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">Meshahara — to make public, to witness, to be seen — is the act at the center of my submission, Water Yourself. The piece imagines a desert garden as a living network: cacti rooted separately yet sharing one soil, one light, one ledger of sun and water. Within this shared ecosystem, a single identity — myself — appears twice: standing, to water; seated, to receive. Same face, same clothing, same body, split across two roles within one private exchange of care. This split speaks directly to the exhibition's inquiry into shared infrastructure and identity. In staging one identity as both giver and receiver, the work asks: what does it mean to witness yourself, to make your own inner tending as public and legible as the care you extend outward? Like the cactus, which stores its own resources rather than depending on constant external input, Water Yourself imagines a sovereignty that exists inside the self alone — an infrastructure of care that begins and ends with the same person.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">The work places the participant inside a fictional digital prison, where they encounter AI-driven characters and are invited into a "Digital Confession" — an intimate conversation about identity, vulnerability, fear, freedom, and human nature. The prison functions as both a narrative environment and a metaphor for contemporary digital life: a space in which we are constantly observed, recorded, classified, and asked to reveal ourselves.<br><br>This connects directly to Many Roots, One Ledger and its question of how we can participate in shared digital systems without surrendering identity. In Out of Jail, participation does not require the participant's private confession to become public. The project also explores coexistence between human and artificial identities. AI characters are not simply tools or interfaces; they exist as inhabitants of the same fictional world as the participant.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 14 -->
-  <article class="a-card">
-    <div class="a-card-head">
-      <div>
-        <div class="a-name">Signxifxixcanxce</div>
-        <div class="a-work-title">I Stand Here</div>
-      </div>
-      <div class="a-number">14</div>
-    </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">I Stand Here is an artwork that refuses to dissolve into the digital tide. Its shifting neon currents carve out a presence that doesn't shrink when placed inside shared systems or open networks. Instead, it radiates. It insists. It occupies. This generative art is like a living map of cultural memory — lines bending, colors colliding, forms reshaping themselves without ever losing their origin story. It mirrors how creators from Southeast Asia move through global digital spaces: fluid, adaptive, unmistakably rooted. The work becomes a kind of stance, a way of saying that stepping into public view doesn't require softening edges or dimming heritage. In a world built on distributed platforms and open participation, I Stand Here becomes a quiet rebellion. It shows how one can move through communal digital architecture while keeping one's lineage intact. This art doesn't whisper its presence. It glows. It ripples. It holds its ground.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+  <!-- 20 · Mark Walhimer -->
+  <article class="artist-card">
+    <div class="artist-number">20</div>
+    <div class="artist-name">Mark Walhimer</div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">Meshahara — to make public, to witness, to be seen. "Invisible Layer" is a machine built for that verb.<br><br>The work is driven by a layer that is never displayed. A hidden motion map is computed every frame, and its colour channels become the spatial coordinates of everything visible. The work that does the work is not the work you see. Whose labour is visible, and whose is structural and unseen, is the question the architecture asks by existing.<br><br>Each instance grows from a seed. The seed determines the work completely; identical code under a different seed produces a different creature. I author the rule and not the outcome. A ledger recording this work records a seed, not an image — authorship at the level of the generative rule rather than the artifact. Green scanners, red layers, and blue depth probes occupy one volume simultaneously through RGB-to-XYZ feedback. Each channel keeps its own identity while contributing to a single image; none is overwritten.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 15 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 21 · NOPER -->
+  <article class="artist-card">
+    <div class="artist-number">21</div>
+    <div class="artist-name">NOPER</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">AlphaOmega8</div>
-        <div class="a-work-title">XYZ Triptych</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236455198" title="NOPER — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">15</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">The work builds on the concept of identity and connections. It is based on the advanced 3D reconstruction of the hemibrain of Drosophila melanogaster, released in 2020 by HHMI's Janelia Research Campus and Connectomics at Google. Biologists have used fruit flies as a model organism to infer human biological processes for over a century — despite obvious differences, including a genetic homology of just 60% — for several key reasons: conserved biological pathways, low genetic redundancy, and speed-and-scale properties. The XYZ triptych is based on images created from 20-micron thick slabs captured by focused ion beam scanning electron microscopes, stitched and aligned into a 26-trillion pixel 3D volume through computational methods. Digitally re-stained, modified and mounted on video, with AI music created using Mureka. This artwork incorporates material from the FlyEM Hemibrain Dataset by Janelia Research Campus / HHMI, used under CC BY 4.0.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 22 · Nygilia -->
+  <article class="artist-card">
+    <div class="artist-number">22</div>
+    <div class="artist-name">Nygilia</div>
+    <div class="artist-meta">Jamaican · German · Italian</div>
+    <div class="videos-list">
+      <div>
+        <div class="video-label">↳ Documentation (with Physixdude)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236455551" title="Nygilia &amp; Physixdude — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">I'm Nygilia, a New Media Artist working across generative art, 3D, illustration, and immersive media. My practice is rooted in Afro-Caribbean and European heritage (Jamaican, German, and Italian) and draws on cultural heritage, video games, and post-internet aesthetics as conceptual foundations. I build worlds and images that hold multiple lineages at once through various perspectives.<br><br>My work has been shown at Art Basel Miami, Digital Art Fair Asia, the Dakar Biennale, and the Paris Olympics 2024. Also, I'm an Adobe Firefly Ambassador, and I was selected as the third Art Blocks x OpenSea Resident artist.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 16 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 23 · Paradigm Stories -->
+  <article class="artist-card">
+    <div class="artist-number">23</div>
+    <div class="artist-name">Paradigm Stories</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Stella Skopal</div>
-        <div class="a-work-title">THE ROIDS / NIGHT JITTERS / PRIMORDIAL</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236455966" title="Paradigm Stories — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">16</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">THE ROIDS, NIGHT JITTERS and PRIMORDIAL approach the exhibition's idea of "Many Roots, One Ledger" through generative systems: shared structures that allow individual identities to emerge rather than flattening them. THE ROIDS begins with 27 films, each reduced to a distinct three-colour palette derived from its visual identity — all entering the same generative system, but remaining recognisable through colour and cultural memory. NIGHT JITTERS uses Brownian motion to animate 305 particles imagined as strangers moving through a crowded Miami night. Each follows the same underlying rules, yet their encounters, collisions and traces continuously produce something collective and unpredictable. PRIMORDIAL approaches the same idea at a more fundamental level — unique numerical seeds generate an evolving field in which simple mathematical information grows into complex, organic-looking forms. Across all three works, code acts as shared infrastructure rather than a tool for producing one predetermined image.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">"Tempus Impromptu" explores connection as both structure and experience. The work originates in a series of hand-drawn black-and-white compositions designed as fragments of a larger visual system. Each piece exists independently, yet its lines, forms and narratives continue beyond its boundaries, connecting with other works to reveal an expanding whole.<br><br>For Many Roots, One Ledger, this idea of interconnected fragments becomes particularly relevant: individual origins remain visible while contributing to a shared structure. The physical drawing evolves through digital animation and blockchain, allowing the work to move between material and digital states without abandoning its handmade origin. The blockchain is treated not simply as a distribution mechanism, but as another layer of continuity — recording the work's digital existence while connecting physical authorship, technological transformation and collective experience.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 17 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 24 · Perfect Loop -->
+  <article class="artist-card">
+    <div class="artist-number">24</div>
+    <div class="artist-name">Perfect Loop</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Simulations</div>
-        <div class="a-work-title">Long Distance Communication</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236457145" title="Perfect Loop — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">17</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">'Long Distance Communication' is a hello! from me to you. A brief, quick video collage that captures the communication of a gesture of greeting in several variations. This short video performance fits into the theme of Coexistence because of how the friendly gestures in 'Long Distance Communication' traverse across time and space to simply say 'hello, you're great!' The RGB coloration of the skin and video telegraphs that it isn't just myself but it could be anybody. Hands are always saying things, writing, in the digital age — but they are always hiding below our profile smirk and gaze. Hands have so much to say! They can reach into a frame and wave and say hello — and that is what 'Long Distance Communication' is about. Created during a residency with Decentralized Art Magazine in 2024.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 25 · Physixdude -->
+  <article class="artist-card">
+    <div class="artist-number">25</div>
+    <div class="artist-name">Physixdude</div>
+    <div class="videos-list">
+      <div>
+        <div class="video-label">↳ Solo documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236457348" title="Physixdude — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div>
+        <div class="video-label">↳ Documentation (with Nygilia)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236455551" title="Physixdude &amp; Nygilia — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">"Digital Apotheosis" imagines digital space as a living ecosystem rather than a purely technological one. Organic forms intertwine with computational artifacts, suggesting that networks grow less like machines than like roots, rivers, and neural pathways. The work explores how individual identity can persist within shared infrastructures, where many distinct visual languages coexist without erasing one another.<br><br>In dialogue with "Many Roots, One Ledger," the piece proposes that digital connectivity need not produce uniformity. Instead, common networks can become places where memory, authorship, and cultural difference remain visible while participating in a larger collective system. The work invites viewers to consider digital space as another landscape in which human imagination continues to take root.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 18 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 26 · Rapha Mey -->
+  <article class="artist-card">
+    <div class="artist-number">26</div>
+    <div class="artist-name">Rapha Mey</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">HACS</div>
-        <div class="a-work-title">Essence</div>
-        <div class="a-location">Tampico, Mexico</div>
+        <div class="video-label">↳ Documentation (with Zizzy &amp; Surreal Beam)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236192400" title="Rapha Mey, Zizzy &amp; Surreal Beam — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">18</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">"Essence" fits the theme of cultural identity and local roots: it's a piece with 25 moving scenes that makes a portrait of the city I was born and raised in. Each scene is a fragment of the identity of Tampico, my hometown in Mexico. I also made this piece as an introduction to my photographic practice through the essence of the place that shaped my eye, hoping for this piece to move across borders too.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">"VSLS (Vessels)" is a series of glass shapes made by code, shown as moving light patterns in real time. The light passes through each glass and bends, and the pattern it makes is what we see. Some of the glass shapes come from blending two shapes together; others are assembled by a small neural net.<br><br>Many Roots, One Ledger asks who gets seen, and on whose terms. In this piece, each glass stands in for a person. On its own, it's just an empty shape — a vessel. It only becomes visible when light passes through it and changes direction because of it. The light follows the same simple rule every time. But every glass bends it a little differently, because every glass has a different shape. So every pattern on the wall is different too. No one chooses the light that reaches them. But what they do with it is what makes them visible.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 19 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 27 · Rebecca Rose -->
+  <article class="artist-card">
+    <div class="artist-number">27</div>
+    <div class="artist-name">Rebecca Rose</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">DOM</div>
-        <div class="a-work-title">Dom (Home)</div>
+        <div class="video-label">↳ Solo documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236457462" title="Rebecca Rose — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">19</div>
+      <div>
+        <div class="video-label">↳ Documentation (with Simulations &amp; Tarp Cigarette)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236458081" title="Rebecca Rose, Simulations &amp; Tarp Cigarette — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">"Dom" (Home) is a triptych built around a private cipher: I sign my work using geometric shapes, where each letter of the alphabet corresponds to a form. The word "Dom" — Home — becomes triangle, circle, square. This is my authorship made visible as infrastructure: a personal ledger encoded directly into the surface of the work. Each panel shows organic, root-like tendrils of light converging toward one of these three shapes — red toward the triangle, yellow-green toward the circle, blue-violet toward the square. The branching lines evoke both neural networks and root systems: distributed structures that carry signal, energy, and identity from many directions into a single point, without erasing where each strand began. My cipher functions like a private key — visible, but only legible to those who know the system. It sits within the composition the way authorship sits within a blockchain: openly displayed, cryptographically distinct, impossible to counterfeit once you understand the code.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <p class="placeholder-note">Statement forthcoming.</p>
+  </article>
+
+  <!-- 28 · Signifixance / Signxifxixcanxce -->
+  <article class="artist-card">
+    <div class="artist-number">28</div>
+    <div class="artist-name">Signifixance</div>
+    <div class="videos-list">
+      <div>
+        <div class="video-label">↳ Documentation (with Hooosney &amp; M808347)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236191238" title="Signifixance, Hooosney &amp; M808347 — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">"I Stand Here" is an artwork that refuses to dissolve into the digital tide. Its shifting neon currents carve out a presence that doesn't shrink when placed inside shared systems or open networks. Instead, it radiates. It insists. It occupies.<br><br>This generative art is like a living map of cultural memory — lines bending, colors colliding, forms reshaping themselves without ever losing their origin story. It mirrors how creators from Southeast Asia move through global digital spaces: fluid, adaptive, unmistakably rooted. The work becomes a kind of stance, a way of saying that stepping into public view doesn't require softening edges or dimming heritage. A reminder that showing up globally doesn't mean letting go of where you come from.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 20 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 29 · SILO -->
+  <article class="artist-card">
+    <div class="artist-number">29</div>
+    <div class="artist-name">SILO</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">M808347</div>
-        <div class="a-work-title">Out of Jail</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236190327" title="SILO — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">20</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">The work places the participant inside a fictional digital prison, where they encounter AI-driven characters and are invited into a "Digital Confession" — an intimate conversation about identity, vulnerability, fear, freedom and human nature. The prison functions as both a narrative environment and a metaphor for contemporary digital life: a space in which we are constantly observed, recorded, classified and asked to reveal ourselves. This connects directly to Many Roots, One Ledger: how can we participate in shared digital systems without surrendering identity? The project also explores coexistence between human and artificial identities. AI characters are not simply tools or interfaces; they exist as inhabitants of the same fictional world as the participant. For the exhibition, Out of Jail is presented as an immersive audiovisual work adapted for large-scale projection, bringing the architecture, characters, voices and atmosphere of the digital prison into the physical space of REX KL.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">This artwork is all about connectivity and how we can find ourselves bogged down by the constant interaction and requirements of modern life. It's best not to forget that there are other elements at play.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 21 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 30 · Simulations -->
+  <article class="artist-card">
+    <div class="artist-number">30</div>
+    <div class="artist-name">Simulations</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Aintweallgods</div>
-        <div class="a-work-title">TEMPORAL_PARADOX.jpg</div>
+        <div class="video-label">↳ Documentation (with Tarp Cigarette &amp; Rebecca Rose)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236458081" title="Simulations, Tarp Cigarette &amp; Rebecca Rose — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">21</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">"TEMPORAL_PARADOX.jpg" is an exploratory digital artwork that maps the subconscious intersections of human relationship, nature, and time. Intertwining motifs from daily life, cultural symbolism, and fluid organic structures, the composition moves with an intuitive symmetry. The piece investigates the philosophical conflict between the rational and the intuitive — illustrating how the chaotic, interconnected nature of reality inherently contradicts the individualistic attempt to understand life through pure logic alone.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">'Long Distance Communication' is a hello! from me to you. A brief, quick, video collage that captures the communication of a gesture of greeting in several variations.<br><br>This short video performance fits into the theme of Coexistence because of how the friendly gestures in 'Long Distance Communication' traverse across time and space to simply say "hello, you're great!" The RGB coloration of the skin and video telegraphs that it isn't just myself but it could be anybody. Hands have so much to say! They can reach into a frame and wave and say hello — and that is what 'Long Distance Communication' is about.<br><br>Created during a residency with Decentralized Art Magazine in 2024.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 22 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 31 · Stella Skopal -->
+  <article class="artist-card">
+    <div class="artist-number">31</div>
+    <div class="artist-name">Stella Skopal</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">A Suliana</div>
-        <div class="a-location">Indonesia</div>
+        <div class="video-label">↳ Documentation</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236458151" title="Stella Skopal — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">22</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">Flowers and foliage emerge from near-total darkness — a visual "root system" in which every element: petals, leaves, butterfly, the snake-like form — grows from the same dark root while retaining its own shape. This responds to the "Many Roots, One Ledger" theme: how individual identity can stay visible and intact while sharing the same visual space and infrastructure. The small butterfly in the lower corner represents the politics of visibility — a small entity, nearly invisible, yet present and entitled to its own space. The organic structure of the flowers and roots becomes a metaphor for distributed networks: every part connected, yet none uniform. I am a multidisciplinary artist and visual practitioner working across various visual media. My practice has been presented through exhibitions and projects in Indonesia, Japan, Italy, and Scotland.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">THE ROIDS, NIGHT JITTERS and PRIMORDIAL approach the exhibition's idea of "Many Roots, One Ledger" through generative systems: shared structures that allow individual identities to emerge rather than flattening them.<br><br>THE ROIDS begins with 27 films, each reduced to a distinct three-colour palette derived from its visual identity. They all enter the same generative system, but remain recognisable through colour and cultural memory — different sources circulating through one shared structure. NIGHT JITTERS uses Brownian motion to animate 305 particles imagined as strangers moving through a crowded Miami night. PRIMORDIAL approaches the same idea at a more fundamental level — unique numerical seeds derived from the base-4 Champernowne constant generate an evolving field.<br><br>Across all three works, code acts as shared infrastructure rather than a tool for producing one predetermined image. The rules are common; what emerges from them is not.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 23 -->
-  <article class="a-card">
-    <div class="a-card-head">
+  <!-- 32 · Tarp Cigarette -->
+  <article class="artist-card">
+    <div class="artist-number">32</div>
+    <div class="artist-name">Tarp Cigarette</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Hooosney</div>
-        <div class="a-location">Indonesia</div>
+        <div class="video-label">↳ Documentation (with Simulations &amp; Rebecca Rose)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236458081" title="Tarp Cigarette, Simulations &amp; Rebecca Rose — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">23</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">This work is inspired by Solana. The artist's imagination depicts two early designers discovering Solana in a laboratory, utilising all the technology and capabilities available to them. Even though they are very different in many aspects — backgrounds, and mindsets — they share knowledge and unite their vision and mission for one useful goal. According to the artist, this best describes "many roots, one ledger." Hi, I'm Hooosney, an illustrator from Indonesia. I always explore my work through various media and tools. I found Web3, which really helps me develop in many aspects — and that development is what always drives me.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">"organic systems as metaphors for distributed infrastructure" — I think AI would be one of the only things considered "new" in digital art. I am actually strongly against AI in practically every one of its forms. Whenever it is centralized, closed source, in the cloud, etc. I know it's poison for humanity and a massive attack surface against human freedom. However, decentralized, locally hosted, open source AI is like a ray of sunlight coming through the clouds in my current view.<br><br>Experimenting with decentralized AI in the creative process, viewing it as a liberated field condition of our modern existence, feels like a worthwhile exploration. At the moment I am working to apply that liberated technology to physical mediums, then back to the digital sphere, and on and on, creating a feedback loop, expanding the creative process using consumer level computer hardware and basic art supplies.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-  <!-- 24 -->
-  <article class="a-card" style="border-right:none;">
-    <div class="a-card-head">
+  <!-- 33 · Zizzy / Zizzyza -->
+  <article class="artist-card">
+    <div class="artist-number">33</div>
+    <div class="artist-name">Zizzy</div>
+    <div class="videos-list">
       <div>
-        <div class="a-name">Herod Hersché</div>
-        <div class="a-location">London · Kuala Lumpur</div>
-        <div class="a-work-title">Guest Critic</div>
+        <div class="video-label">↳ Documentation (with Rapha Mey &amp; Surreal Beam)</div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1236192400" title="Zizzy, Rapha Mey &amp; Surreal Beam — Meshahara 2026" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
       </div>
-      <div class="a-number">✦</div>
     </div>
-    <div class="a-card-body">
-      <p class="a-statement truncated">Herod Hersché is a London-based art critic whose work traces the fault lines between institutional authority and emerging digital practice. For Meshahara he contributes an extended critical essay examining the exhibition's central proposition — that a blockchain ledger might serve as cultural infrastructure rather than financial mechanism — alongside live responses to individual works. His writing appears at <a href="https://herod.meshahara.art" target="_blank" style="color:var(--pink);">herod.meshahara.art</a>.</p>
-      <button class="a-expand" onclick="toggleStatement(this)">Read more</button>
+    <div class="statement-wrap">
+      <p class="statement-text truncated">Created in 2026, "algorithm" is an animated GIF (here sent as a video file) that works on a loop. While the letters of the word appear scattered and changing their colours, a hand very similar to the ones found on a computer's system seems to move but not click through these letters. It's possible to also see some small icons in the background.<br><br>This piece talks about how a dominant system powered by an "algorithm" is capable of choosing and leading people to make pre-defined choices, not letting space for free will. Even being colourful and seeming harmless, the "algorithm" here is the voice of something more powerful dictating where we're supposed to look at.</p>
+      <button class="read-more-btn" onclick="toggleStatement(this)">Read more</button>
     </div>
   </article>
 
-</section>
+  <!-- 34 · Surreal Beam — note: "Beam" appears in docx, Vimeo list has "Zizzy/Rapha Mey/Surreal Beam" -->
+  <!-- Beam card is #04 above; Surreal Beam is the same artist listed under a different handle in the Vimeo group -->
 
-<div class="artists-footer-cta">
-  <div class="afc-title">One Night · <span>REX KL</span> · 10 October 2026</div>
-  <div class="afc-body">Free entry with registration. Doors open 7pm. Curated by Art:Tech &amp; Hersoid.</div>
-  <a href="/tickets.html" class="btn-primary">Register Now →</a>
-</div>
+</main>
 
-<footer class="site-footer">
-  <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Press</strong><a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Exhibition</strong><a href="/exhibition.html">10 October 2026 →</a></div>
-  <div class="footer-cell"><strong>Tickets</strong><a href="/tickets.html">Register Free →</a></div>
+<footer>
+  <div class="footer-logo">Meshahara 2026</div>
+  <div class="footer-copy">10 Oct 2026 · REX KL · Many Roots, One Ledger</div>
 </footer>
 
-<script src="/js/main.js"></script>
 <script>
-function toggleStatement(btn) {
-  const p = btn.previousElementSibling;
-  const isOpen = p.classList.toggle('truncated');
-  btn.textContent = isOpen ? 'Read more' : 'Read less';
-  btn.classList.toggle('open', !isOpen);
-}
-// Mobile nav toggle (mirrors main.js pattern)
-const tog = document.getElementById('navtoggle');
-const links = document.getElementById('navlinks');
-if(tog && links) tog.addEventListener('click', () => links.classList.toggle('open'));
+  function toggleStatement(btn) {
+    const p = btn.previousElementSibling;
+    const isOpen = p.classList.toggle('truncated');
+    btn.textContent = isOpen ? 'Read more' : 'Read less';
+    btn.classList.toggle('open', !isOpen);
+  }
 </script>
+
 </body>
 </html>
