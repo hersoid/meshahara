@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meshahara: Many Roots, One Ledger — REX KL, Kuala Lumpur 2026</title>
-<meta name="description" content="Meshahara: Many Roots, One Ledger. An immersive group exhibition at REX KL, Kuala Lumpur. 10 October 2026. Curated by Art:Tech & Hersoid.">
+<meta name="description" content="Meshahara: Many Roots, One Ledger. An immersive group exhibition at REX KL, Kuala Lumpur. 10 October 2026. Curated by Hersoid.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -18,11 +18,15 @@
   display:flex;align-items:stretch;
   border-bottom:2px solid var(--text);
 }
-.hero-video-section video{
-  position:absolute;top:0;left:0;
-  width:100%;height:100%;
-  object-fit:cover;
-  display:block;opacity:.7;
+.hero-video-section iframe{
+  position:absolute;
+  top:50%;left:50%;
+  width:100vw;height:56.25vw;
+  min-height:100%;min-width:177.77vh;
+  transform:translate(-50%,-50%);
+  border:none;
+  opacity:.7;
+  pointer-events:none;
 }
 .hero-overlay{
   position:relative;z-index:2;
@@ -103,12 +107,13 @@
     <li><a href="/" class="active">Home</a></li>
     <li><a href="/exhibition.html">Exhibition</a></li>
     <li><a href="/artists.html">Artists</a></li>
+    <li><a href="/curator.html">Producer</a></li>
     <li><a href="/open-call.html">Open Call</a></li>
     <li><a href="/programme.html">Programme</a></li>
     <li><a href="/meshahara-synth-v2.html">Synth ✦</a></li>
     <li><a href="/video-synth.html" style="color:var(--pink);">Video ✦</a></li>
     <li><a href="/blog.html">Newsletter</a></li>
-    <li><a href="/tickets.html" class="btn-ticket">Tickets →</a></li>
+    <li><a href="/tickets.html" class="btn-ticket">Subscribe →</a></li>
   </ul>
   <button class="nav-toggle" id="navtoggle" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -117,9 +122,12 @@
 
 <!-- VIDEO HERO -->
 <section class="hero-video-section">
-  <video autoplay muted loop playsinline preload="metadata" poster="/images/roots.jpg">
-    <source src="/images/tickets-video.mp4" type="video/mp4">
-  </video>
+  <iframe
+    src="https://player.vimeo.com/video/1238352002?autoplay=1&loop=1&muted=1&background=1&playsinline=1"
+    allow="autoplay; fullscreen; picture-in-picture"
+    allowfullscreen
+    aria-hidden="true">
+  </iframe>
   <div class="hero-overlay">
     <p class="hero-kicker">Solana Immersive Exhibition · REX KL · Kuala Lumpur · 2026</p>
     <h1 class="hero-title">ME<em>SHA</em><br>HARA</h1>
@@ -127,20 +135,20 @@
     <div class="hero-meta-strip">
       <div><div class="hm-k">Venue</div><div class="hm-v">REX KL, Chinatown KL</div></div>
       <div><div class="hm-k">Date</div><div class="hm-v">10 October 2026</div></div>
-      <div><div class="hm-k">Curated by</div><div class="hm-v">Art:Tech &amp; Hersoid</div></div>
-      <div><div class="hm-k">Entry</div><div class="hm-v">Free with registration</div></div>
+      <div><div class="hm-k">Curated by</div><div class="hm-v">Hersoid</div></div>
+      <div><div class="hm-k">Entry</div><div class="hm-v">Free</div></div>
     </div>
     <a href="/tickets.html" class="hero-cta-block">
-      <div class="hero-cta-date">10 October 2026 · REX KL · Free Entry</div>
-      <div class="hero-cta-label">Register Now →</div>
+      <div class="hero-cta-date">Stay connected · Future events</div>
+      <div class="hero-cta-label">Subscribe for Updates →</div>
     </a>
   </div>
 </section>
 
 <!-- TICKER -->
 <div class="ticker">
-  <span><span class="ticker-dot"></span>Open Call closes 31 August 2026 · 23:59 MYT · <span id="countdown">calculating...</span></span>
-  <span>Artist notification: 10 September 2026 · International applications welcome</span>
+  <span><span class="ticker-dot"></span>Meshahara took place 10 October 2026 at REX KL · Thank you for being there</span>
+  <span>Subscribe for future events · hello@meshahara.art</span>
 </div>
 
 <!-- SYNTH CTA BAND -->
@@ -185,46 +193,29 @@
   </div>
   <div class="fact-item">
     <div class="fact-n">Free</div>
-    <div class="fact-l">Entry with<br>Registration</div>
+    <div class="fact-l">Open to<br>All</div>
   </div>
 </div>
 
 <!-- OPEN CALL BAND -->
 <div class="open-call-band">
   <div class="oc-text">
-    <div class="oc-kicker">Open Call — Closes 31 August 2026</div>
-    <h2 class="oc-title">Submit Your Work</h2>
-    <p class="oc-body">We are seeking artists working at the intersection of digital practice and cultural identity. All mediums considered. No submission fee. International applications welcome.</p>
+    <div class="oc-kicker">Stay in the Loop · Future Events</div>
+    <h2 class="oc-title">What Comes Next</h2>
+    <p class="oc-body">Meshahara continues. Subscribe to be the first to hear about future exhibitions, artist releases, and events from the network we've built.</p>
   </div>
-  <a href="/open-call.html" class="oc-btn">Apply Now →</a>
+  <a href="/tickets.html" class="oc-btn">Subscribe →</a>
 </div>
 
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Deadline 31 August 2026 →</a></div>
+  <div class="footer-cell"><strong>Exhibition</strong><a href="/exhibition.html">About Meshahara →</a></div>
   <div class="footer-cell"><strong>Newsletter</strong><a href="/blog.html">Subscribe for updates →</a></div>
   <div class="footer-cell"><strong>Herod Hersché</strong><a href="https://herod.meshahara.art" target="_blank" rel="noopener">Guest Critic →</a></div>
 </footer>
 
 <script>
-// Countdown
-function updateCountdown(){
-  var el=document.getElementById('countdown');
-  if(!el) return;
-  var deadline=new Date('2026-08-31T23:59:00+08:00').getTime();
-  var now=Date.now();
-  var diff=deadline-now;
-  if(diff<=0){el.textContent='Deadline passed';return;}
-  var d=Math.floor(diff/86400000);
-  var h=Math.floor((diff%86400000)/3600000);
-  var m=Math.floor((diff%3600000)/60000);
-  var s=Math.floor((diff%60000)/1000);
-  el.textContent=d+'d '+h+'h '+m+'m '+s+'s remaining';
-}
-updateCountdown();
-setInterval(updateCountdown,1000);
-
 // Mobile nav
 var toggle=document.getElementById('navtoggle');
 var navlinks=document.getElementById('navlinks');

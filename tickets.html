@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tickets & Registration — Meshahara: Many Roots, One Ledger</title>
-<meta name="description" content="Register for Meshahara: Many Roots, One Ledger — 10 October 2026 at REX KL, Kuala Lumpur. Free entry with registration.">
+<title>Stay in the Loop — Meshahara</title>
+<meta name="description" content="Meshahara: Many Roots, One Ledger took place 10 October 2026. Subscribe to hear about future exhibitions and events.">
 <link rel="stylesheet" href="/css/main.css">
 <style>
 .page-header{display:grid;grid-template-columns:100px 1fr 260px;border-bottom:2px solid var(--text);min-height:200px;}
@@ -22,11 +22,15 @@
   min-height:80vh;
   display:flex;align-items:stretch;
 }
-.video-section video{
-  position:absolute;top:0;left:0;
-  width:100%;height:100%;
-  object-fit:cover;
-  display:block;opacity:.75;
+.video-section iframe{
+  position:absolute;
+  top:50%;left:50%;
+  width:100vw;height:56.25vw;
+  min-height:100%;min-width:177.77vh;
+  transform:translate(-50%,-50%);
+  border:none;
+  opacity:.75;
+  pointer-events:none;
 }
 .video-overlay{
   position:relative;z-index:2;
@@ -61,24 +65,86 @@
 }
 .vo-cta:hover{background:var(--pink-dark);text-decoration:none;}
 
-/* REGISTRATION BODY */
-.reg-body{
+/* SUBSCRIBE BODY */
+.sub-body{
   display:grid;grid-template-columns:1fr 340px;
   border-bottom:2px solid var(--text);
 }
-.reg-main{padding:2.75rem 2rem;border-right:1px solid var(--rule);}
-.reg-main h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.04em;color:var(--text);margin-bottom:.75rem;margin-top:2rem;}
-.reg-main h2:first-child{margin-top:0;}
-.reg-main p{font-size:14px;line-height:1.85;color:var(--muted);margin-bottom:1rem;}
-.reg-main p b{font-weight:500;color:var(--text);}
-.tally-wrap{width:100%;margin-top:1.5rem;}
-.tally-wrap iframe{display:block;width:100%;border:none;min-height:400px;}
-.reg-aside{padding:2.5rem 1.75rem;background:var(--surface);display:flex;flex-direction:column;gap:1.5rem;}
-.event-box{border:2px solid var(--text);padding:1.5rem;}
-.ev-label{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
-.ev-date{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:.04em;line-height:1;color:var(--text);margin-bottom:.5rem;}
-.ev-detail{font-size:13px;color:var(--muted);line-height:2;}
-.ev-detail b{color:var(--text);font-weight:500;}
+.sub-main{padding:2.75rem 2rem;border-right:1px solid var(--rule);}
+.sub-main h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.04em;color:var(--text);margin-bottom:.75rem;margin-top:2rem;}
+.sub-main h2:first-child{margin-top:0;}
+.sub-main p{font-size:14px;line-height:1.85;color:var(--muted);margin-bottom:1rem;}
+.sub-main p b{font-weight:500;color:var(--text);}
+
+/* EMAIL CAPTURE */
+.email-form{margin-top:1.75rem;display:flex;gap:0;max-width:520px;}
+.email-form input[type=email]{
+  flex:1;
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  padding:.75rem 1rem;
+  border:1px solid var(--text);
+  border-right:none;
+  background:var(--bg);
+  color:var(--text);
+  outline:none;
+}
+.email-form input[type=email]::placeholder{color:var(--dim);}
+.email-form button{
+  font-family:'DM Mono',monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--text);color:var(--bg);
+  border:1px solid var(--text);
+  padding:.75rem 1.25rem;
+  cursor:pointer;white-space:nowrap;
+  transition:background .15s;
+}
+.email-form button:hover{background:var(--pink);border-color:var(--pink);}
+.form-note{font-size:11px;color:var(--dim);margin-top:.6rem;line-height:1.5;}
+.form-note a{color:var(--muted);}
+.form-success{display:none;margin-top:1rem;font-size:13px;color:var(--text);border-left:3px solid var(--pink);padding-left:.75rem;line-height:1.6;}
+
+/* MEMENTO GIVEAWAY */
+.memento-section{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--rule);}
+.memento-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);margin-bottom:.5rem;}
+.memento-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.04em;color:var(--text);margin-bottom:.5rem;}
+.memento-body{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:1.25rem;}
+.memento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.memento-item{background:var(--surface);padding:0;}
+.memento-img{
+  aspect-ratio:1;
+  background-size:cover;
+  background-position:center;
+  background-color:var(--surface2);
+  position:relative;
+  overflow:hidden;
+}
+.memento-img-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:.5rem .6rem;
+  background:rgba(28,26,24,.75);
+  font-size:8px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(240,235,224,.6);
+}
+.memento-dl{
+  display:block;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);
+  padding:.6rem;
+  text-decoration:none;
+  border-top:1px solid var(--rule);
+  transition:color .15s,background .15s;
+  text-align:center;
+}
+.memento-dl:hover{color:var(--pink);background:var(--surface2);}
+
+/* ASIDE */
+.sub-aside{padding:2.5rem 1.75rem;background:var(--surface);display:flex;flex-direction:column;gap:1.5rem;}
+.event-recap{border:2px solid var(--rule);padding:1.5rem;}
+.recap-label{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin-bottom:.75rem;}
+.recap-date{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:.04em;line-height:1;color:var(--text);margin-bottom:.5rem;}
+.recap-detail{font-size:13px;color:var(--muted);line-height:2;}
+.recap-detail b{color:var(--text);font-weight:500;}
 
 /* PROGRAMME */
 .prog-strip{border-bottom:2px solid var(--text);}
@@ -94,14 +160,17 @@
 @media(max-width:900px){
   .page-header{grid-template-columns:1fr 220px;}
   .page-spine{display:none;}
-  .reg-body{grid-template-columns:1fr;}
-  .reg-aside{border-top:1px solid var(--rule);}
+  .sub-body{grid-template-columns:1fr;}
+  .sub-aside{border-top:1px solid var(--rule);}
   .prog-grid{grid-template-columns:1fr 1fr;}
   .pi:nth-child(2){border-right:none;}
   .pi:nth-child(3){border-top:1px solid var(--rule);}
   .pi:nth-child(4){border-right:none;border-top:1px solid var(--rule);}
   .video-overlay{padding:4rem 1.5rem 2rem;min-height:70vh;}
   .vo-title{font-size:clamp(44px,10vw,72px);}
+  .email-form{flex-direction:column;}
+  .email-form input[type=email]{border-right:1px solid var(--text);border-bottom:none;}
+  .email-form button{border-top:none;}
 }
 @media(max-width:600px){
   .page-header{grid-template-columns:1fr;}
@@ -114,6 +183,7 @@
   .vo-title{font-size:clamp(40px,12vw,60px);}
   .vo-meta{flex-direction:column;gap:.75rem;}
   .vo-cta{display:block;text-align:center;}
+  .memento-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -130,7 +200,7 @@
     <li><a href="/programme.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Programme</a></li>
     <li><a href="/meshahara-synth-v2.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);padding:.3rem .75rem;text-decoration:none;">Synth ✦</a></li>
     <li><a href="/blog.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:.3rem .75rem;text-decoration:none;">Newsletter</a></li>
-    <li><a href="/tickets.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;background:var(--dark);color:var(--bg) !important;padding:.35rem .9rem;text-decoration:none;margin-left:.5rem;">Tickets →</a></li>
+    <li><a href="/tickets.html" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;background:var(--dark);color:var(--bg) !important;padding:.35rem .9rem;text-decoration:none;margin-left:.5rem;">Subscribe →</a></li>
   </ul>
   <button class="nav-toggle" id="navtoggle" aria-label="Menu" style="display:none;background:none;border:none;cursor:pointer;padding:.25rem;flex-direction:column;gap:5px;">
     <span style="display:block;width:22px;height:2px;background:var(--text);"></span>
@@ -139,84 +209,102 @@
   </button>
 </nav>
 
-<!-- VIDEO SECTION — leads the page, no header above -->
+<!-- VIDEO SECTION -->
 <div class="video-section">
-  <video
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-    poster="/images/roots.jpg"
-    aria-label="Meshahara exhibition preview — REX KL, Kuala Lumpur">
-    <source src="/images/tickets-video.mp4" type="video/mp4">
-  </video>
+  <iframe
+    src="https://player.vimeo.com/video/1238352002?autoplay=1&loop=1&muted=1&background=1&playsinline=1"
+    allow="autoplay; fullscreen; picture-in-picture"
+    allowfullscreen
+    aria-hidden="true">
+  </iframe>
   <div class="video-overlay">
-    <div class="vo-kicker">Meshahara: Many Roots, One Ledger</div>
-    <div class="vo-title">One night.<br><em>One room.</em><br>Something you<br>won't forget.</div>
+    <div class="vo-kicker">Meshahara: Many Roots, One Ledger · 10 October 2026</div>
+    <div class="vo-title">One night.<br><em>One room.</em><br>What comes<br>next.</div>
     <div class="vo-meta">
-      <div><div class="vo-mk">Date</div><div class="vo-mv">10 October 2026</div></div>
-      <div><div class="vo-mk">Doors open</div><div class="vo-mv">6:30pm</div></div>
+      <div><div class="vo-mk">Took place</div><div class="vo-mv">10 October 2026</div></div>
       <div><div class="vo-mk">Venue</div><div class="vo-mv">REX KL, Chinatown KL</div></div>
-      <div><div class="vo-mk">Entry</div><div class="vo-mv">Free with registration</div></div>
+      <div><div class="vo-mk">Artists</div><div class="vo-mv">15+ International</div></div>
+      <div><div class="vo-mk">Next event</div><div class="vo-mv">Subscribe to find out</div></div>
     </div>
-    <a href="#register" class="vo-cta">Register Your Place →</a>
+    <a href="#subscribe" class="vo-cta">Subscribe for Updates →</a>
   </div>
 </div>
 
-<!-- REGISTRATION FORM -->
-<div class="reg-body" id="register">
-  <div class="reg-main">
-    <h2>Reserve Your Place</h2>
-    <p>Registration is free. Complete the form below — a <b>confirmation email with your QR code entry pass</b> will be sent immediately. Please have it ready on your phone or printed when you arrive at REX KL.</p>
+<!-- SUBSCRIBE BODY -->
+<div class="sub-body" id="subscribe">
+  <div class="sub-main">
+    <h2>Stay in the Loop</h2>
+    <p>Meshahara happened on 10 October 2026. <b>Thank you to everyone who came.</b> The network we built that night — artists, curators, technologists, and curious visitors from across the region — is the foundation for what comes next.</p>
+    <p>Subscribe below to be the first to hear about future exhibitions, artist releases, and events. We keep it focused: no noise, just news that matters.</p>
 
-    <div class="tally-wrap">
-      <iframe
-        src="https://tally.so/embed/lb17zv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-        loading="lazy"
-        width="100%"
-        height="400"
-        frameborder="0"
-        marginheight="0"
-        marginwidth="0"
-        title="Meshahara Registration Form"
-        style="border:none;display:block;">
-      </iframe>
+    <form class="email-form" id="subscribeForm" onsubmit="handleSubscribe(event)">
+      <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit">Subscribe →</button>
+    </form>
+    <div class="form-note">No spam. Unsubscribe any time. <a href="mailto:hello@meshahara.art">hello@meshahara.art</a> if you have questions.</div>
+    <div class="form-success" id="formSuccess">
+      ✦ &nbsp;You're in. We'll be in touch when the next event is announced.
     </div>
-    <p style="margin-top:1rem;font-size:13px;color:var(--dim);">Problems registering? Email <a href="mailto:hello@meshahara.art">hello@meshahara.art</a></p>
+
+    <!-- MEMENTO GIVEAWAY -->
+    <div class="memento-section">
+      <div class="memento-label">Free Download · Subscriber Gift</div>
+      <div class="memento-title">Meshahara Memento Pack</div>
+      <div class="memento-body">A thank-you from us. Subscribe above and download your free memento pack — a postcard and two wallpapers from the exhibition, yours to keep.</div>
+      <div class="memento-grid">
+        <div class="memento-item">
+          <div class="memento-img" style="background-image:url('/images/memento-postcard.jpg');">
+            <div class="memento-img-label">Postcard · Print Edition</div>
+          </div>
+          <a href="/images/memento-postcard.jpg" class="memento-dl" download>↓ Download Postcard</a>
+        </div>
+        <div class="memento-item">
+          <div class="memento-img" style="background-image:url('/images/memento-wallpaper-grid.png');background-position:center top;">
+            <div class="memento-img-label">Wallpaper · Grid Pattern</div>
+          </div>
+          <a href="/images/memento-wallpaper-grid.png" class="memento-dl" download>↓ Download Wallpaper</a>
+        </div>
+        <div class="memento-item">
+          <div class="memento-img" style="background-image:url('/images/memento-wallpaper-wheel.png');">
+            <div class="memento-img-label">Wallpaper · Wheel Pattern</div>
+          </div>
+          <a href="/images/memento-wallpaper-wheel.png" class="memento-dl" download>↓ Download Wallpaper</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="reg-aside">
-    <div class="event-box">
-      <div class="ev-label">Opening Night</div>
-      <div class="ev-date">10 Oct<br>2026</div>
-      <div class="ev-detail">
-        <b>Doors open:</b> 6:30pm<br>
+  <div class="sub-aside">
+    <div class="event-recap">
+      <div class="recap-label">Opening Night</div>
+      <div class="recap-date">10 Oct<br>2026</div>
+      <div class="recap-detail">
         <b>Venue:</b> REX KL<br>
         Jalan Sultan, Chinatown<br>
         Kuala Lumpur<br><br>
-        <b>Entry:</b> Free with registration<br>
-        <b>QR code:</b> Sent by email
+        <b>Artists:</b> 15+ international<br>
+        <b>Format:</b> Immersive projection<br>
+        <b>Status:</b> <span style="color:var(--pink);">Event complete</span>
       </div>
     </div>
     <div class="aside-block" style="border-top:none;margin-top:0;padding-top:0;">
-      <div class="aside-title">Getting There</div>
-      <div class="aside-body">LRT to Pasar Seni — 5 min walk. Grab recommended. Street parking available in Chinatown.</div>
+      <div class="aside-title">Documentation</div>
+      <div class="aside-body">Photos, video, and artist interviews from the night will be published in the weeks ahead. <a href="/gallery.html">Visit the gallery →</a></div>
     </div>
     <div class="aside-block">
-      <div class="aside-title">Accessibility</div>
-      <div class="aside-body">Step-free access from street level. Note requirements in the form or contact <a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+      <div class="aside-title">Artists</div>
+      <div class="aside-body">Explore the full lineup of artists who showed work at Meshahara. <a href="/artists.html">View artists →</a></div>
     </div>
     <div class="aside-block">
-      <div class="aside-title">Press Accreditation</div>
-      <div class="aside-body">Press passes available separately. Contact <a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
+      <div class="aside-title">Press & Partnerships</div>
+      <div class="aside-body">For press, future partnership enquiries, or to discuss the next edition: <a href="mailto:press@meshahara.art">press@meshahara.art</a></div>
     </div>
   </div>
 </div>
 
-<!-- PROGRAMME -->
+<!-- PROGRAMME (kept as retrospective record) -->
 <div class="prog-strip">
-  <div class="prog-header"><span class="lbl">Programme · Opening Night · 10 October 2026</span></div>
+  <div class="prog-header"><span class="lbl">What Happened · Opening Night · 10 October 2026</span></div>
   <div class="prog-grid">
     <div class="pi"><div class="pi-n">01</div><div class="pi-t">Architectural Projection</div><div class="pi-d">Large-scale immersive works across the REX KL main arena.</div></div>
     <div class="pi"><div class="pi-n">02</div><div class="pi-t">Artist Panel</div><div class="pi-d">Local and international voices on art, authorship, the blockchain.</div></div>
@@ -227,7 +315,7 @@
 
 <footer class="site-footer">
   <div class="footer-cell"><strong>Contact</strong><a href="mailto:hello@meshahara.art">hello@meshahara.art</a></div>
-  <div class="footer-cell"><strong>Open Call</strong><a href="/open-call.html">Deadline 31 August 2026 →</a></div>
+  <div class="footer-cell"><strong>Newsletter</strong><a href="/blog.html">Blog & updates →</a></div>
   <div class="footer-cell"><strong>Exhibition</strong><a href="/exhibition.html">About Meshahara →</a></div>
 </footer>
 
@@ -235,7 +323,16 @@
 var toggle = document.getElementById('navtoggle');
 var navlinks = document.getElementById('navlinks');
 if(toggle){toggle.addEventListener('click',function(){toggle.classList.toggle('open');navlinks.classList.toggle('open');});}
+
+function handleSubscribe(e){
+  e.preventDefault();
+  var form = document.getElementById('subscribeForm');
+  var success = document.getElementById('formSuccess');
+  // Submit to Klaviyo or your email provider here.
+  // For now, show the success message.
+  form.style.display = 'none';
+  success.style.display = 'block';
+}
 </script>
-<script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')){}else{var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
 </body>
 </html>
